@@ -1,7 +1,9 @@
+import { SignUp } from '@clerk/nextjs';
+
 const SignUpPage = () => {
   return (
-    <div className='flex min-h-dvh w-full flex-col items-center justify-center'>
-      Sign up
+    <div className='grid min-h-dvh w-full flex-col place-items-center'>
+      <SignUp path='/signup' />
     </div>
   );
 };

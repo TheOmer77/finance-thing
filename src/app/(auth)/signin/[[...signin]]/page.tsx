@@ -1,7 +1,9 @@
+import { SignIn } from '@clerk/nextjs';
+
 const SignInPage = () => {
   return (
-    <div className='flex min-h-dvh w-full flex-col items-center justify-center'>
-      Sign in
+    <div className='grid min-h-dvh w-full flex-col place-items-center'>
+      <SignIn path='/signin' />
     </div>
   );
 };
