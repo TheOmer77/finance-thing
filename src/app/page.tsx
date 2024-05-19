@@ -1,6 +1,6 @@
 const HomePage = () => {
   return (
-    <div className='w-full min-h-dvh grid place-items-center'>Hello world.</div>
+    <div className='grid min-h-dvh w-full place-items-center'>Hello world.</div>
   );
 };
 
