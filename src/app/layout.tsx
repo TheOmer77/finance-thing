@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 import { ClerkProvider } from '@clerk/nextjs';
 import { Inter } from 'next/font/google';
 
+import { clerkLocalication, clerkTheme } from '@/constants/clerk';
 import '@/styles/index.css';
 
 const inter = Inter({ subsets: ['latin'] });
@@ -13,7 +14,7 @@ export const metadata: Metadata = {
 };
 
 const RootLayout = ({ children }: PropsWithChildren) => (
-  <ClerkProvider>
+  <ClerkProvider appearance={clerkTheme} localization={clerkLocalication}>
     <html lang='en'>
       <body className={inter.className}>{children}</body>
     </html>
