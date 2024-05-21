@@ -1,6 +1,8 @@
 import type { ComponentPropsWithoutRef } from 'react';
 import type { ClerkProvider } from '@clerk/nextjs';
+
 import { buttonVariants } from '@/components/ui/Button/variants';
+import { cn } from '@/lib/utils';
 
 type Appearance = ComponentPropsWithoutRef<typeof ClerkProvider>['appearance'];
 type Localization = ComponentPropsWithoutRef<
@@ -23,10 +25,12 @@ shadow-none`,
 bg-none [&>*:not(:first-of-type)]:border-0`,
     footerAction:
       'text-sm text-muted-foreground [&>*]:[font-size:inherit] [&>span]:text-inherit',
-    footerActionLink: buttonVariants({
-      variant: 'link',
-      className: 'h-auto px-0 py-0 hover:text-primary',
-    }),
+    footerActionLink: cn(
+      buttonVariants({
+        variant: 'link',
+        className: 'h-auto px-0 py-0 hover:text-primary',
+      })
+    ),
   },
 } satisfies Appearance;
 
