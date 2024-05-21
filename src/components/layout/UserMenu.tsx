@@ -11,6 +11,8 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/DropdownMenu';
 
@@ -37,17 +39,18 @@ export const UserMenu = () => {
                 src={user?.imageUrl}
               />
               <AvatarFallback>
-                {
-                  (user?.username
-                    ? user.username
-                    : user?.primaryEmailAddress?.emailAddress)?.[0]
-                }
+                {user?.primaryEmailAddress?.emailAddress?.[0]}
               </AvatarFallback>
             </Avatar>
           )}
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align='end'>
+        <DropdownMenuLabel className='pb-0'>{user?.fullName}</DropdownMenuLabel>
+        <DropdownMenuLabel className='pt-0 text-xs font-normal text-muted-foreground'>
+          {user?.primaryEmailAddress?.emailAddress}
+        </DropdownMenuLabel>
+        <DropdownMenuSeparator />
         <DropdownMenuItem onClick={() => openUserProfile()}>
           Profile
         </DropdownMenuItem>
