@@ -1,5 +1,5 @@
 import { HeaderLogo } from './HeaderLogo';
-import { HeaderNav } from './HeaderNav';
+import { Nav } from '@/components/layout/Nav';
 
 export const Header = () => (
   <header
@@ -11,7 +11,7 @@ text-primary-foreground'
 justify-between p-4 lg:pb-36'
     >
       <HeaderLogo />
-      <HeaderNav />
+      <Nav />
     </div>
   </header>
 );

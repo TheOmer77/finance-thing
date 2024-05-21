@@ -2,7 +2,7 @@
 
 import { usePathname } from 'next/navigation';
 
-import { HeaderNavButton, type HeaderNavButtonProps } from './HeaderNavButton';
+import { NavButton, type NavButtonProps } from './NavButton';
 
 const routes = [
   { href: '/', label: 'Overview' },
@@ -10,15 +10,15 @@ const routes = [
   { href: '/accounts', label: 'Accounts' },
   { href: '/categories', label: 'Categories' },
   { href: '/settings', label: 'Settings' },
-] satisfies Omit<HeaderNavButtonProps, 'active'>[];
+] satisfies Omit<NavButtonProps, 'active'>[];
 
-export const HeaderNav = () => {
+export const Nav = () => {
   const pathname = usePathname();
 
   return (
     <nav className='hidden flex-row items-center gap-px overflow-x-auto lg:flex'>
       {routes.map(({ href, label }) => (
-        <HeaderNavButton
+        <NavButton
           key={href}
           href={href}
           label={label}

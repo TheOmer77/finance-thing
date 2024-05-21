@@ -3,17 +3,13 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/Button';
 import { cn } from '@/lib/utils';
 
-export type HeaderNavButtonProps = {
+export type NavButtonProps = {
   href: `/${string}`;
   label: string;
   active?: boolean;
 };
 
-export const HeaderNavButton = ({
-  active,
-  href,
-  label,
-}: HeaderNavButtonProps) => (
+export const NavButton = ({ active, href, label }: NavButtonProps) => (
   <Button
     variant='ghost'
     className={cn(
