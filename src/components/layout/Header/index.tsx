@@ -7,8 +7,8 @@ export const Header = () => (
 text-primary-foreground'
   >
     <div
-      className='mx-auto flex w-full max-w-screen-2xl flex-row items-center
-justify-between p-4 lg:pb-36'
+      className='mx-auto flex w-full max-w-screen-2xl flex-row-reverse
+items-center justify-end p-4 lg:flex-row lg:justify-between lg:pb-36'
     >
       <HeaderLogo />
       <Nav />

@@ -1,3 +1,4 @@
+import { forwardRef, type ElementRef } from 'react';
 import Link from 'next/link';
 
 import { Button } from '@/components/ui/Button';
@@ -9,15 +10,21 @@ export type NavButtonProps = {
   active?: boolean;
 };
 
-export const NavButton = ({ active, href, label }: NavButtonProps) => (
-  <Button
-    variant='ghost'
-    className={cn(
-      'text-inherit hover:bg-primary-foreground/25 hover:text-inherit',
-      active && 'bg-primary-foreground/15'
-    )}
-    asChild
-  >
-    <Link href={href}>{label}</Link>
-  </Button>
+export const NavButton = forwardRef<ElementRef<'button'>, NavButtonProps>(
+  ({ active, href, label, ...props }, ref) => (
+    <Button
+      {...props}
+      ref={ref}
+      variant='ghost'
+      className={cn(
+        `justify-start text-inherit hover:text-inherit
+lg:hover:bg-primary-foreground/20`,
+        active && 'bg-muted lg:bg-primary-foreground/10'
+      )}
+      asChild
+    >
+      <Link href={href}>{label}</Link>
+    </Button>
+  )
 );
+NavButton.displayName = 'NavButton';
