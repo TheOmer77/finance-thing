@@ -1,5 +1,6 @@
 import type { ComponentPropsWithoutRef } from 'react';
 import type { ClerkProvider } from '@clerk/nextjs';
+import { buttonVariants } from '@/components/ui/Button/variants';
 
 type Appearance = ComponentPropsWithoutRef<typeof ClerkProvider>['appearance'];
 type Localization = ComponentPropsWithoutRef<
@@ -16,8 +17,8 @@ shadow-none`,
     header: 'text-start',
     headerTitle: 'text-foreground text-3xl font-bold tracking-tight',
     headerSubtitle: 'text-muted-foreground text-sm',
-    socialButtonsBlockButton: 'h-10 rounded-lg px-2 py-0',
-    socialButtonsBlockButtonText: 'text-sm',
+    socialButtonsBlockButton: buttonVariants({ variant: 'outline' }),
+    socialButtonsBlockButtonText: '[font-size:inherit]',
     footer: `bg-muted [&>*]:text-muted-foreground border-muted-foreground
 bg-none [&>*:not(:first-of-type)]:border-0`,
   },
