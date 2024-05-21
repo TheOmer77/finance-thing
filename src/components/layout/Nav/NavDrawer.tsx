@@ -10,7 +10,7 @@ export const NavDrawer = ({ children }: PropsWithChildren) => (
       <Button
         variant='ghost'
         size='icon'
-        className='me-2 text-inherit hover:bg-primary-foreground/20
+        className='-order-1 text-inherit hover:bg-primary-foreground/20
 hover:text-inherit lg:hidden'
       >
         <MenuIcon className='size-4' />
