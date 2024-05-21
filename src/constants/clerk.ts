@@ -21,6 +21,12 @@ shadow-none`,
     socialButtonsBlockButtonText: '[font-size:inherit]',
     footer: `bg-muted [&>*]:text-muted-foreground border-muted-foreground
 bg-none [&>*:not(:first-of-type)]:border-0`,
+    footerAction:
+      'text-sm text-muted-foreground [&>*]:[font-size:inherit] [&>span]:text-inherit',
+    footerActionLink: buttonVariants({
+      variant: 'link',
+      className: 'h-auto px-0 py-0 hover:text-primary',
+    }),
   },
 } satisfies Appearance;
 
