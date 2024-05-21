@@ -15,7 +15,7 @@ export const NavButton = forwardRef<ElementRef<'button'>, NavButtonProps>(
     <Button
       {...props}
       ref={ref}
-      variant='ghost'
+      variant='flat'
       className={cn(
         `justify-start text-inherit hover:text-inherit
 lg:hover:bg-primary-foreground/20`,

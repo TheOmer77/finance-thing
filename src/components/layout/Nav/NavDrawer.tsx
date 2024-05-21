@@ -8,7 +8,7 @@ export const NavDrawer = ({ children }: PropsWithChildren) => (
   <Drawer direction='left'>
     <DrawerTrigger asChild>
       <Button
-        variant='ghost'
+        variant='flat'
         size='icon'
         className='-order-1 text-inherit hover:bg-primary-foreground/20
 hover:text-inherit lg:hidden'

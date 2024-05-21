@@ -25,7 +25,7 @@ export const UserMenu = () => {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button
-          variant='ghost'
+          variant='flat'
           size='icon'
           className='ms-auto rounded-full p-2'
           disabled={!isLoaded}
