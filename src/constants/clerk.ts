@@ -12,12 +12,11 @@ type Localization = ComponentPropsWithoutRef<
 export const clerkTheme = {
   elements: {
     rootBox: 'size-full',
-    cardBox:
-      'bg-background size-full max-w-full rounded-none border-0 shadow-none',
-    card: `mx-auto w-full max-w-sm grow rounded-none border-none bg-transparent
+    card: `mx-auto w-full max-w-sm grow border-none bg-transparent
 shadow-none`,
     header: 'text-start',
-    headerTitle: 'text-foreground text-3xl font-bold tracking-tight',
+    headerTitle: `text-foreground text-3xl font-bold tracking-tight
+[.cl-actionCard_&]:text-xl [.cl-actionCard_&]:font-semibold`,
     headerSubtitle: 'text-muted-foreground text-sm',
     socialButtonsBlockButton: buttonVariants({ variant: 'outline' }),
     socialButtonsBlockButtonText: '[font-size:inherit]',
@@ -31,6 +30,24 @@ bg-none [&>*:not(:first-of-type)]:border-0`,
         className: 'h-auto px-0 py-0 hover:text-primary',
       })
     ),
+    navbar: `bg-muted bg-none [&>:last-child]:hidden [&_h1+p]:text-sm
+[&_h1+p]:text-muted-foreground [&_h1]:font-semibold [&_h1]:tracking-tight
+[&_h1]:text-foreground`,
+    navbarButton: 'text-sm h-10 [&[data-active=true]]:bg-foreground/10',
+    navbarButtonIcon: 'size-4',
+    profileSectionTitleText: 'text-sm',
+  },
+  signIn: {
+    elements: {
+      cardBox:
+        'bg-background size-full max-w-full rounded-none border-0 shadow-none',
+    },
+  },
+  signUp: {
+    elements: {
+      cardBox:
+        'bg-background size-full max-w-full rounded-none border-0 shadow-none',
+    },
   },
 } satisfies Appearance;
 
