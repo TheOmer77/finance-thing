@@ -1,5 +1,6 @@
 import { HeaderLogo } from './HeaderLogo';
 import { Nav } from '@/components/layout/Nav';
+import { UserMenu } from '@/components/layout/UserMenu';
 
 export const Header = () => (
   <header
@@ -12,6 +13,7 @@ items-center justify-start gap-2 p-4 lg:flex-row lg:gap-8 lg:pb-36'
     >
       <HeaderLogo />
       <Nav />
+      <UserMenu />
     </div>
   </header>
 );
