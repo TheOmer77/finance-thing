@@ -51,7 +51,7 @@ bg-none [&>*:not(:first-of-type)]:border-0`,
   },
 } satisfies Appearance;
 
-export const clerkLocalication = {
+export const clerkLocalization = {
   signIn: {
     start: {
       title: 'Welcome back!',
