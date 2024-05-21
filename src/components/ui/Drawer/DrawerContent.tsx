@@ -18,16 +18,17 @@ export const DrawerContent = forwardRef<
     <Drawer.Content
       ref={ref}
       className={cn(
-        `fixed bottom-0 z-50 flex flex-col bg-background shadow
-shadow-neutral-900/50 focus-visible:outline-none
+        `fixed bottom-0 z-50 flex w-80 flex-col bg-background
+shadow focus-visible:outline-none
 [&[vaul-drawer-direction=bottom]]:inset-x-0
-[&[vaul-drawer-direction=bottom]]:mx-auto
-[&[vaul-drawer-direction=bottom]]:mt-24 [&[vaul-drawer-direction=bottom]]:h-auto
+[&[vaul-drawer-direction=bottom]]:mx-auto [&[vaul-drawer-direction=bottom]]:mt-24
+[&[vaul-drawer-direction=bottom]]:h-auto
 [&[vaul-drawer-direction=bottom]]:w-dvw
 [&[vaul-drawer-direction=bottom]]:max-w-screen-sm
-[&[vaul-drawer-direction=bottom]]:rounded-t-lg
-[&[vaul-drawer-direction=right]]:end-0 [&[vaul-drawer-direction=right]]:h-dvh
-[&[vaul-drawer-direction=right]]:w-80
+[&[vaul-drawer-direction=bottom]]:rounded-t-lg [&[vaul-drawer-direction=left]]:start-0
+[&[vaul-drawer-direction=left]]:h-dvh
+[&[vaul-drawer-direction=left]]:rounded-e-lg [&[vaul-drawer-direction=right]]:end-0
+[&[vaul-drawer-direction=right]]:h-dvh
 [&[vaul-drawer-direction=right]]:rounded-s-lg`,
         className
       )}
@@ -35,8 +36,8 @@ shadow-neutral-900/50 focus-visible:outline-none
     >
       <div
         data-drawer-handle=''
-        className='mx-auto mt-4 h-1 w-10 rounded-full bg-muted
-transition-[height,margin] [[vaul-drawer-direction=right]>&]:hidden'
+        className='mx-auto mt-4 hidden h-1 w-10 rounded-full bg-muted
+[[vaul-drawer-direction=bottom]>&]:block'
       />
       {children}
     </Drawer.Content>
