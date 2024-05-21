@@ -2,7 +2,7 @@ import type { PropsWithChildren } from 'react';
 import { ClerkLoaded, ClerkLoading } from '@clerk/nextjs';
 import { Loader2Icon } from 'lucide-react';
 
-import { Logo } from '@/components/Logo';
+import { Logo } from '@/components/layout/Logo';
 
 const AuthLayout = ({ children }: PropsWithChildren) => (
   <div
