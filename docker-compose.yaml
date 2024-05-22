@@ -1,11 +1,11 @@
 services:
   app:
+    image: finance-tutorial-thing-app
     build:
       dockerfile: Dockerfile
       context: .
     ports:
       - 3000:3000
-      - 4983:4983 # Drizzle studio
     volumes:
       - .:/app
       - /app/node_modules
@@ -15,17 +15,29 @@ services:
       - NEXT_PUBLIC_CLERK_SIGN_IN_URL=/signin
       - NEXT_PUBLIC_CLERK_SIGN_UP_URL=/signup
       - DATABASE_URL=${DATABASE_URL:?error}
-# If using a local DB, uncomment this
-#   db:
-#     image: postgres:16.3-alpine3.19
-#     ports:
-#       - '5432:5432'
-#     volumes:
-#       - db-data:/var/lib/postgresql/data
-#     environment:
-#       - POSTGRES_USER=${DB_USER:-postgres}
-#       - POSTGRES_PASSWORD=${DB_PASSWORD:-postgres}
-#       - POSTGRES_DB=${DB_NAME:-postgres}
 
+  db-studio:
+    image: finance-tutorial-thing-app
+    command: pnpm db:studio
+    restart: always
+    ports:
+      - 4983:4983
+    volumes:
+      - .:/app
+      - /app/node_modules
+    environment:
+      - DATABASE_URL=${DATABASE_URL:?error}
+
+  # If using a local DB, uncomment this
+  # db:
+  #   image: postgres:16.3-alpine3.19
+  #   ports:
+  #     - '5432:5432'
+  #   volumes:
+  #     - db-data:/var/lib/postgresql/data
+  #   environment:
+  #     - POSTGRES_USER=${DB_USER:-postgres}
+  #     - POSTGRES_PASSWORD=${DB_PASSWORD:-postgres}
+  #     - POSTGRES_DB=${DB_NAME:-postgres}
 # volumes:
 #   db-data:
