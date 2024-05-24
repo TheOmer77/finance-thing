@@ -7,7 +7,7 @@ import { client } from '@/lib/hono';
 export const useAccounts = () => {
   const queryClient = useQueryClient();
 
-  const getAccountsQuery = useQuery({
+  const getQuery = useQuery({
     queryKey: ['accounts'],
     queryFn: async () => {
       const res = await client.api.accounts.$get();
@@ -18,7 +18,7 @@ export const useAccounts = () => {
     },
   });
 
-  const createAccountMutation = useMutation<
+  const createMutation = useMutation<
     InferResponseType<typeof client.api.accounts.$post>,
     Error,
     InferRequestType<typeof client.api.accounts.$post>['json']
@@ -34,10 +34,34 @@ export const useAccounts = () => {
     onError: () => toast.error('Failed to create account.'),
   });
 
+  const bulkDeleteMutation = useMutation<
+    InferResponseType<(typeof client.api.accounts)['bulk-delete']['$post']>,
+    Error,
+    InferRequestType<
+      (typeof client.api.accounts)['bulk-delete']['$post']
+    >['json']
+  >({
+    mutationFn: async json => {
+      const res = await client.api.accounts['bulk-delete'].$post({ json });
+      return await res.json();
+    },
+    onSuccess: ({ data }) => {
+      toast.success(`${data.length === 1 ? 'Account' : 'Accounts'} deleted.`);
+      queryClient.invalidateQueries({ queryKey: ['accounts'] });
+      // TODO: Also invalidate summary
+    },
+    onError: (_, { ids }) =>
+      toast.error(
+        `Failed to delete ${ids.length === 1 ? 'Account' : 'Accounts'}.`
+      ),
+  });
+
   return {
-    accounts: getAccountsQuery.data,
-    accountsLoading: getAccountsQuery.isLoading,
-    createAccount: createAccountMutation.mutate,
-    createAccountPending: createAccountMutation.isPending,
+    accounts: getQuery.data,
+    accountsLoading: getQuery.isLoading,
+    createAccount: createMutation.mutate,
+    createAccountPending: createMutation.isPending,
+    deleteAccounts: bulkDeleteMutation.mutate,
+    deleteAccountsPending: bulkDeleteMutation.isPending,
   };
 };
