@@ -13,7 +13,9 @@ export const accounts = pgTable('accounts', {
     .$onUpdate(() => new Date()),
 });
 
-export const insertAccountSchema = createInsertSchema(accounts).omit({
+export const insertAccountSchema = createInsertSchema(accounts, {
+  name: ({ name }) => name.min(1, { message: 'Name is required.' }),
+}).omit({
   createdAt: true,
   updatedAt: true,
 });
