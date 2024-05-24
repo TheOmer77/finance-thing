@@ -64,7 +64,7 @@ export const AccountForm = ({
               type='button'
               disabled={disabled}
               onClick={() => onDelete?.()}
-              variant='secondary'
+              variant='outline'
             >
               Delete
             </Button>
