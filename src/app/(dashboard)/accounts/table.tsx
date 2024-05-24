@@ -1,21 +1,19 @@
 'use client';
 
 import type { ColumnDef } from '@tanstack/react-table';
+import type { InferResponseType } from 'hono';
 
 import { Checkbox } from '@/components/ui/Checkbox';
 import {
   DataTable,
   DataTableColumnHeader,
 } from '@/components/layout/DataTable';
+import { useAccounts } from '@/hooks/useAccounts';
+import { client } from '@/lib/hono';
 
-// This type is used to define the shape of our data.
-// TODO: Replace this with the actual data type
-export type DummyData = {
-  id: string;
-  amount: number;
-  status: 'pending' | 'processing' | 'success' | 'failed';
-  email: string;
-};
+export type AccountData = InferResponseType<
+  typeof client.api.accounts.$get
+>['data'][number];
 
 export const columns = [
   {
@@ -40,37 +38,22 @@ export const columns = [
     enableSorting: false,
     enableHiding: false,
   },
-  { accessorKey: 'status', header: 'Status' },
   {
-    accessorKey: 'email',
+    accessorKey: 'name',
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title='Email' />
+      <DataTableColumnHeader column={column} title='Name' />
     ),
   },
-  { accessorKey: 'amount', header: 'Amount' },
-] satisfies ColumnDef<DummyData>[];
-
-const DUMMY_DATA: DummyData[] = [
-  {
-    id: '728ed52f',
-    amount: 100,
-    status: 'pending',
-    email: 'm@example.com',
-  },
-  {
-    id: '897fe9a7',
-    amount: 200,
-    status: 'success',
-    email: 'a@example.com',
-  },
-];
+] satisfies ColumnDef<AccountData>[];
 
 export const AccountsTable = () => {
+  const { accounts } = useAccounts();
+
   return (
     <DataTable
       columns={columns}
-      data={DUMMY_DATA}
-      filterKey='email'
+      data={accounts || []}
+      filterKey='name'
       onDelete={rows => console.log(rows)}
       className='px-4'
     />
