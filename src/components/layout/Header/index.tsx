@@ -5,7 +5,7 @@ import { HeaderWelcomeMsg } from './HeaderWelcomeMsg';
 
 export const Header = () => (
   <header
-    className='h-48 w-full bg-background bg-gradient-to-b from-primary
+    className='h-64 w-full bg-background bg-gradient-to-b from-primary
 to-primary/80 text-primary-foreground lg:h-80 [&>*]:mx-auto [&>*]:w-full
 [&>*]:max-w-screen-2xl [&>*]:px-4'
   >
