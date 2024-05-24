@@ -1,18 +1,14 @@
-'use client';
+import { Card, CardHeader, CardTitle } from '@/components/ui/Card';
 
-import { Button } from '@/components/ui/Button';
-import { AccountDrawer } from '@/components/layout/modals/AccountDrawer';
-import { useModal } from '@/hooks/useModal';
-
-const DashboardPage = () => {
-  const { openModal } = useModal();
-
-  return (
-    <>
-      <Button onClick={() => openModal('accounts-new')}>Add an account</Button>
-      <AccountDrawer />
-    </>
-  );
-};
+const DashboardPage = () => (
+  <Card>
+    <CardHeader>
+      <CardTitle>Overview</CardTitle>
+    </CardHeader>
+    <div className='p-6 pt-0 text-sm text-muted-foreground'>
+      Dashboard overview TBD.
+    </div>
+  </Card>
+);
 
 export default DashboardPage;
