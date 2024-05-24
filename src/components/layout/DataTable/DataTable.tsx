@@ -15,6 +15,7 @@ import {
 } from '@tanstack/react-table';
 import { TrashIcon } from 'lucide-react';
 
+import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 import {
   Table,
@@ -24,13 +25,15 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/Table';
+import { useConfirm } from '@/hooks/useConfirm';
+
 import { DataTablePagination } from './DataTablePagination';
-import { Button } from '@/components/ui/Button';
 
 type DataTableProps<TData, TValue> = {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
   filterKey: string;
+  itemType?: string;
   onDelete?: (rows: Row<TData>[]) => void;
   disabled?: boolean;
 } & Pick<ComponentPropsWithoutRef<'div'>, 'className' | 'style'>;
@@ -39,6 +42,7 @@ export const DataTable = <TData, TValue>({
   columns,
   data,
   filterKey,
+  itemType,
   onDelete,
   disabled,
   className,
@@ -60,6 +64,21 @@ export const DataTable = <TData, TValue>({
     onRowSelectionChange: setRowSelection,
     state: { sorting, columnFilters, rowSelection },
   });
+  const { rows } = table.getFilteredSelectedRowModel();
+
+  const [DeleteDialog, confirmDelete] = useConfirm({
+    message: `Delete ${rows.length === 1 ? 'this' : rows.length} ${itemType || 'item'}${rows.length === 1 ? '' : 's'}?`,
+    confirmLabel: 'Delete',
+    destructive: true,
+  });
+
+  const handleDelete = async () => {
+    const ok = await confirmDelete();
+    if (!ok) return;
+
+    onDelete?.(rows);
+    table.resetRowSelection();
+  };
 
   return (
     <div className={className} style={style}>
@@ -72,18 +91,15 @@ export const DataTable = <TData, TValue>({
           }
           className='max-w-sm'
         />
-        {onDelete && table.getFilteredSelectedRowModel().rows.length > 0 && (
+        {onDelete && rows.length > 0 && (
           <Button
             variant='outline'
             className='ms-auto'
             disabled={disabled}
-            onClick={() => {
-              onDelete(table.getFilteredSelectedRowModel().rows);
-              table.resetRowSelection();
-            }}
+            onClick={handleDelete}
           >
             <TrashIcon className='me-2 size-4' />
-            {`Delete (${table.getFilteredSelectedRowModel().rows.length})`}
+            {`Delete (${rows.length})`}
           </Button>
         )}
       </div>
@@ -136,6 +152,7 @@ export const DataTable = <TData, TValue>({
         </Table>
       </div>
       <DataTablePagination table={table} />
+      <DeleteDialog />
     </div>
   );
 };
