@@ -22,13 +22,19 @@ export const AccountDrawer = () => {
   const { currentModal, closeModal } = useModal();
   const { createAccount, createAccountPending } = useAccounts();
 
+  const isCurrentModal = currentModal === 'accounts-new';
+
+  const handleOpenChange = (open: boolean) => {
+    if (!open && isCurrentModal) closeModal();
+  };
+
   const handleSubmit: AccountFormProps['onSubmit'] = values =>
     createAccount(values, { onSuccess: () => closeModal() });
 
   return (
     <Drawer
-      open={currentModal === 'accounts-new'}
-      onOpenChange={open => !open && closeModal()}
+      open={isCurrentModal}
+      onOpenChange={handleOpenChange}
       direction={matchesMd ? 'right' : 'bottom'}
     >
       <DrawerContent className='w-96 space-y-4'>
