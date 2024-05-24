@@ -49,7 +49,10 @@ export const columns = [
 ] satisfies ColumnDef<AccountData>[];
 
 export const AccountsTable = () => {
-  const { accounts, accountsLoading } = useAccounts();
+  const { accounts, accountsLoading, deleteAccounts, deleteAccountsPending } =
+    useAccounts();
+
+  const disabled = accountsLoading || deleteAccountsPending;
 
   if (accountsLoading)
     return (
@@ -63,7 +66,11 @@ export const AccountsTable = () => {
       columns={columns}
       data={accounts || []}
       filterKey='name'
-      onDelete={rows => console.log(rows)}
+      onDelete={rows => {
+        const ids = rows.map(({ original }) => original.id);
+        deleteAccounts({ ids });
+      }}
+      disabled={disabled}
       className='p-6 pt-0'
     />
   );
