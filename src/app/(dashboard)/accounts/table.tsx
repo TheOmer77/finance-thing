@@ -2,6 +2,7 @@
 
 import type { ColumnDef } from '@tanstack/react-table';
 import type { InferResponseType } from 'hono';
+import { Loader2Icon } from 'lucide-react';
 
 import { Checkbox } from '@/components/ui/Checkbox';
 import {
@@ -10,6 +11,7 @@ import {
 } from '@/components/layout/DataTable';
 import { useAccounts } from '@/hooks/useAccounts';
 import { client } from '@/lib/hono';
+import { CardContent } from '@/components/ui/Card';
 
 export type AccountData = InferResponseType<
   typeof client.api.accounts.$get
@@ -47,7 +49,14 @@ export const columns = [
 ] satisfies ColumnDef<AccountData>[];
 
 export const AccountsTable = () => {
-  const { accounts } = useAccounts();
+  const { accounts, accountsLoading } = useAccounts();
+
+  if (accountsLoading)
+    return (
+      <CardContent className='grid h-[32rem] w-full place-items-center'>
+        <Loader2Icon className='size-6 animate-spin text-muted-foreground' />
+      </CardContent>
+    );
 
   return (
     <DataTable
@@ -55,7 +64,7 @@ export const AccountsTable = () => {
       data={accounts || []}
       filterKey='name'
       onDelete={rows => console.log(rows)}
-      className='px-4'
+      className='p-6 pt-0'
     />
   );
 };
