@@ -31,7 +31,7 @@ type DataTableProps<TData, TValue> = {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
   filterKey: string;
-  onDelete?: (rows: Row<TData>) => void;
+  onDelete?: (rows: Row<TData>[]) => void;
   disabled?: boolean;
 } & Pick<ComponentPropsWithoutRef<'div'>, 'className' | 'style'>;
 
@@ -73,7 +73,15 @@ export const DataTable = <TData, TValue>({
           className='max-w-sm'
         />
         {onDelete && table.getFilteredSelectedRowModel().rows.length > 0 && (
-          <Button variant='outline' disabled={disabled} className='ms-auto'>
+          <Button
+            variant='outline'
+            className='ms-auto'
+            disabled={disabled}
+            onClick={() => {
+              onDelete(table.getFilteredSelectedRowModel().rows);
+              table.resetRowSelection();
+            }}
+          >
             <TrashIcon className='me-2 size-4' />
             {`Delete (${table.getFilteredSelectedRowModel().rows.length})`}
           </Button>
