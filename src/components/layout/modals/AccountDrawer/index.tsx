@@ -23,16 +23,23 @@ export const AccountDrawer = () => {
   const { currentModal, lastModal, closeModal } = useModal();
   const { createAccount, createAccountPending } = useAccounts();
 
-  const currentAccountId =
-    (currentModal !== null &&
-      currentModal.startsWith('accounts-edit-') &&
-      currentModal.split('-')[2]) ||
-    undefined;
-  const isCurrentModal = currentModal === 'accounts-new' || !!currentAccountId;
+  const isCurrentModal =
+    currentModal === 'accounts-new' ||
+    !!currentModal?.startsWith('accounts-edit-');
   const lastModalWasEdit = !!lastModal?.startsWith('accounts-edit-');
 
-  const { account: currentAccount, accountFetching: currentAccountFetching } =
-    useAccount(currentAccountId);
+  const currentAccountId =
+    (currentModal?.startsWith('accounts-edit-') &&
+      currentModal.split('-')[2]) ||
+    undefined;
+  const {
+    account: currentAccount,
+    accountFetching: currentAccountFetching,
+    updateAccount,
+    updateAccountPending,
+  } = useAccount(currentAccountId);
+
+  const isPending = createAccountPending || updateAccountPending;
 
   const defaultValues = {
     name: (!currentAccountFetching && currentAccount?.name) || '',
@@ -43,8 +50,8 @@ export const AccountDrawer = () => {
   };
 
   const handleSubmit: AccountFormProps['onSubmit'] = values => {
-    // TODO: Run update account mutation
-    if (currentAccountId) return alert('Account editing not implemented yet.');
+    if (currentAccountId)
+      return updateAccount(values, { onSuccess: () => closeModal() });
     createAccount(values, { onSuccess: () => closeModal() });
   };
 
@@ -77,7 +84,7 @@ export const AccountDrawer = () => {
         ) : (
           <AccountForm
             onSubmit={handleSubmit}
-            disabled={createAccountPending}
+            disabled={isPending}
             defaultValues={defaultValues}
             id={currentAccountId}
           />
