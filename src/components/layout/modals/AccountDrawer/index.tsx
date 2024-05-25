@@ -13,7 +13,7 @@ import {
   DrawerTitle,
 } from '@/components/ui/Drawer';
 import { useAccounts } from '@/hooks/useAccounts';
-import { useAccount } from '@/hooks/useAccount';
+import { useAccountById } from '@/hooks/useAccountById';
 import { useModal } from '@/hooks/useModal';
 
 import { AccountForm, type AccountFormProps } from './form';
@@ -37,7 +37,7 @@ export const AccountDrawer = () => {
     accountFetching: currentAccountFetching,
     updateAccount,
     updateAccountPending,
-  } = useAccount(currentAccountId);
+  } = useAccountById(currentAccountId);
 
   const isPending = createAccountPending || updateAccountPending;
 

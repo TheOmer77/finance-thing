@@ -4,7 +4,7 @@ import type { InferRequestType, InferResponseType } from 'hono';
 
 import { client } from '@/lib/hono';
 
-export const useAccount = (id?: string) => {
+export const useAccountById = (id?: string) => {
   const queryClient = useQueryClient();
 
   const getQuery = useQuery({
