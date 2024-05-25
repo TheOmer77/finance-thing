@@ -1,6 +1,6 @@
 'use client';
 
-import { XIcon } from 'lucide-react';
+import { Loader2Icon, XIcon } from 'lucide-react';
 import { useMediaQuery } from 'usehooks-ts';
 
 import { Button } from '@/components/ui/Button';
@@ -13,6 +13,7 @@ import {
   DrawerTitle,
 } from '@/components/ui/Drawer';
 import { useAccounts } from '@/hooks/useAccounts';
+import { useAccount } from '@/hooks/useAccount';
 import { useModal } from '@/hooks/useModal';
 
 import { AccountForm, type AccountFormProps } from './form';
@@ -22,14 +23,30 @@ export const AccountDrawer = () => {
   const { currentModal, closeModal } = useModal();
   const { createAccount, createAccountPending } = useAccounts();
 
-  const isCurrentModal = currentModal === 'accounts-new';
+  const isNewModal = currentModal === 'accounts-new',
+    currentAccountId =
+      (currentModal !== null &&
+        currentModal.startsWith('accounts-edit-') &&
+        currentModal.split('-')[2]) ||
+      undefined;
+  const isCurrentModal = isNewModal || !!currentAccountId;
+
+  const { account: currentAccount, accountFetching: currentAccountFetching } =
+    useAccount(currentAccountId);
+
+  const defaultValues = {
+    name: (!currentAccountFetching && currentAccount?.name) || '',
+  };
 
   const handleOpenChange = (open: boolean) => {
     if (!open && isCurrentModal) closeModal();
   };
 
-  const handleSubmit: AccountFormProps['onSubmit'] = values =>
+  const handleSubmit: AccountFormProps['onSubmit'] = values => {
+    // TODO: Run update account mutation
+    if (currentAccountId) return alert('Account editing not implemented yet.');
     createAccount(values, { onSuccess: () => closeModal() });
+  };
 
   return (
     <Drawer
@@ -49,11 +66,18 @@ export const AccountDrawer = () => {
             Create a new account to track your transactions.
           </DrawerDescription>
         </DrawerHeader>
-        <AccountForm
-          onSubmit={handleSubmit}
-          disabled={createAccountPending}
-          defaultValues={{ name: '' }}
-        />
+        {currentAccountFetching ? (
+          <div className='grid h-16 w-full place-items-center'>
+            <Loader2Icon className='size-6 animate-spin text-muted-foreground' />
+          </div>
+        ) : (
+          <AccountForm
+            onSubmit={handleSubmit}
+            disabled={createAccountPending}
+            defaultValues={defaultValues}
+            id={currentAccountId}
+          />
+        )}
       </DrawerContent>
     </Drawer>
   );
