@@ -61,9 +61,13 @@ export const AccountDrawer = () => {
           </Button>
         </DrawerClose>
         <DrawerHeader>
-          <DrawerTitle>New account</DrawerTitle>
+          <DrawerTitle>
+            {currentAccountId ? 'Edit account' : 'New account'}
+          </DrawerTitle>
           <DrawerDescription>
-            Create a new account to track your transactions.
+            {currentAccountId
+              ? 'Edit this existing account.'
+              : 'Create a new account to track your transactions.'}
           </DrawerDescription>
         </DrawerHeader>
         {currentAccountFetching ? (
