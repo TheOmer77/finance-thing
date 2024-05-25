@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 
 const MODAL_SEARCH_KEY = 'modal';
@@ -8,6 +9,12 @@ export const useModal = () => {
   const searchParams = useSearchParams(),
     currentModal = searchParams.get(MODAL_SEARCH_KEY) as ModalValue;
 
+  const [lastModal, setLastModal] = useState(currentModal);
+
+  useEffect(() => {
+    if (currentModal !== null) setLastModal(currentModal);
+  }, [currentModal]);
+
   const openModal = (modal: ModalValue) => {
     const params = new URLSearchParams(searchParams.toString());
     if (modal === null) params.delete(MODAL_SEARCH_KEY);
@@ -17,5 +24,5 @@ export const useModal = () => {
 
   const closeModal = (delta = -1) => window.history.go(delta);
 
-  return { currentModal, openModal, closeModal };
+  return { currentModal, lastModal, openModal, closeModal };
 };
