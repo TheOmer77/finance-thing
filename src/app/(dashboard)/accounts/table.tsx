@@ -4,6 +4,7 @@ import type { ColumnDef } from '@tanstack/react-table';
 import type { InferResponseType } from 'hono';
 import { Loader2Icon } from 'lucide-react';
 
+import { CardContent } from '@/components/ui/Card';
 import { Checkbox } from '@/components/ui/Checkbox';
 import {
   DataTable,
@@ -11,7 +12,8 @@ import {
 } from '@/components/layout/DataTable';
 import { useAccounts } from '@/hooks/useAccounts';
 import { client } from '@/lib/hono';
-import { CardContent } from '@/components/ui/Card';
+
+import { AccountActions } from './actions';
 
 export type AccountData = InferResponseType<
   typeof client.api.accounts.$get
@@ -45,6 +47,10 @@ export const columns = [
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title='Name' />
     ),
+  },
+  {
+    id: 'actions',
+    cell: ({ row }) => <AccountActions id={row.original.id} />,
   },
 ] satisfies ColumnDef<AccountData>[];
 
