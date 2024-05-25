@@ -20,16 +20,16 @@ import { AccountForm, type AccountFormProps } from './form';
 
 export const AccountDrawer = () => {
   const matchesMd = useMediaQuery('(min-width: 768px)');
-  const { currentModal, closeModal } = useModal();
+  const { currentModal, lastModal, closeModal } = useModal();
   const { createAccount, createAccountPending } = useAccounts();
 
-  const isNewModal = currentModal === 'accounts-new',
-    currentAccountId =
-      (currentModal !== null &&
-        currentModal.startsWith('accounts-edit-') &&
-        currentModal.split('-')[2]) ||
-      undefined;
-  const isCurrentModal = isNewModal || !!currentAccountId;
+  const currentAccountId =
+    (currentModal !== null &&
+      currentModal.startsWith('accounts-edit-') &&
+      currentModal.split('-')[2]) ||
+    undefined;
+  const isCurrentModal = currentModal === 'accounts-new' || !!currentAccountId;
+  const lastModalWasEdit = !!lastModal?.startsWith('accounts-edit-');
 
   const { account: currentAccount, accountFetching: currentAccountFetching } =
     useAccount(currentAccountId);
@@ -62,10 +62,10 @@ export const AccountDrawer = () => {
         </DrawerClose>
         <DrawerHeader>
           <DrawerTitle>
-            {currentAccountId ? 'Edit account' : 'New account'}
+            {lastModalWasEdit ? 'Edit account' : 'New account'}
           </DrawerTitle>
           <DrawerDescription>
-            {currentAccountId
+            {lastModalWasEdit
               ? 'Edit this existing account.'
               : 'Create a new account to track your transactions.'}
           </DrawerDescription>
