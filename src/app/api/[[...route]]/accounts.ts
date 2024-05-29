@@ -102,7 +102,7 @@ export const accountsRouter = new Hono()
       const [data] = await db
         .update(accounts)
         .set({ name })
-        .where(eq(accounts.id, id))
+        .where(and(eq(accounts.userId, auth.userId), eq(accounts.id, id)))
         .returning();
       if (!data)
         throw new HTTPException(404, {
