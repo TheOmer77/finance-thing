@@ -107,11 +107,11 @@ export const AccountDrawer = () => {
             </div>
           ) : (
             <AccountForm
+              defaultValues={defaultValues}
               onSubmit={handleSubmit}
               onDelete={handleDelete}
               disabled={isPending}
-              defaultValues={defaultValues}
-              id={currentAccountId}
+              isEdit={lastModalWasEdit}
             />
           )}
         </DrawerContent>

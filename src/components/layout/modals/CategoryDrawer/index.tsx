@@ -107,11 +107,11 @@ export const CategoryDrawer = () => {
             </div>
           ) : (
             <CategoryForm
+              defaultValues={defaultValues}
               onSubmit={handleSubmit}
               onDelete={handleDelete}
               disabled={isPending}
-              defaultValues={defaultValues}
-              id={currentCategoryId}
+              isEdit={lastModalWasEdit}
             />
           )}
         </DrawerContent>

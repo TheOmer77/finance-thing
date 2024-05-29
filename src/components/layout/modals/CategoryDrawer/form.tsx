@@ -21,19 +21,19 @@ const categoryFormSchema = insertCategorySchema.pick({ name: true });
 type CategoryFormValues = z.infer<typeof categoryFormSchema>;
 
 export type CategoryFormProps = {
-  id?: string;
   defaultValues?: CategoryFormValues;
   onSubmit: (values: CategoryFormValues) => void;
   onDelete?: () => void;
   disabled?: boolean;
+  isEdit?: boolean;
 };
 
 export const CategoryForm = ({
-  id,
   defaultValues,
   onSubmit,
   onDelete,
   disabled,
+  isEdit,
 }: CategoryFormProps) => {
   const form = useForm<CategoryFormValues>({
     resolver: zodResolver(categoryFormSchema),
@@ -59,7 +59,7 @@ export const CategoryForm = ({
           />
         </div>
         <DrawerFooter>
-          {onDelete && id && (
+          {isEdit && (
             <Button
               type='button'
               disabled={disabled}
@@ -70,7 +70,7 @@ export const CategoryForm = ({
             </Button>
           )}
           <Button type='submit' disabled={disabled}>
-            {id ? 'Save' : 'Create'}
+            {isEdit ? 'Save' : 'Create'}
           </Button>
         </DrawerFooter>
       </form>

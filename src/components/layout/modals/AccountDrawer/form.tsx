@@ -21,19 +21,19 @@ const accountFormSchema = insertAccountSchema.pick({ name: true });
 type AccountFormValues = z.infer<typeof accountFormSchema>;
 
 export type AccountFormProps = {
-  id?: string;
   defaultValues?: AccountFormValues;
   onSubmit: (values: AccountFormValues) => void;
   onDelete?: () => void;
   disabled?: boolean;
+  isEdit?: boolean;
 };
 
 export const AccountForm = ({
-  id,
   defaultValues,
   onSubmit,
   onDelete,
-  disabled,
+  disabled = false,
+  isEdit = false,
 }: AccountFormProps) => {
   const form = useForm<AccountFormValues>({
     resolver: zodResolver(accountFormSchema),
@@ -59,7 +59,7 @@ export const AccountForm = ({
           />
         </div>
         <DrawerFooter>
-          {onDelete && id && (
+          {isEdit && (
             <Button
               type='button'
               disabled={disabled}
@@ -70,7 +70,7 @@ export const AccountForm = ({
             </Button>
           )}
           <Button type='submit' disabled={disabled}>
-            {id ? 'Save' : 'Create'}
+            {isEdit ? 'Save' : 'Create'}
           </Button>
         </DrawerFooter>
       </form>
