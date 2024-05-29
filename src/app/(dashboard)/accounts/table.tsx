@@ -72,7 +72,7 @@ export const AccountsTable = () => {
       columns={columns}
       data={accounts || []}
       filterKey='name'
-      itemType='account'
+      itemTypeSingle='account'
       onDelete={rows => {
         const ids = rows.map(({ original }) => original.id);
         deleteAccounts({ ids });

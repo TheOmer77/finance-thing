@@ -33,7 +33,8 @@ type DataTableProps<TData, TValue> = {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
   filterKey: string;
-  itemType?: string;
+  itemTypeSingle?: string;
+  itemTypeMultiple?: string;
   onDelete?: (rows: Row<TData>[]) => void;
   disabled?: boolean;
 } & Pick<ComponentPropsWithoutRef<'div'>, 'className' | 'style'>;
@@ -42,7 +43,8 @@ export const DataTable = <TData, TValue>({
   columns,
   data,
   filterKey,
-  itemType,
+  itemTypeSingle = 'item',
+  itemTypeMultiple,
   onDelete,
   disabled,
   className,
@@ -69,8 +71,8 @@ export const DataTable = <TData, TValue>({
   const [DeleteDialog, confirmDelete] = useConfirm({
     message:
       rows.length === 1
-        ? `Delete this ${itemType || 'item'}?`
-        : `Delete ${rows.length} ${itemType || 'item'}s?`,
+        ? `Delete this ${itemTypeSingle}?`
+        : `Delete ${rows.length} ${itemTypeMultiple || `${itemTypeSingle}s`}?`,
     confirmLabel: 'Delete',
     destructive: true,
   });

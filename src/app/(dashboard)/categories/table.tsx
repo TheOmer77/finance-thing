@@ -76,7 +76,8 @@ export const CategoriesTable = () => {
       columns={columns}
       data={categories || []}
       filterKey='name'
-      itemType='category'
+      itemTypeSingle='category'
+      itemTypeMultiple='categories'
       onDelete={rows => {
         const ids = rows.map(({ original }) => original.id);
         deleteCategories({ ids });
