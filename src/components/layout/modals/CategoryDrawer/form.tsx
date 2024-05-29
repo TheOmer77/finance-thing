@@ -58,7 +58,7 @@ export const CategoryForm = ({
             )}
           />
         </div>
-        <DrawerFooter>
+        <DrawerFooter className='md:absolute md:inset-x-0 md:bottom-0'>
           {isEdit && (
             <Button
               type='button'
