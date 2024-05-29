@@ -67,14 +67,17 @@ export const DataTable = <TData, TValue>({
   const { rows } = table.getFilteredSelectedRowModel();
 
   const [DeleteDialog, confirmDelete] = useConfirm({
-    message: `Delete ${rows.length === 1 ? 'this' : rows.length} ${itemType || 'item'}${rows.length === 1 ? '' : 's'}?`,
+    message:
+      rows.length === 1
+        ? `Delete this ${itemType || 'item'}?`
+        : `Delete ${rows.length} ${itemType || 'item'}s?`,
     confirmLabel: 'Delete',
     destructive: true,
   });
 
   const handleDelete = async () => {
-    const ok = await confirmDelete();
-    if (!ok) return;
+    const confirmed = await confirmDelete();
+    if (!confirmed) return;
 
     onDelete?.(rows);
     table.resetRowSelection();
