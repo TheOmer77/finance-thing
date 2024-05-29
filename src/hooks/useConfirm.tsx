@@ -26,6 +26,8 @@ export const useConfirm = ({
     resolve: (value: boolean) => void;
   } | null>(null);
 
+  const isPending = !!promise;
+
   const confirm = () =>
     new Promise<boolean>(resolve => setPromise({ resolve }));
 
@@ -56,5 +58,5 @@ export const useConfirm = ({
     </Dialog>
   );
 
-  return [ConfirmDialog, confirm] as const;
+  return [ConfirmDialog, confirm, isPending] as const;
 };
