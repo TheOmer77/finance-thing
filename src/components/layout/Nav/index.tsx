@@ -2,17 +2,11 @@
 
 import { usePathname } from 'next/navigation';
 
-import { NavButton, type NavButtonProps } from './NavButton';
-import { NavDrawer } from './NavDrawer';
 import { DrawerClose } from '@/components/ui/Drawer';
+import { navRoutes } from '@/constants/nav';
 
-const routes = [
-  { href: '/', label: 'Overview' },
-  { href: '/transactions', label: 'Transactions' },
-  { href: '/accounts', label: 'Accounts' },
-  { href: '/categories', label: 'Categories' },
-  { href: '/settings', label: 'Settings' },
-] satisfies Omit<NavButtonProps, 'active'>[];
+import { NavButton } from './NavButton';
+import { NavDrawer } from './NavDrawer';
 
 export const Nav = () => {
   const pathname = usePathname();
@@ -20,7 +14,7 @@ export const Nav = () => {
   return (
     <>
       <nav className='hidden flex-row items-center gap-px overflow-x-auto lg:flex'>
-        {routes.map(({ href, label }) => (
+        {navRoutes.map(({ href, label }) => (
           <NavButton
             key={href}
             href={href}
@@ -30,7 +24,7 @@ export const Nav = () => {
         ))}
       </nav>
       <NavDrawer>
-        {routes.map(({ href, label }) => (
+        {navRoutes.map(({ href, label }) => (
           <DrawerClose key={href} asChild>
             <NavButton href={href} label={label} active={pathname === href} />
           </DrawerClose>
