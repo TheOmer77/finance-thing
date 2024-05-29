@@ -1,5 +1,7 @@
 'use client';
 
+import { EllipsisVerticalIcon, PencilIcon, TrashIcon } from 'lucide-react';
+
 import { Button } from '@/components/ui/Button';
 import {
   DropdownMenu,
@@ -7,8 +9,9 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/DropdownMenu';
+import { useAccountById } from '@/hooks/useAccountById';
+import { useConfirm } from '@/hooks/useConfirm';
 import { useModal } from '@/hooks/useModal';
-import { EllipsisVerticalIcon, PencilIcon } from 'lucide-react';
 
 type AccountActionsProps = {
   id: string;
@@ -16,20 +19,48 @@ type AccountActionsProps = {
 
 export const AccountActions = ({ id }: AccountActionsProps) => {
   const { openModal } = useModal();
+  const { deleteAccount, deleteAccountPending } = useAccountById(id);
+  const [DeleteDialog, confirmDelete] = useConfirm({
+    message: `Delete this account?`,
+    confirmLabel: 'Delete',
+    destructive: true,
+  });
+
+  const handleEdit = () => openModal(`accounts-edit-${id}`);
+
+  const handleDelete = async () => {
+    const confirmed = await confirmDelete();
+    if (!confirmed) return;
+
+    deleteAccount();
+  };
 
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button variant='flat' size='icon'>
-          <EllipsisVerticalIcon className='size-4' />
-        </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent align='end'>
-        <DropdownMenuItem onClick={() => openModal(`accounts-edit-${id}`)}>
-          <PencilIcon className='me-2 size-4' />
-          Edit
-        </DropdownMenuItem>
-      </DropdownMenuContent>
-    </DropdownMenu>
+    <>
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button variant='flat' size='icon' disabled={deleteAccountPending}>
+            <EllipsisVerticalIcon className='size-4' />
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent align='end'>
+          <DropdownMenuItem
+            onClick={handleEdit}
+            disabled={deleteAccountPending}
+          >
+            <PencilIcon className='me-2 size-4' />
+            Edit
+          </DropdownMenuItem>
+          <DropdownMenuItem
+            onClick={handleDelete}
+            disabled={deleteAccountPending}
+          >
+            <TrashIcon className='me-2 size-4' />
+            Delete
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+      <DeleteDialog />
+    </>
   );
 };
