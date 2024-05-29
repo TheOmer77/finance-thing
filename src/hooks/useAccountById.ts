@@ -40,10 +40,29 @@ export const useAccountById = (id?: string) => {
     onError: () => toast.error('Failed to update account.'),
   });
 
+  const deleteMutation = useMutation<
+    InferResponseType<(typeof client.api.accounts)[':id']['$delete']>,
+    Error
+  >({
+    mutationFn: async () => {
+      const res = await client.api.accounts[':id'].$delete({ param: { id } });
+      return await res.json();
+    },
+    onSuccess: () => {
+      toast.success('Account deleted.');
+      queryClient.invalidateQueries({ queryKey: ['accounts'] });
+      queryClient.invalidateQueries({ queryKey: ['account', { id }] });
+      // TODO: Invalidate summary and transactions
+    },
+    onError: () => toast.error('Failed to delete account.'),
+  });
+
   return {
     account: getQuery.data,
     accountFetching: getQuery.isFetching,
     updateAccount: updateMutation.mutate,
     updateAccountPending: updateMutation.isPending,
+    deleteAccount: deleteMutation.mutate,
+    deleteAccountPending: deleteMutation.isPending,
   };
 };
