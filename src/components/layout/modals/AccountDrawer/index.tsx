@@ -14,6 +14,7 @@ import {
 } from '@/components/ui/Drawer';
 import { useAccounts } from '@/hooks/useAccounts';
 import { useAccountById } from '@/hooks/useAccountById';
+import { useConfirm } from '@/hooks/useConfirm';
 import { useModal } from '@/hooks/useModal';
 
 import { AccountForm, type AccountFormProps } from './form';
@@ -22,6 +23,11 @@ export const AccountDrawer = () => {
   const matchesMd = useMediaQuery('(min-width: 768px)');
   const { currentModal, lastModal, closeModal } = useModal();
   const { createAccount, createAccountPending } = useAccounts();
+  const [DeleteDialog, confirmDelete] = useConfirm({
+    message: `Delete this account?`,
+    confirmLabel: 'Delete',
+    destructive: true,
+  });
 
   const isCurrentModal =
     currentModal === 'accounts-new' ||
@@ -37,9 +43,12 @@ export const AccountDrawer = () => {
     accountFetching: currentAccountFetching,
     updateAccount,
     updateAccountPending,
+    deleteAccount,
+    deleteAccountPending,
   } = useAccountById(currentAccountId);
 
-  const isPending = createAccountPending || updateAccountPending;
+  const isPending =
+    createAccountPending || updateAccountPending || deleteAccountPending;
 
   const defaultValues = {
     name: (!currentAccountFetching && currentAccount?.name) || '',
@@ -55,41 +64,53 @@ export const AccountDrawer = () => {
     createAccount(values, { onSuccess: () => closeModal() });
   };
 
+  const handleDelete = async () => {
+    if (!currentAccountId) return;
+    const confirmed = await confirmDelete();
+    if (!confirmed) return;
+
+    deleteAccount(undefined, { onSuccess: () => closeModal() });
+  };
+
   return (
-    <Drawer
-      open={isCurrentModal}
-      onOpenChange={handleOpenChange}
-      direction={matchesMd ? 'right' : 'bottom'}
-    >
-      <DrawerContent className='w-96 space-y-4'>
-        <DrawerClose asChild>
-          <Button variant='flat' size='icon' className='absolute end-2 top-0'>
-            <XIcon className='size-4' />
-          </Button>
-        </DrawerClose>
-        <DrawerHeader>
-          <DrawerTitle>
-            {lastModalWasEdit ? 'Edit account' : 'New account'}
-          </DrawerTitle>
-          <DrawerDescription>
-            {lastModalWasEdit
-              ? 'Edit this existing account.'
-              : 'Create a new account to track your transactions.'}
-          </DrawerDescription>
-        </DrawerHeader>
-        {currentAccountFetching ? (
-          <div className='grid h-16 w-full place-items-center'>
-            <Loader2Icon className='size-6 animate-spin text-muted-foreground' />
-          </div>
-        ) : (
-          <AccountForm
-            onSubmit={handleSubmit}
-            disabled={isPending}
-            defaultValues={defaultValues}
-            id={currentAccountId}
-          />
-        )}
-      </DrawerContent>
-    </Drawer>
+    <>
+      <Drawer
+        open={isCurrentModal}
+        onOpenChange={handleOpenChange}
+        direction={matchesMd ? 'right' : 'bottom'}
+      >
+        <DrawerContent className='w-96 space-y-4'>
+          <DrawerClose asChild>
+            <Button variant='flat' size='icon' className='absolute end-2 top-0'>
+              <XIcon className='size-4' />
+            </Button>
+          </DrawerClose>
+          <DrawerHeader>
+            <DrawerTitle>
+              {lastModalWasEdit ? 'Edit account' : 'New account'}
+            </DrawerTitle>
+            <DrawerDescription>
+              {lastModalWasEdit
+                ? 'Edit this existing account.'
+                : 'Create a new account to track your transactions.'}
+            </DrawerDescription>
+          </DrawerHeader>
+          {currentAccountFetching ? (
+            <div className='grid h-16 w-full place-items-center'>
+              <Loader2Icon className='size-6 animate-spin text-muted-foreground' />
+            </div>
+          ) : (
+            <AccountForm
+              onSubmit={handleSubmit}
+              onDelete={handleDelete}
+              disabled={isPending}
+              defaultValues={defaultValues}
+              id={currentAccountId}
+            />
+          )}
+        </DrawerContent>
+      </Drawer>
+      <DeleteDialog />
+    </>
   );
 };
