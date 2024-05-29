@@ -7,7 +7,7 @@ import { Drawer, DrawerContent, DrawerTrigger } from '@/components/ui/Drawer';
 export const NavDrawer = ({ children }: PropsWithChildren) => (
   <Drawer direction='left'>
     <DrawerTrigger asChild>
-      <Button variant='flat-nav' size='icon' className='-order-1 lg:hidden'>
+      <Button variant='flat-nav' size='icon' className='-order-1 md:hidden'>
         <MenuIcon className='size-4' />
       </Button>
     </DrawerTrigger>

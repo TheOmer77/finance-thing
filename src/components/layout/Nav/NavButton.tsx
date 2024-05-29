@@ -18,8 +18,8 @@ export const NavButton = forwardRef<ElementRef<'button'>, NavButtonProps>(
       variant='flat'
       className={cn(
         `justify-start text-inherit hover:text-inherit
-lg:hover:bg-primary-foreground/20`,
-        active && 'bg-muted lg:bg-primary-foreground/10'
+md:hover:bg-primary-foreground/20`,
+        active && 'bg-muted md:bg-primary-foreground/10'
       )}
       asChild
     >

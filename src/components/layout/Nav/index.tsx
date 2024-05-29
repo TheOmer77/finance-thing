@@ -13,7 +13,7 @@ export const Nav = () => {
 
   return (
     <>
-      <nav className='hidden flex-row items-center gap-px overflow-x-auto lg:flex'>
+      <nav className='hidden flex-row items-center gap-px overflow-x-auto md:flex'>
         {navRoutes.map(({ href, label }) => (
           <NavButton
             key={href}
