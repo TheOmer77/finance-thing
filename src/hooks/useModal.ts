@@ -3,7 +3,12 @@ import { useSearchParams } from 'next/navigation';
 
 const MODAL_SEARCH_KEY = 'modal';
 
-type ModalValue = null | 'accounts-new' | `accounts-edit-${string}`;
+type ModalValue =
+  | null
+  | 'accounts-new'
+  | `accounts-edit-${string}`
+  | 'categories-new'
+  | `categories-edit-${string}`;
 
 export const useModal = () => {
   const searchParams = useSearchParams(),
