@@ -23,7 +23,7 @@ export const AccountDrawer = () => {
   const matchesMd = useMediaQuery('(min-width: 768px)');
   const { currentModal, lastModal, closeModal } = useModal();
   const { createAccount, createAccountPending } = useAccounts();
-  const [DeleteDialog, confirmDelete] = useConfirm({
+  const [DeleteDialog, confirmDelete, deleteConfirmPending] = useConfirm({
     message: `Delete this account?`,
     confirmLabel: 'Delete',
     destructive: true,
@@ -55,7 +55,13 @@ export const AccountDrawer = () => {
   };
 
   const handleOpenChange = (open: boolean) => {
-    if (!open && isCurrentModal) closeModal();
+    if (
+      !open &&
+      isCurrentModal &&
+      !deleteConfirmPending &&
+      !deleteAccountPending
+    )
+      closeModal();
   };
 
   const handleSubmit: AccountFormProps['onSubmit'] = values => {
@@ -75,7 +81,7 @@ export const AccountDrawer = () => {
   return (
     <>
       <Drawer
-        open={isCurrentModal}
+        open={isCurrentModal && !deleteConfirmPending && !deleteAccountPending}
         onOpenChange={handleOpenChange}
         direction={matchesMd ? 'right' : 'bottom'}
       >
