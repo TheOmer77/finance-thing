@@ -1,2 +1,2 @@
 export * from './accounts';
-export * from './categoties';
+export * from './categories';
