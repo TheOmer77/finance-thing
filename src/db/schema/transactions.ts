@@ -54,6 +54,7 @@ export const insertTransactionSchema = createInsertSchema(transactions, {
   payee: ({ payee }) => payee.min(1, { message: 'Payee is required.' }),
   date: z.coerce.date({ message: 'Date is required.' }),
 }).omit({
+  id: true,
   createdAt: true,
   updatedAt: true,
 });
