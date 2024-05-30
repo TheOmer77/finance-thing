@@ -2,13 +2,15 @@ import { Hono } from 'hono';
 import { handle } from 'hono/vercel';
 
 import { accountsRouter } from './accounts';
-import { errorHandler } from './errorHandler';
 import { categoriesRouter } from './categories';
+import { transactionsRouter } from './transactions';
+import { errorHandler } from './errorHandler';
 
 const app = new Hono()
   .basePath('/api')
   .route('/accounts', accountsRouter)
   .route('/categories', categoriesRouter)
+  .route('/transactions', transactionsRouter)
   .onError(errorHandler);
 
 export const GET = handle(app);
