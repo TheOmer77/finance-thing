@@ -23,6 +23,7 @@ export const categoriesRelations = relations(categories, ({ many }) => ({
 export const insertCategorySchema = createInsertSchema(categories, {
   name: ({ name }) => name.min(1, { message: 'Name is required.' }),
 }).omit({
+  id: true,
   createdAt: true,
   updatedAt: true,
 });

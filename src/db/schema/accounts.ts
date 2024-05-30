@@ -23,6 +23,7 @@ export const accountsRelations = relations(accounts, ({ many }) => ({
 export const insertAccountSchema = createInsertSchema(accounts, {
   name: ({ name }) => name.min(1, { message: 'Name is required.' }),
 }).omit({
+  id: true,
   createdAt: true,
   updatedAt: true,
 });
