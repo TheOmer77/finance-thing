@@ -39,6 +39,16 @@ export const transactionsRelations = relations(transactions, ({ one }) => ({
   }),
 }));
 
+export const transactionsAccountsRelation = relations(accounts, ({ many }) => ({
+  transactions: many(transactions),
+}));
+export const transactionsCategoriesRelations = relations(
+  categories,
+  ({ many }) => ({
+    transactions: many(transactions),
+  })
+);
+
 export const insertTransactionSchema = createInsertSchema(transactions, {
   amount: ({ amount }) => amount.min(1, { message: 'Amount is required.' }),
   payee: ({ payee }) => payee.min(1, { message: 'Payee is required.' }),
