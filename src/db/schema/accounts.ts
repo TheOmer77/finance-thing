@@ -1,6 +1,9 @@
+import { relations } from 'drizzle-orm';
 import { pgTable, text, timestamp } from 'drizzle-orm/pg-core';
 import { createInsertSchema } from 'drizzle-zod';
 import { createId } from '@paralleldrive/cuid2';
+
+import { transactions } from './transactions';
 
 export const accounts = pgTable('accounts', {
   id: text('id').primaryKey().$default(createId),
@@ -12,6 +15,10 @@ export const accounts = pgTable('accounts', {
     .defaultNow()
     .$onUpdate(() => new Date()),
 });
+
+export const accountsRelations = relations(accounts, ({ many }) => ({
+  transactions: many(transactions),
+}));
 
 export const insertAccountSchema = createInsertSchema(accounts, {
   name: ({ name }) => name.min(1, { message: 'Name is required.' }),
