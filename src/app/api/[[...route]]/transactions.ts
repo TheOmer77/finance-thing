@@ -125,6 +125,22 @@ export const transactionsRouter = new Hono()
   )
 
   .post(
+    '/bulk-create',
+    clerkMiddleware(),
+    zValidator('json', z.array(insertTransactionSchema)),
+    async ctx => {
+      const auth = getAuth(ctx);
+      if (!auth?.userId)
+        throw new HTTPException(401, { message: 'Unauthorized' });
+
+      const values = ctx.req.valid('json');
+      const data = await db.insert(transactions).values(values).returning();
+
+      return ctx.json({ success: true, data });
+    }
+  )
+
+  .post(
     '/bulk-delete',
     clerkMiddleware(),
     zValidator('json', z.object({ ids: z.array(z.string()) })),
