@@ -15,6 +15,13 @@
       "when": 1716996808153,
       "tag": "0001_illegal_talkback",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1717064302282,
+      "tag": "0002_awesome_madripoor",
+      "breakpoints": true
     }
   ]
 }
