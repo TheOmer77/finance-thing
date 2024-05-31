@@ -8,7 +8,9 @@ type ModalValue =
   | 'accounts-new'
   | `accounts-edit-${string}`
   | 'categories-new'
-  | `categories-edit-${string}`;
+  | `categories-edit-${string}`
+  | 'transactions-new'
+  | `transactions-edit-${string}`;
 
 export const useModal = () => {
   const searchParams = useSearchParams(),
