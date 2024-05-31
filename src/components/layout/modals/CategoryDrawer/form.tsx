@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
 import { Button } from '@/components/ui/Button';
+import { DrawerFooter } from '@/components/ui/Drawer';
 import {
   Form,
   FormControl,
@@ -15,7 +16,6 @@ import {
 } from '@/components/ui/Form';
 import { Input } from '@/components/ui/Input';
 import { insertCategorySchema } from '@/db/schema';
-import { DrawerFooter } from '@/components/ui/Drawer';
 
 const categoryFormSchema = insertCategorySchema.pick({ name: true });
 type CategoryFormValues = z.infer<typeof categoryFormSchema>;
