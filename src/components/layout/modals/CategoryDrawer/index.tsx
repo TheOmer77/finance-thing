@@ -17,7 +17,11 @@ import { useCategoryById } from '@/hooks/useCategoryById';
 import { useConfirm } from '@/hooks/useConfirm';
 import { useModal } from '@/hooks/useModal';
 
-import { CategoryForm, type CategoryFormProps } from './form';
+import {
+  CategoryForm,
+  type CategoryFormProps,
+  type CategoryFormValues,
+} from './form';
 
 export const CategoryDrawer = () => {
   const matchesMd = useMediaQuery('(min-width: 768px)');
@@ -52,7 +56,7 @@ export const CategoryDrawer = () => {
 
   const defaultValues = {
     name: (!currentCategoryFetching && currentCategory?.name) || '',
-  };
+  } satisfies CategoryFormValues;
 
   const handleOpenChange = (open: boolean) => {
     if (

@@ -18,7 +18,7 @@ import { Input } from '@/components/ui/Input';
 import { insertCategorySchema } from '@/db/schema';
 
 const categoryFormSchema = insertCategorySchema.pick({ name: true });
-type CategoryFormValues = z.infer<typeof categoryFormSchema>;
+export type CategoryFormValues = z.infer<typeof categoryFormSchema>;
 
 export type CategoryFormProps = {
   defaultValues?: CategoryFormValues;
