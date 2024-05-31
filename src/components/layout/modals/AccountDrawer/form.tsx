@@ -18,7 +18,7 @@ import { Input } from '@/components/ui/Input';
 import { insertAccountSchema } from '@/db/schema';
 
 const accountFormSchema = insertAccountSchema.pick({ name: true });
-type AccountFormValues = z.infer<typeof accountFormSchema>;
+export type AccountFormValues = z.infer<typeof accountFormSchema>;
 
 export type AccountFormProps = {
   defaultValues?: AccountFormValues;

@@ -17,7 +17,11 @@ import { useAccountById } from '@/hooks/useAccountById';
 import { useConfirm } from '@/hooks/useConfirm';
 import { useModal } from '@/hooks/useModal';
 
-import { AccountForm, type AccountFormProps } from './form';
+import {
+  AccountForm,
+  type AccountFormProps,
+  type AccountFormValues,
+} from './form';
 
 export const AccountDrawer = () => {
   const matchesMd = useMediaQuery('(min-width: 768px)');
@@ -52,7 +56,7 @@ export const AccountDrawer = () => {
 
   const defaultValues = {
     name: (!currentAccountFetching && currentAccount?.name) || '',
-  };
+  } satisfies AccountFormValues;
 
   const handleOpenChange = (open: boolean) => {
     if (
