@@ -5,6 +5,7 @@ type AutocompleteContextValue = {
   inputRef?: RefObject<HTMLInputElement>;
   inputValue: string;
   placeholder?: string;
+  isOpen?: boolean;
   onSelect: (value: string, inputValue: string) => void;
   onInputValueChange: (value: string) => void;
   onFocus: () => void;

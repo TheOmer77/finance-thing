@@ -66,6 +66,7 @@ export const Autocomplete = forwardRef<
       value={{
         inputRef,
         inputValue,
+        isOpen,
         onBlur: handleBlur,
         onFocus: handleFocus,
         onInputValueChange: setInputValue,
