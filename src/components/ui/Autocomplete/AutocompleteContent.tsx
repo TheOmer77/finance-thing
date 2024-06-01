@@ -1,3 +1,5 @@
+'use client';
+
 import { forwardRef, type ElementRef } from 'react';
 import type { PopoverContentProps } from '@radix-ui/react-popover';
 import { CommandList } from 'cmdk';
