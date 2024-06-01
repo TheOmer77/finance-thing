@@ -71,6 +71,7 @@ export const Autocomplete = forwardRef<
         onFocus: handleFocus,
         onInputValueChange: setInputValue,
         onSelect: handleSelect,
+        value,
       }}
     >
       <Popover open={isOpen}>
