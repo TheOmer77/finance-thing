@@ -30,13 +30,13 @@ export const AutocompleteItem = forwardRef<
       }}
       onSelect={inputValue => {
         if (!value) return;
-        onSelect(value, inputValue);
+        onSelect?.(value, inputValue);
       }}
       className={cn(
         `relative flex w-full cursor-default select-none items-center gap-2
 rounded-sm px-2 py-1.5 text-sm outline-none aria-selected:bg-accent
-  aria-selected:text-accent-foreground data-[disabled=true]:pointer-events-none
-  data-[disabled=true]:opacity-50`,
+aria-selected:text-accent-foreground data-[disabled=true]:pointer-events-none
+data-[disabled=true]:opacity-50`,
         !isSelected ? 'pl-8' : null,
         className
       )}

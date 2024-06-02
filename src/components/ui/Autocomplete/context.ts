@@ -7,7 +7,8 @@ type AutocompleteContextValue = {
   placeholder?: string;
   isMounted?: boolean;
   isOpen?: boolean;
-  onSelect: (value: string, inputValue: string) => void;
+  onSelect?: (value: string, inputValue: string) => void;
+  onCreatableSelect?: () => void;
   onInputValueChange: (value: string) => void;
   onFocus: () => void;
   onBlur: () => void;
@@ -15,7 +16,6 @@ type AutocompleteContextValue = {
 
 export const AutocompleteContext = createContext<AutocompleteContextValue>({
   inputValue: '',
-  onSelect: () => {},
   onInputValueChange: () => {},
   onFocus: () => {},
   onBlur: () => {},
