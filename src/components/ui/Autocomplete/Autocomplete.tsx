@@ -32,7 +32,8 @@ export const Autocomplete = forwardRef<
     ref
   ) => {
     const isMounted = useIsClient();
-    const inputRef = useRef<HTMLInputElement>(null);
+    const inputRef = useRef<HTMLInputElement>(null),
+      listRef = useRef<HTMLDivElement>(null);
 
     const [isOpen, setOpen] = useState(false);
     const [inputValue, setInputValue] = useState<string>(value || '');
@@ -86,11 +87,12 @@ export const Autocomplete = forwardRef<
           inputValue,
           isMounted,
           isOpen,
+          listRef,
           onBlur: handleBlur,
+          onCreatableSelect: handleCreatableSelect,
           onFocus: handleFocus,
           onInputValueChange: setInputValue,
           onSelect: handleSelect,
-          onCreatableSelect: handleCreatableSelect,
           value,
         }}
       >

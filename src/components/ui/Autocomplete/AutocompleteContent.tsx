@@ -4,6 +4,7 @@ import {
   forwardRef,
   useContext,
   useEffect,
+  useImperativeHandle,
   useState,
   type ElementRef,
 } from 'react';
@@ -19,8 +20,10 @@ export const AutocompleteContent = forwardRef<
   ElementRef<typeof PopoverContent>,
   PopoverContentProps
 >(({ onOpenAutoFocus, className, children, ...props }, ref) => {
-  const { isMounted, isOpen } = useContext(AutocompleteContext);
+  const { isMounted, isOpen, listRef } = useContext(AutocompleteContext);
   const [openedOnce, setOpenedOnce] = useState(false);
+
+  useImperativeHandle(ref, () => listRef!.current!, [listRef]);
 
   useEffect(() => {
     if (isOpen && !openedOnce) setOpenedOnce(isOpen);
@@ -42,7 +45,7 @@ export const AutocompleteContent = forwardRef<
         className
       )}
     >
-      <CommandList>{children}</CommandList>
+      <CommandList ref={listRef}>{children}</CommandList>
     </PopoverContent>
   );
 });

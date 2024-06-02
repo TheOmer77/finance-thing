@@ -2,8 +2,9 @@ import { createContext, type RefObject } from 'react';
 
 type AutocompleteContextValue = {
   value?: string;
-  inputRef?: RefObject<HTMLInputElement>;
   inputValue: string;
+  inputRef?: RefObject<HTMLInputElement>;
+  listRef?: RefObject<HTMLDivElement>;
   placeholder?: string;
   isMounted?: boolean;
   isOpen?: boolean;
