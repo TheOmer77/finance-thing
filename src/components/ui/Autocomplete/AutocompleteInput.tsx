@@ -24,26 +24,43 @@ export type AutocompleteInputProps = Omit<
 export const AutocompleteInput = forwardRef<
   ElementRef<typeof CommandInput>,
   AutocompleteInputProps
->(({ ...props }, ref) => {
-  const { inputValue, onBlur, onFocus, onInputValueChange, inputRef } =
-    useContext(AutocompleteContext);
+>(({ className, ...props }, ref) => {
+  const {
+    inputRef,
+    inputValue,
+    isMounted,
+    onBlur,
+    onFocus,
+    onInputValueChange,
+  } = useContext(AutocompleteContext);
 
   useImperativeHandle(ref, () => inputRef!.current!, [inputRef]);
 
   return (
     <PopoverAnchor className='relative'>
-      <CommandInput
-        {...props}
-        ref={inputRef}
-        value={inputValue}
-        onValueChange={onInputValueChange}
-        onBlur={onBlur}
-        onFocus={onFocus}
-        className={cn('pe-8')}
-        asChild
-      >
-        <Input />
-      </CommandInput>
+      {isMounted ? (
+        <CommandInput
+          {...props}
+          ref={inputRef}
+          value={inputValue}
+          onValueChange={onInputValueChange}
+          onBlur={onBlur}
+          onFocus={onFocus}
+          className={cn('pe-8', className)}
+          asChild
+        >
+          <Input />
+        </CommandInput>
+      ) : (
+        <Input
+          {...props}
+          ref={inputRef}
+          value={inputValue}
+          onBlur={onBlur}
+          onFocus={onFocus}
+          className={cn('pe-8', className)}
+        />
+      )}
       <div
         className='pointer-events-none absolute inset-y-0 end-3 grid
 place-items-center'

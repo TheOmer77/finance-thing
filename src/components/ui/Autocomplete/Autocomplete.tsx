@@ -10,6 +10,7 @@ import {
   type ComponentPropsWithoutRef,
 } from 'react';
 import { Command as CommandRoot } from 'cmdk';
+import { useIsClient } from 'usehooks-ts';
 
 import { Popover } from '@/components/ui/Popover';
 
@@ -21,6 +22,7 @@ export const Autocomplete = forwardRef<
   ElementRef<typeof CommandRoot>,
   ComponentPropsWithoutRef<typeof CommandRoot>
 >(({ value, onValueChange, onKeyDown, children, ...props }, ref) => {
+  const isMounted = useIsClient();
   const inputRef = useRef<HTMLInputElement>(null);
 
   const [isOpen, setOpen] = useState(false);
@@ -66,6 +68,7 @@ export const Autocomplete = forwardRef<
       value={{
         inputRef,
         inputValue,
+        isMounted,
         isOpen,
         onBlur: handleBlur,
         onFocus: handleFocus,
@@ -75,9 +78,13 @@ export const Autocomplete = forwardRef<
       }}
     >
       <Popover open={isOpen}>
-        <CommandRoot {...props} ref={ref} onKeyDown={handleKeyDown}>
-          {children}
-        </CommandRoot>
+        {!isMounted ? (
+          children
+        ) : (
+          <CommandRoot {...props} ref={ref} onKeyDown={handleKeyDown}>
+            {children}
+          </CommandRoot>
+        )}
       </Popover>
     </AutocompleteContext.Provider>
   );

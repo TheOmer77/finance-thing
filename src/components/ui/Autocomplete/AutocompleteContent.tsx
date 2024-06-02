@@ -19,20 +19,18 @@ export const AutocompleteContent = forwardRef<
   ElementRef<typeof PopoverContent>,
   PopoverContentProps
 >(({ onOpenAutoFocus, className, children, ...props }, ref) => {
-  const { isOpen } = useContext(AutocompleteContext);
+  const { isMounted, isOpen } = useContext(AutocompleteContext);
   const [openedOnce, setOpenedOnce] = useState(false);
 
   useEffect(() => {
     if (isOpen && !openedOnce) setOpenedOnce(isOpen);
   }, [isOpen, openedOnce]);
 
-  if (!openedOnce) return null;
-
   return (
     <PopoverContent
       {...props}
       ref={ref}
-      forceMount
+      forceMount={isMounted || undefined}
       onOpenAutoFocus={e => {
         e.preventDefault();
         onOpenAutoFocus?.(e);
