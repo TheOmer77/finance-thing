@@ -4,10 +4,15 @@ import type { InferResponseType, InferRequestType } from 'hono';
 
 import { client } from '@/lib/hono';
 
-export const useAccounts = () => {
+export type AccountsArray = InferResponseType<
+  typeof client.api.accounts.$get
+>['data'];
+
+export const useAccounts = ({ enabled = true } = {}) => {
   const queryClient = useQueryClient();
 
   const getQuery = useQuery({
+    enabled,
     queryKey: ['accounts'],
     queryFn: async () => {
       const res = await client.api.accounts.$get();
