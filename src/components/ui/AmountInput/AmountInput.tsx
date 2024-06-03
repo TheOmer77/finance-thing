@@ -1,4 +1,4 @@
-import { forwardRef, type ElementRef } from 'react';
+import { forwardRef, useState, type ElementRef } from 'react';
 import CurrencyInput, {
   type CurrencyInputProps,
 } from 'react-currency-input-field';
@@ -26,11 +26,22 @@ export const AmountInput = forwardRef<
   ElementRef<typeof CurrencyInput>,
   AmountInputProps
 >(({ value, onChange, prefix = '$', className, ...props }, ref) => {
+  const [inputValue, setInputValue] = useState(
+    value ? value.toString() : '0.00'
+  );
+
   const isIncome = typeof value === 'number' && value > 0,
     isExpense = typeof value === 'number' && value < 0;
 
-  const handleChange: CurrencyInputProps['onValueChange'] = (_, __, values) =>
-    onChange?.(values?.float || undefined);
+  const handleChange: CurrencyInputProps['onValueChange'] = (
+    inputValue,
+    __,
+    values
+  ) => {
+    if (inputValue) setInputValue(inputValue);
+    if (inputValue === values?.float?.toString?.())
+      onChange?.(values?.float || undefined);
+  };
 
   const handleReverseValue = () => {
     if (!value) return;
@@ -68,7 +79,7 @@ export const AmountInput = forwardRef<
           {...props}
           ref={ref}
           prefix={prefix}
-          value={value}
+          value={inputValue}
           onValueChange={handleChange}
           decimalScale={2}
           decimalsLimit={2}
