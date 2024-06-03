@@ -49,8 +49,18 @@ export const transactionsCategoriesRelations = relations(
   })
 );
 
+const AMOUNT_REQUIRED_MSG = 'Amount is required, and cannot be zero.';
 export const insertTransactionSchema = createInsertSchema(transactions, {
-  amount: ({ amount }) => amount.min(1, { message: 'Amount is required.' }),
+  accountId: ({ accountId }) =>
+    accountId
+      .min(1, { message: 'Account is required.' })
+      .cuid2({ message: 'Invalid account.' }),
+  categoryId: ({ categoryId }) =>
+    categoryId.cuid2({ message: 'Invalid category.' }),
+  amount: ({ amount }) =>
+    amount
+      .positive({ message: AMOUNT_REQUIRED_MSG })
+      .or(amount.negative({ message: AMOUNT_REQUIRED_MSG })),
   payee: ({ payee }) => payee.min(1, { message: 'Payee is required.' }),
   date: z.coerce.date({ message: 'Date is required.' }),
 }).omit({
