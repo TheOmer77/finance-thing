@@ -1,5 +1,6 @@
 export * from './Autocomplete';
 export * from './AutocompleteContent';
+export * from './AutocompleteCreatableItem';
 export * from './AutocompleteEmpty';
 export * from './AutocompleteGroup';
 export * from './AutocompleteInput';
