@@ -4,7 +4,6 @@ import {
   forwardRef,
   useCallback,
   useContext,
-  useMemo,
   type ElementRef,
   type ComponentPropsWithoutRef,
 } from 'react';
@@ -13,12 +12,7 @@ import { CommandItem } from 'cmdk';
 import { cn } from '@/lib/utils';
 
 import { AutocompleteContext } from './context';
-
-const CMDK_ATTR_PREFIX = 'cmdk-',
-  CMDK_ITEM_ATTR = `${CMDK_ATTR_PREFIX}item`,
-  CMDK_GROUP_ATTR = `${CMDK_ATTR_PREFIX}group`,
-  CREATABLE_ATTR = 'data-creatable-item',
-  VALUE_ATTR = 'data-value';
+import { CREATABLE_ATTR } from './constants';
 
 export type AutocompleteCreatableItemProps = Omit<
   ComponentPropsWithoutRef<typeof CommandItem>,
@@ -31,37 +25,17 @@ export const AutocompleteCreatableItem = forwardRef<
   ElementRef<typeof CommandItem>,
   AutocompleteCreatableItemProps
 >(({ className, ...props }, ref) => {
-  const { onCreatableSelect, onOpenChange, onSelect, inputValue, listRef } =
-    useContext(AutocompleteContext);
+  const {
+    inputValue,
+    listItems: listOptions,
+    onCreatableSelect,
+    onOpenChange,
+    onSelect,
+  } = useContext(AutocompleteContext);
 
-  const listEl = listRef?.current;
-
-  // Stupid hack to find if inputValue exactly matches one of the options
-  const listIncludesExactMatch = useMemo(() => {
-    if (!listEl) return false;
-    const listValues = Array.from(listEl.children[0].children)
-      .reduce((arr, child) => {
-        const attributeNames = child.getAttributeNames();
-        const cmdkAttribute = attributeNames.filter(attr =>
-          attr.startsWith(CMDK_ATTR_PREFIX)
-        )[0];
-
-        if (
-          !cmdkAttribute ||
-          ![CMDK_ITEM_ATTR, CMDK_GROUP_ATTR].includes(cmdkAttribute) ||
-          attributeNames.includes(CREATABLE_ATTR)
-        )
-          return arr;
-        if (cmdkAttribute === CMDK_ITEM_ATTR) return [...arr, child];
-
-        const groupItems = Array.from(child.children[0].children);
-        return [...arr, ...groupItems];
-      }, [] as Element[])
-      .map(el => el.getAttribute(VALUE_ATTR))
-      .filter(Boolean) as string[];
-
-    return listValues.includes(inputValue);
-  }, [inputValue, listEl]);
+  const listIncludesExactMatch = listOptions.some(
+    ({ label }) => label === inputValue
+  );
 
   const handleSelect = useCallback(() => {
     onOpenChange?.(false);

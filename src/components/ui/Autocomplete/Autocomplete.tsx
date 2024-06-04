@@ -3,6 +3,7 @@
 import {
   forwardRef,
   useCallback,
+  useMemo,
   useRef,
   useState,
   type ElementRef,
@@ -15,6 +16,15 @@ import { useIsClient } from 'usehooks-ts';
 import { Popover } from '@/components/ui/Popover';
 
 import { AutocompleteContext } from './context';
+import {
+  CMDK_ATTR_PREFIX,
+  CMDK_GROUP_ATTR,
+  CMDK_ITEM_ATTR,
+  CREATABLE_ATTR,
+  LABEL_ATTR,
+  VALUE_ATTR,
+  type AutocompleteOption,
+} from './constants';
 
 export type AutocompleteProps = ComponentPropsWithoutRef<typeof CommandRoot> & {
   onCreatableSelect?: (
@@ -34,12 +44,43 @@ export const Autocomplete = forwardRef<
     const isMounted = useIsClient();
     const inputRef = useRef<HTMLInputElement>(null),
       listRef = useRef<HTMLDivElement>(null);
+    const listEl = listRef.current;
 
     const [isOpen, setOpen] = useState(false);
     const [inputValue, setInputValue] = useState<string>('');
     const [lastValidInputValue, setLastValidInputValue] = useState(
       inputValue || ''
     );
+
+    // Stupid hack to get all options with their labels & values
+    const listItems = useMemo(() => {
+      if (!listEl) return [];
+      return Array.from(listEl.children[0].children)
+        .reduce((arr, child) => {
+          const attributeNames = child.getAttributeNames();
+          const cmdkAttribute = attributeNames.filter(attr =>
+            attr.startsWith(CMDK_ATTR_PREFIX)
+          )[0];
+
+          if (
+            !cmdkAttribute ||
+            ![CMDK_ITEM_ATTR, CMDK_GROUP_ATTR].includes(cmdkAttribute) ||
+            attributeNames.includes(CREATABLE_ATTR)
+          )
+            return arr;
+          if (cmdkAttribute === CMDK_ITEM_ATTR) return [...arr, child];
+
+          const groupItems = Array.from(child.children[0].children);
+          return [...arr, ...groupItems];
+        }, [] as Element[])
+        .map(el => ({
+          label: el.getAttribute(LABEL_ATTR),
+          value: el.getAttribute(VALUE_ATTR),
+        }))
+        .filter(
+          ({ label, value }) => !!label && !!value
+        ) as AutocompleteOption[];
+    }, [listEl]);
 
     const handleKeyDown = useCallback(
       (event: KeyboardEvent<HTMLDivElement>) => {
@@ -74,6 +115,7 @@ export const Autocomplete = forwardRef<
           isMounted,
           isOpen,
           lastValidInputValue,
+          listItems,
           listRef,
           onCreatableSelect,
           onInputValueChange: setInputValue,

@@ -40,6 +40,7 @@ data-[disabled=true]:opacity-50`,
         !isSelected ? 'pl-8' : null,
         className
       )}
+      data-item-value={value}
     >
       {isSelected ? <CheckIcon className='size-4' /> : null}
       {children}
