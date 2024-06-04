@@ -56,7 +56,7 @@ export const TransactionForm = ({
   const form = useForm<TransactionFormValues>({
     resolver: zodResolver(insertTransactionSchema),
     defaultValues: defaultValues,
-    disabled: createAccountPending || createCategoryPending,
+    disabled: disabled || createAccountPending || createCategoryPending,
   });
 
   return (
@@ -66,7 +66,6 @@ export const TransactionForm = ({
           <FormField
             control={form.control}
             name='date'
-            disabled={disabled}
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Date</FormLabel>
@@ -84,7 +83,6 @@ export const TransactionForm = ({
           <FormField
             control={form.control}
             name='accountId'
-            disabled={disabled}
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Account</FormLabel>
@@ -122,7 +120,6 @@ export const TransactionForm = ({
           <FormField
             control={form.control}
             name='categoryId'
-            disabled={disabled}
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Category</FormLabel>
@@ -158,7 +155,6 @@ export const TransactionForm = ({
           <FormField
             control={form.control}
             name='payee'
-            disabled={disabled}
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Payee</FormLabel>
@@ -172,7 +168,6 @@ export const TransactionForm = ({
           <FormField
             control={form.control}
             name='amount'
-            disabled={disabled}
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Amount</FormLabel>
@@ -193,7 +188,6 @@ export const TransactionForm = ({
           <FormField
             control={form.control}
             name='notes'
-            disabled={disabled}
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Notes</FormLabel>
