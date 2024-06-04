@@ -42,6 +42,7 @@ export const TransactionDrawer = () => {
     currentModal === 'transactions-new' ||
     !!currentModal?.startsWith('transactions-edit-');
   const lastModalWasEdit = !!lastModal?.startsWith('transactions-edit-');
+  const isOpen = isCurrentModal && !deleteConfirmPending;
 
   const { accounts, accountsLoading } = useAccounts({
       enabled: isCurrentModal,
@@ -61,7 +62,7 @@ export const TransactionDrawer = () => {
     updateTransactionPending,
     deleteTransaction,
     deleteTransactionPending,
-  } = useTransactionById(currentTransactionId);
+  } = useTransactionById(currentTransactionId, { enabled: isOpen });
 
   const isPending =
       createTransactionPending ||
@@ -118,9 +119,7 @@ export const TransactionDrawer = () => {
     <>
       {/* TODO: Make scrollable */}
       <Drawer
-        open={
-          isCurrentModal && !deleteConfirmPending && !deleteTransactionPending
-        }
+        open={isOpen && !deleteTransactionPending}
         onOpenChange={handleOpenChange}
         direction={matchesMd ? 'right' : 'bottom'}
       >

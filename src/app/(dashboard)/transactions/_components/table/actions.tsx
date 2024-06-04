@@ -19,8 +19,10 @@ type TransactionActionsProps = {
 
 export const TransactionActions = ({ id }: TransactionActionsProps) => {
   const { openModal } = useModal();
-  const { deleteTransaction, deleteTransactionPending } =
-    useTransactionById(id);
+  const { deleteTransaction, deleteTransactionPending } = useTransactionById(
+    id,
+    { enabled: false }
+  );
   const [DeleteDialog, confirmDelete] = useConfirm({
     message: `Delete this transaction?`,
     confirmLabel: 'Delete',
