@@ -4,7 +4,6 @@ import {
   forwardRef,
   useContext,
   useEffect,
-  useImperativeHandle,
   useState,
   type ElementRef,
 } from 'react';
@@ -22,8 +21,6 @@ export const AutocompleteContent = forwardRef<
 >(({ onOpenAutoFocus, className, children, ...props }, ref) => {
   const { isMounted, isOpen, listRef } = useContext(AutocompleteContext);
   const [openedOnce, setOpenedOnce] = useState(false);
-
-  useImperativeHandle(ref, () => listRef!.current!, [listRef]);
 
   useEffect(() => {
     if (isOpen && !openedOnce) setOpenedOnce(isOpen);

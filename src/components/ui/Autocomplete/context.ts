@@ -8,7 +8,7 @@ type AutocompleteContextValue = {
   lastValidInputValue: string;
   listItems: AutocompleteOption[];
   inputRef?: RefObject<HTMLInputElement>;
-  listRef?: RefObject<HTMLDivElement>;
+  listRef?: (value: HTMLDivElement) => void;
   isMounted?: boolean;
   isOpen?: boolean;
   onOpenChange?: (open: boolean) => void;

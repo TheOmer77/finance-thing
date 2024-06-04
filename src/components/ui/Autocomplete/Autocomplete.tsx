@@ -3,6 +3,7 @@
 import {
   forwardRef,
   useCallback,
+  useEffect,
   useMemo,
   useRef,
   useState,
@@ -14,6 +15,7 @@ import { Command as CommandRoot } from 'cmdk';
 import { useIsClient } from 'usehooks-ts';
 
 import { Popover } from '@/components/ui/Popover';
+import { useCallbackRef } from '@/hooks/useCallbackRef';
 
 import { AutocompleteContext } from './context';
 import {
@@ -42,9 +44,8 @@ export const Autocomplete = forwardRef<
     ref
   ) => {
     const isMounted = useIsClient();
-    const inputRef = useRef<HTMLInputElement>(null),
-      listRef = useRef<HTMLDivElement>(null);
-    const listEl = listRef.current;
+    const inputRef = useRef<HTMLInputElement>(null);
+    const [listRef, listEl] = useCallbackRef<HTMLDivElement>();
 
     const [isOpen, setOpen] = useState(false);
     const [inputValue, setInputValue] = useState<string>('');
@@ -106,6 +107,13 @@ export const Autocomplete = forwardRef<
       },
       [onValueChange]
     );
+
+    useEffect(() => {
+      if (!value) return;
+
+      const initialSelectedItem = listItems.find(item => item.value === value);
+      if (initialSelectedItem) setInputValue(initialSelectedItem.label);
+    }, [listItems, value]);
 
     return (
       <AutocompleteContext.Provider
