@@ -36,8 +36,9 @@ export const TransactionLinkCell = ({
     return (
       <span
         className={cn(
-          'flex flex-row items-center',
-          type === 'account' && 'text-destructive'
+          type === 'account'
+            ? 'flex flex-row items-center text-destructive'
+            : 'text-muted-foreground'
         )}
       >
         {type === 'account' ? (
