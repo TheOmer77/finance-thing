@@ -18,7 +18,7 @@ import { useConfirm } from '@/hooks/useConfirm';
 import { useModal } from '@/hooks/useModal';
 import { useTransactionById } from '@/hooks/useTransactionById';
 import { useTransactions } from '@/hooks/useTransactions';
-import { amountFromMiliunits, amountToMiliunits } from '@/lib/convertAmount';
+import { amountFromMilliunits, amountToMilliunits } from '@/lib/convertAmount';
 
 import {
   TransactionForm,
@@ -74,7 +74,7 @@ export const TransactionDrawer = () => {
       (!currentTransactionFetching && currentTransaction?.accountId) || '',
     amount:
       !currentTransactionFetching && currentTransaction?.amount
-        ? amountFromMiliunits(currentTransaction.amount)
+        ? amountFromMilliunits(currentTransaction.amount)
         : 0,
     date:
       !currentTransactionFetching && currentTransaction?.date
@@ -99,7 +99,7 @@ export const TransactionDrawer = () => {
   const handleSubmit: TransactionFormProps['onSubmit'] = values => {
     const valuesToSubmit = {
       ...values,
-      amount: amountToMiliunits(values.amount),
+      amount: amountToMilliunits(values.amount),
     };
 
     if (currentTransactionId)
