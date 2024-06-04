@@ -35,7 +35,8 @@ export const useCategoryById = (id?: string) => {
       toast.success('Category updated.');
       queryClient.invalidateQueries({ queryKey: ['categories'] });
       queryClient.invalidateQueries({ queryKey: ['category', { id }] });
-      // TODO: Invalidate summary and transactions
+      queryClient.invalidateQueries({ queryKey: ['transactions'] });
+      // TODO: Invalidate summary
     },
     onError: () => toast.error('Failed to update category.'),
   });
@@ -52,7 +53,8 @@ export const useCategoryById = (id?: string) => {
       toast.success('Category deleted.');
       queryClient.invalidateQueries({ queryKey: ['categories'] });
       queryClient.invalidateQueries({ queryKey: ['category', { id }] });
-      // TODO: Invalidate summary and transactions
+      queryClient.invalidateQueries({ queryKey: ['transactions'] });
+      // TODO: Invalidate summary
     },
     onError: () => toast.error('Failed to delete category.'),
   });
