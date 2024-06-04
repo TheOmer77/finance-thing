@@ -1,5 +1,7 @@
 import { createContext, type RefObject } from 'react';
 
+import type { AutocompleteProps } from './Autocomplete';
+
 type AutocompleteContextValue = {
   value?: string;
   inputValue: string;
@@ -10,7 +12,7 @@ type AutocompleteContextValue = {
   isOpen?: boolean;
   onOpenChange?: (open: boolean) => void;
   onSelect?: (value: string, inputValue: string) => void;
-  onCreatableSelect?: () => void;
+  onCreatableSelect?: AutocompleteProps['onCreatableSelect'];
   onInputValueChange?: (value: string) => void;
 };
 

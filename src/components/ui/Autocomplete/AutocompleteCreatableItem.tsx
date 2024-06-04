@@ -2,6 +2,7 @@
 
 import {
   forwardRef,
+  useCallback,
   useContext,
   useMemo,
   type ElementRef,
@@ -30,7 +31,7 @@ export const AutocompleteCreatableItem = forwardRef<
   ElementRef<typeof CommandItem>,
   AutocompleteCreatableItemProps
 >(({ className, ...props }, ref) => {
-  const { onCreatableSelect, inputValue, listRef } =
+  const { onCreatableSelect, onOpenChange, onSelect, inputValue, listRef } =
     useContext(AutocompleteContext);
 
   const listEl = listRef?.current;
@@ -62,6 +63,13 @@ export const AutocompleteCreatableItem = forwardRef<
     return listValues.includes(inputValue);
   }, [inputValue, listEl]);
 
+  const handleSelect = useCallback(() => {
+    onOpenChange?.(false);
+    onCreatableSelect?.(inputValue, (value: string) =>
+      onSelect?.(value, inputValue)
+    );
+  }, [inputValue, onCreatableSelect, onOpenChange, onSelect]);
+
   if (!inputValue || listIncludesExactMatch) return null;
   return (
     <CommandItem
@@ -73,7 +81,7 @@ export const AutocompleteCreatableItem = forwardRef<
         event.preventDefault();
         event.stopPropagation();
       }}
-      onSelect={onCreatableSelect}
+      onSelect={handleSelect}
       className={cn(
         `relative flex w-full cursor-default select-none items-center gap-2
         rounded-sm px-2 py-1.5 pl-8 text-sm outline-none aria-selected:bg-accent

@@ -66,13 +66,6 @@ export const Autocomplete = forwardRef<
       [onValueChange]
     );
 
-    const handleCreatableSelect = useCallback(() => {
-      setOpen(false);
-      onCreatableSelect?.(inputValue, (value: string) =>
-        handleSelect(value, inputValue)
-      );
-    }, [handleSelect, inputValue, onCreatableSelect]);
-
     return (
       <AutocompleteContext.Provider
         value={{
@@ -82,7 +75,7 @@ export const Autocomplete = forwardRef<
           isOpen,
           lastValidInputValue,
           listRef,
-          onCreatableSelect: handleCreatableSelect,
+          onCreatableSelect,
           onInputValueChange: setInputValue,
           onOpenChange: setOpen,
           onSelect: handleSelect,
