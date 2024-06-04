@@ -55,7 +55,7 @@ export const AccountDrawer = () => {
     createAccountPending || updateAccountPending || deleteAccountPending;
 
   const defaultValues = {
-    name: (!currentAccountFetching && currentAccount?.name) || '',
+    name: currentAccount?.name || '',
   } satisfies AccountFormValues;
 
   const handleOpenChange = (open: boolean) => {
