@@ -2,6 +2,7 @@
 
 import type { ColumnDef } from '@tanstack/react-table';
 import type { InferResponseType } from 'hono';
+import { format } from 'date-fns';
 import { Loader2Icon } from 'lucide-react';
 
 import { CardContent } from '@/components/ui/Card';
@@ -12,6 +13,7 @@ import {
 } from '@/components/layout/DataTable';
 import { useTransactions } from '@/hooks/useTransactions';
 import { client } from '@/lib/hono';
+import { formatCurrency } from '@/lib/amount';
 
 import { TransactionActions } from './actions';
 
@@ -43,10 +45,31 @@ export const columns = [
     enableHiding: false,
   },
   {
+    accessorKey: 'date',
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title='Date' />
+    ),
+    cell: ({ row }) => format(row.getValue('date'), 'PPP'),
+  },
+  {
+    accessorKey: 'category',
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title='Category' />
+    ),
+    cell: ({ row }) => row.original.category,
+  },
+  {
     accessorKey: 'payee',
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title='Payee' />
     ),
+  },
+  {
+    accessorKey: 'amount',
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title='Amount' />
+    ),
+    cell: ({ row }) => formatCurrency(row.getValue('amount')),
   },
   {
     id: 'actions',
