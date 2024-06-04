@@ -88,6 +88,7 @@ export const AmountInput = forwardRef<
           onValueChange={handleChange}
           decimalScale={2}
           decimalsLimit={2}
+          step={0.01}
           className={cn('ps-11', className)}
         />
       </Input>
