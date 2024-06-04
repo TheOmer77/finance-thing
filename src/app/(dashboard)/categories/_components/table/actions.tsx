@@ -9,7 +9,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/DropdownMenu';
-import { useCategoryById } from '@/hooks/useCategoryById';
+import { useCategoryById } from '@/hooks/categories';
 import { useConfirm } from '@/hooks/useConfirm';
 import { useModal } from '@/hooks/useModal';
 

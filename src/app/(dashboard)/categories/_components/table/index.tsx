@@ -10,7 +10,7 @@ import {
   DataTable,
   DataTableColumnHeader,
 } from '@/components/layout/DataTable';
-import { useCategories } from '@/hooks/useCategories';
+import { useCategories } from '@/hooks/categories';
 import { client } from '@/lib/hono';
 
 import { CategoryActions } from './actions';

@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/Button';
 import { CardHeader, CardTitle } from '@/components/ui/Card';
 import { Skeleton } from '@/components/ui/Skeleton';
 import { useModal } from '@/hooks/useModal';
-import { useCategories } from '@/hooks/useCategories';
+import { useCategories } from '@/hooks/categories';
 
 export const CategoriesHeader = () => {
   const { openModal } = useModal();

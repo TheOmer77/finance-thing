@@ -13,8 +13,7 @@ import {
   DrawerTitle,
 } from '@/components/ui/Drawer';
 import { DrawerLoadingState } from '@/components/layout/DrawerLoadingState';
-import { useCategories } from '@/hooks/useCategories';
-import { useCategoryById } from '@/hooks/useCategoryById';
+import { useCategories, useCategoryById } from '@/hooks/categories';
 import { useConfirm } from '@/hooks/useConfirm';
 import { useModal } from '@/hooks/useModal';
 

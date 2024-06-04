@@ -26,7 +26,7 @@ import {
 import { Input } from '@/components/ui/Input';
 import { Textarea } from '@/components/ui/Textarea';
 import { useAccounts, type AccountsArray } from '@/hooks/accounts';
-import { useCategories, type CategoriesArray } from '@/hooks/useCategories';
+import { useCategories, type CategoriesArray } from '@/hooks/categories';
 import { insertTransactionSchema } from '@/db/schema';
 
 export type TransactionFormValues = z.infer<typeof insertTransactionSchema>;
