@@ -4,20 +4,8 @@ import type { InferRequestType, InferResponseType } from 'hono';
 
 import { client } from '@/lib/hono';
 
-export const useAccountById = (id?: string) => {
+export const useAccountById = (id?: string, { enabled = true } = {}) => {
   const queryClient = useQueryClient();
-
-  const getQuery = useQuery({
-    enabled: !!id,
-    queryKey: ['account', { id }],
-    queryFn: async () => {
-      const res = await client.api.accounts[':id'].$get({ param: { id } });
-      if (!res.ok) throw new Error('Failed to fetch account.');
-
-      const { data } = await res.json();
-      return data;
-    },
-  });
 
   const updateMutation = useMutation<
     InferResponseType<(typeof client.api.accounts)[':id']['$patch']>,
@@ -57,6 +45,23 @@ export const useAccountById = (id?: string) => {
       // TODO: Invalidate summary
     },
     onError: () => toast.error('Failed to delete account.'),
+  });
+
+  const getQuery = useQuery({
+    enabled:
+      enabled &&
+      !!id &&
+      // Don't try to fetch after deletion, it will result in 404
+      !deleteMutation.isPending &&
+      !deleteMutation.isSuccess,
+    queryKey: ['account', { id }],
+    queryFn: async () => {
+      const res = await client.api.accounts[':id'].$get({ param: { id } });
+      if (!res.ok) throw new Error('Failed to fetch account.');
+
+      const { data } = await res.json();
+      return data;
+    },
   });
 
   return {

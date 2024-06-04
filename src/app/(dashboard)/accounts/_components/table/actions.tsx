@@ -19,7 +19,9 @@ type AccountActionsProps = {
 
 export const AccountActions = ({ id }: AccountActionsProps) => {
   const { openModal } = useModal();
-  const { deleteAccount, deleteAccountPending } = useAccountById(id);
+  const { deleteAccount, deleteAccountPending } = useAccountById(id, {
+    enabled: false,
+  });
   const [DeleteDialog, confirmDelete] = useConfirm({
     message: `Delete this account?`,
     confirmLabel: 'Delete',

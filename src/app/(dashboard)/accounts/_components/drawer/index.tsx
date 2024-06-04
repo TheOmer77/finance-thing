@@ -38,6 +38,7 @@ export const AccountDrawer = () => {
     currentModal === 'accounts-new' ||
     !!currentModal?.startsWith('accounts-edit-');
   const lastModalWasEdit = !!lastModal?.startsWith('accounts-edit-');
+  const isOpen = isCurrentModal && !deleteConfirmPending;
 
   const currentAccountId =
     (currentModal?.startsWith('accounts-edit-') &&
@@ -50,7 +51,7 @@ export const AccountDrawer = () => {
     updateAccountPending,
     deleteAccount,
     deleteAccountPending,
-  } = useAccountById(currentAccountId);
+  } = useAccountById(currentAccountId, { enabled: isOpen });
 
   const isPending =
     createAccountPending || updateAccountPending || deleteAccountPending;
@@ -86,7 +87,7 @@ export const AccountDrawer = () => {
   return (
     <>
       <Drawer
-        open={isCurrentModal && !deleteConfirmPending && !deleteAccountPending}
+        open={isOpen && !deleteAccountPending}
         onOpenChange={handleOpenChange}
         direction={matchesMd ? 'right' : 'bottom'}
       >
