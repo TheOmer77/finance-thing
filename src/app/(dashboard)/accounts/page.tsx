@@ -1,7 +1,6 @@
-import { AccountDrawer } from '@/components/layout/modals/AccountDrawer';
-
-import { AccountsTable } from './table';
-import { AccountsHeader } from './header';
+import { AccountDrawer } from './_components/drawer';
+import { AccountsHeader } from './_components/header';
+import { AccountsTable } from './_components/table';
 
 const AccountsPage = () => (
   <>
