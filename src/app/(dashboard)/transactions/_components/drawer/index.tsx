@@ -14,7 +14,7 @@ import {
 } from '@/components/ui/Drawer';
 import { ScrollArea } from '@/components/ui/ScrollArea';
 import { DrawerLoadingState } from '@/components/layout/DrawerLoadingState';
-import { useAccounts } from '@/hooks/useAccounts';
+import { useAccounts } from '@/hooks/accounts';
 import { useCategories } from '@/hooks/useCategories';
 import { useConfirm } from '@/hooks/useConfirm';
 import { useModal } from '@/hooks/useModal';

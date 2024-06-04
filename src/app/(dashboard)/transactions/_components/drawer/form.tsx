@@ -25,7 +25,7 @@ import {
 } from '@/components/ui/Form';
 import { Input } from '@/components/ui/Input';
 import { Textarea } from '@/components/ui/Textarea';
-import { useAccounts, type AccountsArray } from '@/hooks/useAccounts';
+import { useAccounts, type AccountsArray } from '@/hooks/accounts';
 import { useCategories, type CategoriesArray } from '@/hooks/useCategories';
 import { insertTransactionSchema } from '@/db/schema';
 

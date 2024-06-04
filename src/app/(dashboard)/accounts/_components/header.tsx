@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/Button';
 import { CardHeader, CardTitle } from '@/components/ui/Card';
 import { Skeleton } from '@/components/ui/Skeleton';
 import { useModal } from '@/hooks/useModal';
-import { useAccounts } from '@/hooks/useAccounts';
+import { useAccounts } from '@/hooks/accounts';
 
 export const AccountsHeader = () => {
   const { openModal } = useModal();
