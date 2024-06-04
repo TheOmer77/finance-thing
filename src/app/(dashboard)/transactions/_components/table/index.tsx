@@ -15,9 +15,6 @@ import { client } from '@/lib/hono';
 
 import { TransactionActions } from './actions';
 
-// TEMPORARY - Remove when actually implemented
-const TEMP_NOT_IMPLEMENTED_YET = true;
-
 export type TransactionData = InferResponseType<
   typeof client.api.transactions.$get
 >['data'][number];
@@ -46,9 +43,9 @@ export const columns = [
     enableHiding: false,
   },
   {
-    accessorKey: 'name',
+    accessorKey: 'payee',
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title='Name' />
+      <DataTableColumnHeader column={column} title='Payee' />
     ),
   },
   {
@@ -74,20 +71,11 @@ export const TransactionsTable = () => {
       </CardContent>
     );
 
-  // TEMPORARY - Remove when actually implemented
-  if (TEMP_NOT_IMPLEMENTED_YET)
-    return (
-      <CardContent className='text-sm text-muted-foreground'>
-        Table not implemented yet. You can still add a new transaction using the
-        button above.
-      </CardContent>
-    );
-
   return (
     <DataTable
       columns={columns}
       data={transactions || []}
-      filterKey='name'
+      filterKey='payee'
       itemTypeSingle='transaction'
       onDelete={rows => {
         const ids = rows.map(({ original }) => original.id);

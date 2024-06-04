@@ -1,7 +1,6 @@
-import { TransactionDrawer } from '@/components/layout/modals/TransactionDrawer';
-
-import { TransactionsTable } from './table';
-import { TransactionsHeader } from './header';
+import { TransactionDrawer } from './_components/drawer';
+import { TransactionsHeader } from './_components/header';
+import { TransactionsTable } from './_components/table';
 
 const TransactionsPage = () => (
   <>
