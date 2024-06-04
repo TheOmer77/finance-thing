@@ -1,7 +1,6 @@
-import { CategoryDrawer } from '@/components/layout/modals/CategoryDrawer';
-
-import { CategoriesTable } from './table';
-import { CategoriesHeader } from './header';
+import { CategoriesHeader } from './_components/header';
+import { CategoriesTable } from './_components/table';
+import { CategoryDrawer } from './_components/drawer';
 
 const CategoriesPage = () => (
   <>
