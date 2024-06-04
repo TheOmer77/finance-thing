@@ -5,6 +5,7 @@ import type { InferResponseType } from 'hono';
 import { format } from 'date-fns';
 import { Loader2Icon } from 'lucide-react';
 
+import { Badge } from '@/components/ui/Badge';
 import { CardContent } from '@/components/ui/Card';
 import { Checkbox } from '@/components/ui/Checkbox';
 import {
@@ -13,7 +14,7 @@ import {
 } from '@/components/layout/DataTable';
 import { useTransactions } from '@/hooks/useTransactions';
 import { client } from '@/lib/hono';
-import { formatCurrency } from '@/lib/amount';
+import { amountFromMilliunits, formatCurrency } from '@/lib/amount';
 
 import { TransactionActions } from './actions';
 
@@ -45,6 +46,29 @@ export const columns = [
     enableHiding: false,
   },
   {
+    accessorKey: 'payee',
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title='Payee' />
+    ),
+  },
+  {
+    accessorKey: 'amount',
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title='Amount' />
+    ),
+    cell: ({ row }) => {
+      const amount = row.getValue('amount') as number;
+      return (
+        <Badge
+          variant={amount < 0 ? 'destructive' : 'primary'}
+          className='px-3.5 py-2.5 font-medium'
+        >
+          {formatCurrency(amountFromMilliunits(amount))}
+        </Badge>
+      );
+    },
+  },
+  {
     accessorKey: 'date',
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title='Date' />
@@ -59,17 +83,11 @@ export const columns = [
     cell: ({ row }) => row.original.category,
   },
   {
-    accessorKey: 'payee',
+    accessorKey: 'account',
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title='Payee' />
+      <DataTableColumnHeader column={column} title='Account' />
     ),
-  },
-  {
-    accessorKey: 'amount',
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title='Amount' />
-    ),
-    cell: ({ row }) => formatCurrency(row.getValue('amount')),
+    cell: ({ row }) => row.original.account,
   },
   {
     id: 'actions',

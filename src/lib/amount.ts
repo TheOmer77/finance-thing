@@ -6,4 +6,4 @@ export const formatCurrency = (amount: number) =>
     style: 'currency',
     currency: 'USD',
     minimumFractionDigits: 2,
-  }).format(amountFromMilliunits(amount));
+  }).format(amount);
