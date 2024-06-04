@@ -36,7 +36,7 @@ export const Autocomplete = forwardRef<
       listRef = useRef<HTMLDivElement>(null);
 
     const [isOpen, setOpen] = useState(false);
-    const [inputValue, setInputValue] = useState<string>(value || '');
+    const [inputValue, setInputValue] = useState<string>('');
     const [lastValidInputValue, setLastValidInputValue] = useState(
       inputValue || ''
     );
@@ -52,13 +52,6 @@ export const Autocomplete = forwardRef<
       },
       [isOpen, onKeyDown]
     );
-
-    const handleFocus = useCallback(() => setOpen(true), []);
-
-    const handleBlur = useCallback(() => {
-      setOpen(false);
-      setInputValue(lastValidInputValue);
-    }, [lastValidInputValue]);
 
     const handleSelect = useCallback(
       (value: string, inputValue: string) => {
@@ -87,11 +80,11 @@ export const Autocomplete = forwardRef<
           inputValue,
           isMounted,
           isOpen,
+          lastValidInputValue,
           listRef,
-          onBlur: handleBlur,
           onCreatableSelect: handleCreatableSelect,
-          onFocus: handleFocus,
           onInputValueChange: setInputValue,
+          onOpenChange: setOpen,
           onSelect: handleSelect,
           value,
         }}

@@ -2,6 +2,7 @@
 
 import {
   forwardRef,
+  useCallback,
   useContext,
   useImperativeHandle,
   type ComponentPropsWithoutRef,
@@ -29,12 +30,19 @@ export const AutocompleteInput = forwardRef<
     inputRef,
     inputValue,
     isMounted,
-    onBlur,
-    onFocus,
+    lastValidInputValue,
     onInputValueChange,
+    onOpenChange,
   } = useContext(AutocompleteContext);
 
   useImperativeHandle(ref, () => inputRef!.current!, [inputRef]);
+
+  const handleFocus = useCallback(() => onOpenChange?.(true), [onOpenChange]);
+
+  const handleBlur = useCallback(() => {
+    onOpenChange?.(false);
+    onInputValueChange?.(lastValidInputValue);
+  }, [lastValidInputValue, onInputValueChange, onOpenChange]);
 
   return (
     <PopoverAnchor className='relative'>
@@ -44,8 +52,8 @@ export const AutocompleteInput = forwardRef<
           ref={inputRef}
           value={inputValue}
           onValueChange={onInputValueChange}
-          onBlur={onBlur}
-          onFocus={onFocus}
+          onBlur={handleBlur}
+          onFocus={handleFocus}
           className={cn('pe-8', className)}
           asChild
         >
@@ -56,8 +64,8 @@ export const AutocompleteInput = forwardRef<
           {...props}
           ref={inputRef}
           value={inputValue}
-          onBlur={onBlur}
-          onFocus={onFocus}
+          onBlur={handleBlur}
+          onFocus={handleFocus}
           className={cn('pe-8', className)}
         />
       )}
