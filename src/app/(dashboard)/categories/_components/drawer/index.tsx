@@ -1,6 +1,6 @@
 'use client';
 
-import { Loader2Icon, XIcon } from 'lucide-react';
+import { XIcon } from 'lucide-react';
 import { useMediaQuery } from 'usehooks-ts';
 
 import { Button } from '@/components/ui/Button';
@@ -12,6 +12,7 @@ import {
   DrawerHeader,
   DrawerTitle,
 } from '@/components/ui/Drawer';
+import { DrawerLoadingState } from '@/components/layout/DrawerLoadingState';
 import { useCategories } from '@/hooks/useCategories';
 import { useCategoryById } from '@/hooks/useCategoryById';
 import { useConfirm } from '@/hooks/useConfirm';
@@ -106,9 +107,7 @@ export const CategoryDrawer = () => {
             </DrawerDescription>
           </DrawerHeader>
           {currentCategoryFetching ? (
-            <div className='grid h-16 w-full place-items-center'>
-              <Loader2Icon className='size-6 animate-spin text-muted-foreground' />
-            </div>
+            <DrawerLoadingState />
           ) : (
             <CategoryForm
               defaultValues={defaultValues}
