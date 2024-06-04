@@ -61,7 +61,7 @@ export const TransactionForm = ({
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)}>
+      <form onSubmit={form.handleSubmit(onSubmit)} className='md:h-full'>
         <div className='space-y-4 px-4'>
           <FormField
             control={form.control}
@@ -199,7 +199,10 @@ export const TransactionForm = ({
             )}
           />
         </div>
-        <DrawerFooter className='md:absolute md:inset-x-0 md:bottom-0'>
+        <DrawerFooter
+          className='sticky inset-x-0 bottom-0 bg-background
+md:absolute'
+        >
           {isEdit && (
             <Button
               type='button'

@@ -12,6 +12,7 @@ import {
   DrawerHeader,
   DrawerTitle,
 } from '@/components/ui/Drawer';
+import { ScrollArea } from '@/components/ui/ScrollArea';
 import { DrawerLoadingState } from '@/components/layout/DrawerLoadingState';
 import { useAccounts } from '@/hooks/useAccounts';
 import { useCategories } from '@/hooks/useCategories';
@@ -142,15 +143,23 @@ export const TransactionDrawer = () => {
           {isLoading ? (
             <DrawerLoadingState />
           ) : (
-            <TransactionForm
-              defaultValues={defaultValues}
-              onSubmit={handleSubmit}
-              onDelete={handleDelete}
-              disabled={isPending}
-              isEdit={lastModalWasEdit}
-              accounts={accounts}
-              categories={categories}
-            />
+            <ScrollArea
+              className='md:grow
+md:[&>[data-radix-scroll-area-viewport]>*]:h-full
+[&>[data-radix-scroll-area-viewport]]:max-h-[calc(100dvh-10rem)]
+md:[&>[data-radix-scroll-area-viewport]]:h-full
+md:[&>[data-radix-scroll-area-viewport]]:max-h-none'
+            >
+              <TransactionForm
+                defaultValues={defaultValues}
+                onSubmit={handleSubmit}
+                onDelete={handleDelete}
+                disabled={isPending}
+                isEdit={lastModalWasEdit}
+                accounts={accounts}
+                categories={categories}
+              />
+            </ScrollArea>
           )}
         </DrawerContent>
       </Drawer>
