@@ -112,7 +112,9 @@ export const Autocomplete = forwardRef<
       if (!value) return;
 
       const initialSelectedItem = listItems.find(item => item.value === value);
-      if (initialSelectedItem) setInputValue(initialSelectedItem.label);
+      if (!initialSelectedItem) return;
+      setInputValue(initialSelectedItem.label);
+      setLastValidInputValue(initialSelectedItem.label);
     }, [listItems, value]);
 
     return (
