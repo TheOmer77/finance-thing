@@ -35,16 +35,20 @@ export const AmountInput = forwardRef<
 
   const handleChange: CurrencyInputProps['onValueChange'] = (
     inputValue,
-    __,
+    _,
     values
   ) => {
-    if (inputValue) setInputValue(inputValue);
-    if (inputValue === values?.float?.toString?.())
-      onChange?.(values?.float || undefined);
+    if (!inputValue) {
+      setInputValue('0');
+      return onChange?.(0);
+    }
+    setInputValue(inputValue);
+    if (typeof values?.float === 'number' && !inputValue?.endsWith('.'))
+      onChange?.(values?.float);
   };
 
   const handleReverseValue = () => {
-    if (!value) return;
+    if (typeof value !== 'number') return;
     onChange?.(value * -1);
     setInputValue((value * -1).toFixed(2));
   };
