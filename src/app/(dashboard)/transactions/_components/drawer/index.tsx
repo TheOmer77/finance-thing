@@ -70,20 +70,16 @@ export const TransactionDrawer = () => {
       currentTransactionFetching || accountsLoading || categoriesLoading;
 
   const defaultValues = {
-    accountId:
-      (!currentTransactionFetching && currentTransaction?.accountId) || '',
-    amount:
-      !currentTransactionFetching && currentTransaction?.amount
-        ? amountFromMilliunits(currentTransaction.amount)
-        : 0,
-    date:
-      !currentTransactionFetching && currentTransaction?.date
-        ? new Date(currentTransaction?.date)
-        : new Date(),
-    payee: (!currentTransactionFetching && currentTransaction?.payee) || '',
-    categoryId:
-      (!currentTransactionFetching && currentTransaction?.categoryId) || null,
-    notes: (!currentTransactionFetching && currentTransaction?.notes) || null,
+    accountId: currentTransaction?.accountId || '',
+    categoryId: currentTransaction?.categoryId || null,
+    amount: currentTransaction?.amount
+      ? amountFromMilliunits(currentTransaction.amount)
+      : 0,
+    date: currentTransaction?.date
+      ? new Date(currentTransaction?.date)
+      : new Date(),
+    payee: currentTransaction?.payee || '',
+    notes: currentTransaction?.notes || null,
   } satisfies TransactionFormValues;
 
   const handleOpenChange = (open: boolean) => {
