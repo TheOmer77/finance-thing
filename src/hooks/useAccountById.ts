@@ -35,7 +35,8 @@ export const useAccountById = (id?: string) => {
       toast.success('Account updated.');
       queryClient.invalidateQueries({ queryKey: ['accounts'] });
       queryClient.invalidateQueries({ queryKey: ['account', { id }] });
-      // TODO: Invalidate summary and transactions
+      queryClient.invalidateQueries({ queryKey: ['transactions'] });
+      // TODO: Invalidate summary
     },
     onError: () => toast.error('Failed to update account.'),
   });
@@ -52,7 +53,8 @@ export const useAccountById = (id?: string) => {
       toast.success('Account deleted.');
       queryClient.invalidateQueries({ queryKey: ['accounts'] });
       queryClient.invalidateQueries({ queryKey: ['account', { id }] });
-      // TODO: Invalidate summary and transactions
+      queryClient.invalidateQueries({ queryKey: ['transactions'] });
+      // TODO: Invalidate summary
     },
     onError: () => toast.error('Failed to delete account.'),
   });
