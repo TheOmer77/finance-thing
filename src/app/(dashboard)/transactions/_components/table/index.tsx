@@ -14,7 +14,7 @@ import {
 } from '@/components/layout/DataTable';
 import { AccountDrawer } from '@/app/(dashboard)/accounts/_components/drawer';
 import { CategoryDrawer } from '@/app/(dashboard)/categories/_components/drawer';
-import { useTransactions } from '@/hooks/useTransactions';
+import { useTransactions } from '@/hooks/transactions';
 import { client } from '@/lib/hono';
 import { amountFromMilliunits, formatCurrency } from '@/lib/amount';
 

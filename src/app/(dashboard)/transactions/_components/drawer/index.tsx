@@ -18,8 +18,7 @@ import { useAccounts } from '@/hooks/accounts';
 import { useCategories } from '@/hooks/categories';
 import { useConfirm } from '@/hooks/useConfirm';
 import { useModal } from '@/hooks/useModal';
-import { useTransactionById } from '@/hooks/useTransactionById';
-import { useTransactions } from '@/hooks/useTransactions';
+import { useTransactionById, useTransactions } from '@/hooks/transactions';
 import { amountFromMilliunits, amountToMilliunits } from '@/lib/amount';
 
 import {
