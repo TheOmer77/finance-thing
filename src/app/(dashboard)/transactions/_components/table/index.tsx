@@ -12,10 +12,13 @@ import {
   DataTable,
   DataTableColumnHeader,
 } from '@/components/layout/DataTable';
+import { AccountDrawer } from '@/app/(dashboard)/accounts/_components/drawer';
+import { CategoryDrawer } from '@/app/(dashboard)/categories/_components/drawer';
 import { useTransactions } from '@/hooks/useTransactions';
 import { client } from '@/lib/hono';
 import { amountFromMilliunits, formatCurrency } from '@/lib/amount';
 
+import { TransactionLinkCell } from './link-cell';
 import { TransactionActions } from './actions';
 
 export type TransactionData = InferResponseType<
@@ -80,14 +83,26 @@ export const columns = [
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title='Category' />
     ),
-    cell: ({ row }) => row.original.category,
+    cell: ({ row }) => (
+      <TransactionLinkCell
+        type='category'
+        name={row.original.category}
+        id={row.original.categoryId}
+      />
+    ),
   },
   {
     accessorKey: 'account',
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title='Account' />
     ),
-    cell: ({ row }) => row.original.account,
+    cell: ({ row }) => (
+      <TransactionLinkCell
+        type='account'
+        name={row.original.account}
+        id={row.original.accountId}
+      />
+    ),
   },
   {
     id: 'actions',
@@ -113,17 +128,22 @@ export const TransactionsTable = () => {
     );
 
   return (
-    <DataTable
-      columns={columns}
-      data={transactions || []}
-      filterKey='payee'
-      itemTypeSingle='transaction'
-      onDelete={rows => {
-        const ids = rows.map(({ original }) => original.id);
-        deleteTransactions({ ids });
-      }}
-      disabled={disabled}
-      className='p-6 pt-0'
-    />
+    <>
+      <DataTable
+        columns={columns}
+        data={transactions || []}
+        filterKey='payee'
+        itemTypeSingle='transaction'
+        onDelete={rows => {
+          const ids = rows.map(({ original }) => original.id);
+          deleteTransactions({ ids });
+        }}
+        disabled={disabled}
+        className='p-6 pt-0'
+      />
+
+      <AccountDrawer />
+      <CategoryDrawer />
+    </>
   );
 };
