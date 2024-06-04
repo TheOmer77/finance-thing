@@ -18,7 +18,7 @@ import { useConfirm } from '@/hooks/useConfirm';
 import { useModal } from '@/hooks/useModal';
 import { useTransactionById } from '@/hooks/useTransactionById';
 import { useTransactions } from '@/hooks/useTransactions';
-import { amountFromMilliunits, amountToMilliunits } from '@/lib/convertAmount';
+import { amountFromMilliunits, amountToMilliunits } from '@/lib/amount';
 
 import {
   TransactionForm,
