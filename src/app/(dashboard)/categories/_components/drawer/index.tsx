@@ -38,6 +38,7 @@ export const CategoryDrawer = () => {
     currentModal === 'categories-new' ||
     !!currentModal?.startsWith('categories-edit-');
   const lastModalWasEdit = !!lastModal?.startsWith('categories-edit-');
+  const isOpen = isCurrentModal && !deleteConfirmPending;
 
   const currentCategoryId =
     (currentModal?.startsWith('categories-edit-') &&
@@ -50,7 +51,7 @@ export const CategoryDrawer = () => {
     updateCategoryPending,
     deleteCategory,
     deleteCategoryPending,
-  } = useCategoryById(currentCategoryId);
+  } = useCategoryById(currentCategoryId, { enabled: isOpen });
 
   const isPending =
     createCategoryPending || updateCategoryPending || deleteCategoryPending;
@@ -86,7 +87,7 @@ export const CategoryDrawer = () => {
   return (
     <>
       <Drawer
-        open={isCurrentModal && !deleteConfirmPending && !deleteCategoryPending}
+        open={isOpen && !deleteCategoryPending}
         onOpenChange={handleOpenChange}
         direction={matchesMd ? 'right' : 'bottom'}
       >

@@ -4,20 +4,8 @@ import type { InferRequestType, InferResponseType } from 'hono';
 
 import { client } from '@/lib/hono';
 
-export const useCategoryById = (id?: string) => {
+export const useCategoryById = (id?: string, { enabled = true } = {}) => {
   const queryClient = useQueryClient();
-
-  const getQuery = useQuery({
-    enabled: !!id,
-    queryKey: ['category', { id }],
-    queryFn: async () => {
-      const res = await client.api.categories[':id'].$get({ param: { id } });
-      if (!res.ok) throw new Error('Failed to fetch category.');
-
-      const { data } = await res.json();
-      return data;
-    },
-  });
 
   const updateMutation = useMutation<
     InferResponseType<(typeof client.api.categories)[':id']['$patch']>,
@@ -57,6 +45,23 @@ export const useCategoryById = (id?: string) => {
       // TODO: Invalidate summary
     },
     onError: () => toast.error('Failed to delete category.'),
+  });
+
+  const getQuery = useQuery({
+    enabled:
+      enabled &&
+      !!id &&
+      // Don't try to fetch after deletion, it will result in 404
+      !deleteMutation.isPending &&
+      !deleteMutation.isSuccess,
+    queryKey: ['category', { id }],
+    queryFn: async () => {
+      const res = await client.api.categories[':id'].$get({ param: { id } });
+      if (!res.ok) throw new Error('Failed to fetch category.');
+
+      const { data } = await res.json();
+      return data;
+    },
   });
 
   return {

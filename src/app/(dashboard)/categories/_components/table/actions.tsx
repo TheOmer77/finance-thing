@@ -19,7 +19,9 @@ type CategoryActionsProps = {
 
 export const CategoryActions = ({ id }: CategoryActionsProps) => {
   const { openModal } = useModal();
-  const { deleteCategory, deleteCategoryPending } = useCategoryById(id);
+  const { deleteCategory, deleteCategoryPending } = useCategoryById(id, {
+    enabled: false,
+  });
   const [DeleteDialog, confirmDelete] = useConfirm({
     message: `Delete this category?`,
     confirmLabel: 'Delete',
