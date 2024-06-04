@@ -55,7 +55,7 @@ export const CategoryDrawer = () => {
     createCategoryPending || updateCategoryPending || deleteCategoryPending;
 
   const defaultValues = {
-    name: (!currentCategoryFetching && currentCategory?.name) || '',
+    name: currentCategory?.name || '',
   } satisfies CategoryFormValues;
 
   const handleOpenChange = (open: boolean) => {
