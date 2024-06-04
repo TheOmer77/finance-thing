@@ -46,6 +46,7 @@ export const AmountInput = forwardRef<
   const handleReverseValue = () => {
     if (!value) return;
     onChange?.(value * -1);
+    setInputValue((value * -1).toFixed(2));
   };
 
   return (
