@@ -5,15 +5,15 @@ import {
   Table,
   TableBody,
   TableCell,
-  TableHead,
   TableHeader,
   TableRow,
 } from '@/components/ui/Table';
 import { useTransactionsImport } from '@/hooks/transactions';
 
-const INPUT_DATE_FORMAT = 'yyyy-MM-dd HH:mm:ss',
-  OUTPUT_DATE_FORMAT = 'yyyy-MM-dd';
-const REQUIRED_FIELDS = ['amount', 'date', 'payee'];
+import {
+  TableHeadSelect,
+  type TableHeadSelectProps,
+} from './table-head-select';
 
 export const TransactionsImportTable = () => {
   const { importResult } = useTransactionsImport();
@@ -23,10 +23,21 @@ export const TransactionsImportTable = () => {
     Record<string, string | null>
   >({});
 
-  const handleColumnSelectChange = (
-    columnIndex: number,
-    value: string | null
-  ) => {};
+  const handleColumnSelectChange: TableHeadSelectProps['onChange'] = (
+    columnIndex,
+    value
+  ) =>
+    setSelectedColumns(prev => {
+      const newSelectedColumns = { ...prev };
+
+      Object.keys(selectedColumns).forEach(key => {
+        if (newSelectedColumns[key] === value) newSelectedColumns[key] = null;
+      });
+      newSelectedColumns[`column-${columnIndex}`] =
+        value === 'skip' ? null : value;
+
+      return newSelectedColumns;
+    });
 
   return (
     <CardContent>
@@ -35,7 +46,12 @@ export const TransactionsImportTable = () => {
           <TableHeader>
             <TableRow>
               {headers.map((header, colIndex) => (
-                <TableHead key={`header-${colIndex}`}>{header}</TableHead>
+                <TableHeadSelect
+                  key={`header-${colIndex}`}
+                  onChange={handleColumnSelectChange}
+                  columnIndex={colIndex}
+                  selectedColumns={selectedColumns}
+                />
               ))}
             </TableRow>
           </TableHeader>
