@@ -5,11 +5,10 @@ import { type VariantProps } from 'class-variance-authority';
 import { buttonVariants } from './variants';
 import { cn } from '@/lib/utils';
 
-export interface ButtonProps
-  extends ComponentPropsWithoutRef<'button'>,
-    VariantProps<typeof buttonVariants> {
-  asChild?: boolean;
-}
+export type ButtonProps = ComponentPropsWithoutRef<'button'> &
+  VariantProps<typeof buttonVariants> & {
+    asChild?: boolean;
+  };
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className, variant, size, asChild = false, ...props }, ref) => {

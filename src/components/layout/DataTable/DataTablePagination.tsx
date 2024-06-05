@@ -3,9 +3,9 @@ import type { Table } from '@tanstack/react-table';
 
 import { Button } from '@/components/ui/Button';
 
-interface DataTablePaginationProps<TData> {
+type DataTablePaginationProps<TData> = {
   table: Table<TData>;
-}
+};
 
 export const DataTablePagination = <TData,>({
   table,

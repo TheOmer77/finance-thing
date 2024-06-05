@@ -1,14 +1,15 @@
+import type { ComponentPropsWithoutRef } from 'react';
 import type { Column } from '@tanstack/react-table';
 import { ArrowDownIcon, ArrowUpIcon, ArrowUpDownIcon } from 'lucide-react';
 
 import { Button } from '@/components/ui/Button';
 import { cn } from '@/lib/utils';
 
-interface DataTableColumnHeaderProps<TData, TValue>
-  extends React.HTMLAttributes<HTMLDivElement> {
-  column: Column<TData, TValue>;
-  title: string;
-}
+type DataTableColumnHeaderProps<TData, TValue> =
+  ComponentPropsWithoutRef<'div'> & {
+    column: Column<TData, TValue>;
+    title: string;
+  };
 
 export function DataTableColumnHeader<TData, TValue>({
   column,
