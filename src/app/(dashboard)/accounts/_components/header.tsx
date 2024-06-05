@@ -21,6 +21,7 @@ export const AccountsHeader = () => {
       )}
       {!accountsLoading && (
         <Button
+          variant='primary'
           className='w-10 px-0 sm:w-auto sm:px-4'
           onClick={() => openModal('accounts-new')}
         >

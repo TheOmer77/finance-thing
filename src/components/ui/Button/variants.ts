@@ -27,7 +27,7 @@ disabled:pointer-events-none disabled:opacity-50`,
       },
     },
     defaultVariants: {
-      variant: 'primary',
+      variant: 'outline',
       size: 'md',
     },
   }

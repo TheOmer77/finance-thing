@@ -67,7 +67,7 @@ export const AccountForm = ({
               Delete
             </Button>
           )}
-          <Button type='submit' disabled={disabled}>
+          <Button variant='primary' type='submit' disabled={disabled}>
             {isEdit ? 'Save' : 'Create'}
           </Button>
         </DrawerFooter>
