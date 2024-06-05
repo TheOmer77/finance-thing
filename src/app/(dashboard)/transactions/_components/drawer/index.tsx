@@ -117,7 +117,6 @@ export const TransactionDrawer = () => {
 
   return (
     <>
-      {/* TODO: Make scrollable */}
       <Drawer
         open={isOpen && !deleteTransactionPending}
         onOpenChange={handleOpenChange}
