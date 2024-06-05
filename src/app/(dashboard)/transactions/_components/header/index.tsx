@@ -1,40 +1,34 @@
 'use client';
 
-import { PlusIcon } from 'lucide-react';
+import { useSearchParams } from 'next/navigation';
+import { PlusIcon, XIcon } from 'lucide-react';
 import type { ParseResult } from 'papaparse';
 
 import { Button } from '@/components/ui/Button';
 import { CardHeader, CardTitle } from '@/components/ui/Card';
 import { Skeleton } from '@/components/ui/Skeleton';
 import { useModal } from '@/hooks/useModal';
-import { useTransactions } from '@/hooks/transactions';
+import { useTransactions, useTransactionsImport } from '@/hooks/transactions';
 
 import { UploadButton } from './upload-button';
 
 export const TransactionsHeader = () => {
-  const { openModal } = useModal();
   const { transactionsLoading } = useTransactions();
+  const { importResult, setImportResult, resetImportResult } =
+    useTransactionsImport();
+
+  const searchParams = useSearchParams(),
+    isImportMode = !!searchParams.get('import') && importResult.data.length > 0;
+  const { openModal } = useModal();
 
   const handleUpload = (result: ParseResult<string[]>) => {
-    const [headers, ...data] = result.data;
-    console.table(
-      data.reduce(
-        (arr, curr) => [
-          ...arr,
-          headers.reduce(
-            (obj, header, index) => ({
-              ...obj,
-              [header]: curr[index],
-            }),
-            {}
-          ),
-        ],
-        [] as unknown[]
-      )
-    );
-    console.log(result);
-
     window.history.pushState(null, '', `?import=true`);
+    setImportResult(result);
+  };
+
+  const handleImportCancel = () => {
+    window.history.back();
+    resetImportResult();
   };
 
   return (
@@ -42,21 +36,32 @@ export const TransactionsHeader = () => {
       {transactionsLoading ? (
         <Skeleton className='h-8 w-48' />
       ) : (
-        <CardTitle>Transaction history</CardTitle>
+        <CardTitle>
+          {isImportMode ? 'Import transactions' : 'Transaction history'}
+        </CardTitle>
       )}
-      {!transactionsLoading && (
-        <div className='flex flex-row items-center gap-2'>
-          <UploadButton onUpload={handleUpload} />
+      {!transactionsLoading &&
+        (isImportMode ? (
           <Button
-            variant='primary'
             className='w-10 px-0 sm:w-auto sm:px-4'
-            onClick={() => openModal('transactions-new')}
+            onClick={handleImportCancel}
           >
-            <PlusIcon className='size-4 sm:me-2' />
-            <span className='hidden sm:inline'>Add new</span>
+            <XIcon className='size-4 sm:me-2' />
+            <span className='hidden sm:inline'>Cancel</span>
           </Button>
-        </div>
-      )}
+        ) : (
+          <div className='flex flex-row items-center gap-2'>
+            <UploadButton onUpload={handleUpload} />
+            <Button
+              variant='primary'
+              className='w-10 px-0 sm:w-auto sm:px-4'
+              onClick={() => openModal('transactions-new')}
+            >
+              <PlusIcon className='size-4 sm:me-2' />
+              <span className='hidden sm:inline'>Add new</span>
+            </Button>
+          </div>
+        ))}
     </CardHeader>
   );
 };

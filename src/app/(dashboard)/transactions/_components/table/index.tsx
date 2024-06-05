@@ -1,32 +1,20 @@
 'use client';
 
 import { useSearchParams } from 'next/navigation';
-import type { ParseResult } from 'papaparse';
 
-import { CardContent } from '@/components/ui/Card';
 import { DataTable } from '@/components/layout/DataTable';
 import { LoadingState } from '@/components/layout/LoadingState';
 import { AccountDrawer } from '@/app/(dashboard)/accounts/_components/drawer';
 import { CategoryDrawer } from '@/app/(dashboard)/categories/_components/drawer';
-import { useTransactions } from '@/hooks/transactions';
+import { useTransactions, useTransactionsImport } from '@/hooks/transactions';
 
 import { columns } from './columns';
-
-const INITIAL_IMPORT_RESULTS = {
-  data: [],
-  errors: [],
-  meta: {
-    aborted: false,
-    cursor: 0,
-    delimiter: ',',
-    linebreak: '\n',
-    truncated: false,
-  },
-} satisfies ParseResult<string[]>;
+import { TransactionsImportTable } from './import-table';
 
 export const TransactionsTable = () => {
+  const { importResult } = useTransactionsImport();
   const searchParams = useSearchParams(),
-    isImportMode = !!searchParams.get('import');
+    isImportMode = !!searchParams.get('import') && importResult.data.length > 0;
 
   const {
     transactions,
@@ -38,13 +26,7 @@ export const TransactionsTable = () => {
   const disabled = transactionsLoading || deleteTransactionsPending;
 
   if (transactionsLoading) return <LoadingState variant='table' />;
-
-  if (isImportMode)
-    return (
-      <CardContent className='text-sm text-muted-foreground'>
-        Import screen TBD.
-      </CardContent>
-    );
+  if (isImportMode) return <TransactionsImportTable />;
 
   return (
     <>
