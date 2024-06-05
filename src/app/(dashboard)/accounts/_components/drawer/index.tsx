@@ -12,7 +12,7 @@ import {
   DrawerHeader,
   DrawerTitle,
 } from '@/components/ui/Drawer';
-import { DrawerLoadingState } from '@/components/layout/DrawerLoadingState';
+import { LoadingState } from '@/components/layout/LoadingState';
 import { useAccountById, useAccounts } from '@/hooks/accounts';
 import { useConfirm } from '@/hooks/useConfirm';
 import { useModal } from '@/hooks/useModal';
@@ -107,7 +107,7 @@ export const AccountDrawer = () => {
             </DrawerDescription>
           </DrawerHeader>
           {currentAccountFetching ? (
-            <DrawerLoadingState />
+            <LoadingState variant='drawer' />
           ) : (
             <AccountForm
               defaultValues={defaultValues}

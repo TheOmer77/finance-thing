@@ -1,9 +1,7 @@
 'use client';
 
-import { Loader2Icon } from 'lucide-react';
-
-import { CardContent } from '@/components/ui/Card';
 import { DataTable } from '@/components/layout/DataTable';
+import { LoadingState } from '@/components/layout/LoadingState';
 import { AccountDrawer } from '@/app/(dashboard)/accounts/_components/drawer';
 import { CategoryDrawer } from '@/app/(dashboard)/categories/_components/drawer';
 import { useTransactions } from '@/hooks/transactions';
@@ -20,12 +18,7 @@ export const TransactionsTable = () => {
 
   const disabled = transactionsLoading || deleteTransactionsPending;
 
-  if (transactionsLoading)
-    return (
-      <CardContent className='grid h-[32rem] w-full place-items-center'>
-        <Loader2Icon className='size-6 animate-spin text-muted-foreground' />
-      </CardContent>
-    );
+  if (transactionsLoading) return <LoadingState variant='table' />;
 
   return (
     <>

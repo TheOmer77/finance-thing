@@ -13,7 +13,7 @@ import {
   DrawerTitle,
 } from '@/components/ui/Drawer';
 import { ScrollArea } from '@/components/ui/ScrollArea';
-import { DrawerLoadingState } from '@/components/layout/DrawerLoadingState';
+import { LoadingState } from '@/components/layout/LoadingState';
 import { useAccounts } from '@/hooks/accounts';
 import { useCategories } from '@/hooks/categories';
 import { useConfirm } from '@/hooks/useConfirm';
@@ -140,7 +140,7 @@ export const TransactionDrawer = () => {
             </DrawerDescription>
           </DrawerHeader>
           {isLoading ? (
-            <DrawerLoadingState />
+            <LoadingState variant='drawer' />
           ) : (
             <ScrollArea
               className='md:grow
@@ -162,6 +162,7 @@ md:[&>[data-radix-scroll-area-viewport]]:max-h-none'
           )}
         </DrawerContent>
       </Drawer>
+
       <DeleteDialog />
     </>
   );

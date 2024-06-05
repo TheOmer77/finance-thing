@@ -12,7 +12,7 @@ import {
   DrawerHeader,
   DrawerTitle,
 } from '@/components/ui/Drawer';
-import { DrawerLoadingState } from '@/components/layout/DrawerLoadingState';
+import { LoadingState } from '@/components/layout/LoadingState';
 import { useCategories, useCategoryById } from '@/hooks/categories';
 import { useConfirm } from '@/hooks/useConfirm';
 import { useModal } from '@/hooks/useModal';
@@ -107,7 +107,7 @@ export const CategoryDrawer = () => {
             </DrawerDescription>
           </DrawerHeader>
           {currentCategoryFetching ? (
-            <DrawerLoadingState />
+            <LoadingState variant='drawer' />
           ) : (
             <CategoryForm
               defaultValues={defaultValues}

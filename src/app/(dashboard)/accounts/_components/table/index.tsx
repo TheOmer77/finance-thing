@@ -1,9 +1,7 @@
 'use client';
 
-import { Loader2Icon } from 'lucide-react';
-
-import { CardContent } from '@/components/ui/Card';
 import { DataTable } from '@/components/layout/DataTable';
+import { LoadingState } from '@/components/layout/LoadingState';
 import { useAccounts } from '@/hooks/accounts';
 
 import { columns } from './columns';
@@ -14,12 +12,7 @@ export const AccountsTable = () => {
 
   const disabled = accountsLoading || deleteAccountsPending;
 
-  if (accountsLoading)
-    return (
-      <CardContent className='grid h-[32rem] w-full place-items-center'>
-        <Loader2Icon className='size-6 animate-spin text-muted-foreground' />
-      </CardContent>
-    );
+  if (accountsLoading) return <LoadingState variant='table' />;
 
   return (
     <DataTable
