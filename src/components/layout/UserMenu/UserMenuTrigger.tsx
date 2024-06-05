@@ -1,11 +1,11 @@
 'use client';
 
 import { useUser } from '@clerk/nextjs';
-import { Loader2Icon } from 'lucide-react';
 
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/Avatar';
 import { Button } from '@/components/ui/Button';
 import { DropdownMenuTrigger } from '@/components/ui/DropdownMenu';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/Avatar';
+import { Spinner } from '@/components/ui/Spinner';
 
 export const UserMenuTrigger = () => {
   const { isLoaded, user } = useUser();
@@ -19,7 +19,7 @@ export const UserMenuTrigger = () => {
         disabled={!isLoaded}
       >
         {!isLoaded || !user?.id ? (
-          <Loader2Icon className='size-7 animate-spin' />
+          <Spinner className='size-7 text-inherit' />
         ) : (
           <Avatar className='size-9'>
             <AvatarImage

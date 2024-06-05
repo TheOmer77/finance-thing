@@ -1,7 +1,7 @@
 import type { PropsWithChildren } from 'react';
 import { ClerkLoaded, ClerkLoading } from '@clerk/nextjs';
-import { Loader2Icon } from 'lucide-react';
 
+import { Spinner } from '@/components/ui/Spinner';
 import { Logo } from '@/components/layout/Logo';
 
 const AuthLayout = ({ children }: PropsWithChildren) => (
@@ -10,7 +10,7 @@ const AuthLayout = ({ children }: PropsWithChildren) => (
 place-items-center lg:grid-cols-2'
   >
     <ClerkLoading>
-      <Loader2Icon className='size-8 animate-spin text-muted-foreground' />
+      <Spinner className='size-8' />
     </ClerkLoading>
     <ClerkLoaded>{children}</ClerkLoaded>
     <div
