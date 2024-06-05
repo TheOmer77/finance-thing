@@ -10,7 +10,10 @@ export const Toaster = ({ ...props }: ToasterProps) => (
       classNames: {
         toast: `toast group group-[.toaster]:border-border
 group-[.toaster]:bg-background group-[.toaster]:text-sm
-group-[.toaster]:text-foreground group-[.toaster]:shadow-lg`,
+group-[.toaster]:text-foreground group-[.toaster]:shadow-lg
+group-[.toaster]:data-[type=error]:text-destructive
+group-[.toaster]:data-[type=error]:bg-destructive/5
+group-[.toaster]:data-[type=error]:border-destructive/15`,
         description: 'group-[.toast]:text-muted-foreground',
         actionButton:
           'group-[.toast]:bg-primary group-[.toast]:text-primary-foreground',
