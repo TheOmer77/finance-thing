@@ -45,7 +45,6 @@ export const TransactionsImportTable = () => {
                   key={`header-${colIndex}`}
                   onChange={handleColumnSelectChange}
                   columnIndex={colIndex}
-                  selectedColumns={selectedColumns}
                 />
               ))}
             </TableRow>

@@ -10,21 +10,21 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/DropdownMenu';
 import { TableHead } from '@/components/ui/Table';
+import { useTransactionsImport } from '@/hooks/transactions';
 import { cn } from '@/lib/utils';
 
 import { FIELDS } from './constants';
 
 export type TableHeadSelectProps = {
   columnIndex: number;
-  selectedColumns: Record<string, string | null>;
   onChange: (columnIndex: number, value: string | null) => void;
 };
 
 export const TableHeadSelect = ({
   columnIndex,
   onChange,
-  selectedColumns,
 }: TableHeadSelectProps) => {
+  const { selectedColumns } = useTransactionsImport();
   const currentSelection = selectedColumns[`column-${columnIndex}`];
 
   return (
