@@ -1,5 +1,3 @@
-import { useState } from 'react';
-
 import { CardContent } from '@/components/ui/Card';
 import {
   Table,
@@ -16,12 +14,9 @@ import {
 } from './table-head-select';
 
 export const TransactionsImportTable = () => {
-  const { importResult } = useTransactionsImport();
+  const { importResult, selectedColumns, setSelectedColumns } =
+    useTransactionsImport();
   const [headers, ...body] = importResult.data;
-
-  const [selectedColumns, setSelectedColumns] = useState<
-    Record<string, string | null>
-  >({});
 
   const handleColumnSelectChange: TableHeadSelectProps['onChange'] = (
     columnIndex,

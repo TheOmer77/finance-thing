@@ -14,7 +14,7 @@ import { UploadButton } from './upload-button';
 
 export const TransactionsHeader = () => {
   const { transactionsLoading } = useTransactions();
-  const { importResult, setImportResult, resetImportResult } =
+  const { importResult, setImportResult, resetImport } =
     useTransactionsImport();
 
   const searchParams = useSearchParams(),
@@ -28,7 +28,7 @@ export const TransactionsHeader = () => {
 
   const handleImportCancel = () => {
     window.history.back();
-    resetImportResult();
+    resetImport();
   };
 
   return (
