@@ -6,5 +6,5 @@ export const errorHandler: ErrorHandler = (err, ctx) => {
     return ctx.json({ success: false, message: err.message }, err.status);
 
   console.error(err);
-  return ctx.json({ success: false, message: 'Something went wrong.' });
+  return ctx.json({ success: false, message: 'Something went wrong.' }, 500);
 };
