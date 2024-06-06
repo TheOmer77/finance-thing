@@ -45,7 +45,7 @@ export const TableHeadSelect = ({
         </DropdownMenuTrigger>
         <DropdownMenuContent align='start'>
           <DropdownMenuRadioGroup
-            value={currentSelection || ''}
+            value={currentSelection || 'skip'}
             onValueChange={value => onChange(columnIndex, value)}
           >
             <DropdownMenuRadioItem value='skip'>Skip</DropdownMenuRadioItem>
