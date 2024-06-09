@@ -1,3 +1,5 @@
+import { useState } from 'react';
+
 import { Button } from '@/components/ui/Button';
 import {
   Dialog,
@@ -7,7 +9,6 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/Dialog';
-import { useState } from 'react';
 
 export const useConfirm = ({
   message,
