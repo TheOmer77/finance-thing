@@ -96,8 +96,8 @@ export const useTransactions = () => {
     transactionsLoading: getQuery.isLoading,
     createTransaction: createMutation.mutate,
     createTransactionPending: createMutation.isPending,
-    createTransactions: bulkCreateMutation.mutate,
-    createTransactionsPending: bulkCreateMutation.isPending,
+    bulkCreateTransactions: bulkCreateMutation.mutate,
+    bulkCreateTransactionsPending: bulkCreateMutation.isPending,
     deleteTransactions: bulkDeleteMutation.mutate,
     deleteTransactionsPending: bulkDeleteMutation.isPending,
   };
