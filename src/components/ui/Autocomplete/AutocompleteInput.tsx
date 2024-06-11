@@ -67,6 +67,7 @@ export const AutocompleteInput = forwardRef<
           onBlur={handleBlur}
           onFocus={handleFocus}
           className={cn('pe-8', className)}
+          readOnly
         />
       )}
       <div
