@@ -6,10 +6,12 @@ import { z } from 'zod';
 
 import { Button } from '@/components/ui/Button';
 import { CardDescription, CardHeader, CardTitle } from '@/components/ui/Card';
+import { Spinner } from '@/components/ui/Spinner';
 import { useSelectAccount } from '@/hooks/accounts';
 import { useTransactions, useTransactionsImport } from '@/hooks/transactions';
 import type { insertTransactionSchema } from '@/db/schema';
 import { amountToMilliunits } from '@/lib/amount';
+import { cn } from '@/lib/utils';
 
 import {
   FIELDS,
@@ -142,12 +144,18 @@ export const TransactionsImportHeader = () => {
         </Button>
         <Button
           variant='primary'
-          className='w-10 px-0 sm:w-auto sm:px-4'
+          className={cn(
+            'relative w-10 px-0 sm:w-auto sm:px-4',
+            bulkCreateTransactionsPending
+              ? '[&>:not(.spinner)]:invisible'
+              : '[&>.spinner]:hidden'
+          )}
           onClick={handleContinue}
           disabled={!canContinueImport || bulkCreateTransactionsPending}
         >
           <CheckIcon className='size-4 sm:me-2' />
           <span className='hidden sm:inline'>Continue</span>
+          <Spinner className='spinner absolute size-4 text-inherit' />
         </Button>
       </div>
 
