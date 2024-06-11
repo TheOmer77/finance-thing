@@ -1,10 +1,14 @@
+import { useCallback } from 'react';
 import { CheckIcon, XIcon } from 'lucide-react';
 import { format, parse } from 'date-fns';
 import { toast } from 'sonner';
+import { z } from 'zod';
 
 import { Button } from '@/components/ui/Button';
 import { CardDescription, CardHeader, CardTitle } from '@/components/ui/Card';
-import { useTransactionsImport } from '@/hooks/transactions';
+import { useSelectAccount } from '@/hooks/accounts';
+import { useTransactions, useTransactionsImport } from '@/hooks/transactions';
+import type { insertTransactionSchema } from '@/db/schema';
 import { amountToMilliunits } from '@/lib/amount';
 
 import {
@@ -18,6 +22,12 @@ export const TransactionsImportHeader = () => {
   const { importResult, selectedColumns, resetImport } =
       useTransactionsImport(),
     [headers, ...body] = importResult.data;
+  const { bulkCreateTransactions, bulkCreateTransactionsPending } =
+    useTransactions();
+
+  const [SelectDialog, selectAccount] = useSelectAccount({
+    message: 'Select an account for your imported transactions.',
+  });
 
   const progress = Object.values(selectedColumns).filter(
       value =>
@@ -27,7 +37,7 @@ export const TransactionsImportHeader = () => {
     progressLeft = REQUIRED_FIELDS.length - progress,
     canContinueImport = progress >= REQUIRED_FIELDS.length;
 
-  const handleContinue = () => {
+  const getFormattedData = useCallback(() => {
     const mappedData = {
       headers: [...Array(headers.length).keys()].map(
         index => selectedColumns[`column-${index}`] || null
@@ -71,7 +81,7 @@ export const TransactionsImportHeader = () => {
               } catch (error) {
                 throw new Error(
                   `The column selected for date contains an invalid date, or
-it's in an incorrect format.`
+  it's in an incorrect format.`
                 );
               }
             }
@@ -80,17 +90,32 @@ it's in an incorrect format.`
           }
         }, {})
       );
-
-      console.log(formattedData);
+      return formattedData as Pick<
+        z.infer<typeof insertTransactionSchema>,
+        'amount' | 'date' | 'payee' | 'notes'
+      >[];
     } catch (error) {
-      if (error instanceof Error) return toast.error(error.message);
+      if (error instanceof Error) {
+        toast.error(error.message);
+        return;
+      }
       toast.error('Something went wrong while parsing your imported data.');
     }
-  };
+  }, [body, headers.length, selectedColumns]);
 
   const handleCancel = () => {
     window.history.back();
     resetImport();
+  };
+
+  const handleContinue = async () => {
+    const formattedData = getFormattedData();
+    if (!formattedData) return;
+    const accountId = await selectAccount();
+    if (!accountId) return;
+
+    const dataToSubmit = formattedData.map(value => ({ ...value, accountId }));
+    bulkCreateTransactions(dataToSubmit, { onSuccess: handleCancel });
   };
 
   return (
@@ -107,7 +132,11 @@ it's in an incorrect format.`
         </CardDescription>
       </CardHeader>
       <div className='flex flex-row items-center gap-2 pe-6 [&>*]:shrink-0'>
-        <Button className='w-10 px-0 sm:w-auto sm:px-4' onClick={handleCancel}>
+        <Button
+          className='w-10 px-0 sm:w-auto sm:px-4'
+          onClick={handleCancel}
+          disabled={bulkCreateTransactionsPending}
+        >
           <XIcon className='size-4 sm:me-2' />
           <span className='hidden sm:inline'>Cancel</span>
         </Button>
@@ -115,12 +144,14 @@ it's in an incorrect format.`
           variant='primary'
           className='w-10 px-0 sm:w-auto sm:px-4'
           onClick={handleContinue}
-          disabled={!canContinueImport}
+          disabled={!canContinueImport || bulkCreateTransactionsPending}
         >
           <CheckIcon className='size-4 sm:me-2' />
           <span className='hidden sm:inline'>Continue</span>
         </Button>
       </div>
+
+      <SelectDialog />
     </div>
   );
 };
