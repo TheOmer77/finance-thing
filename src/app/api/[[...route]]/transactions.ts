@@ -4,7 +4,7 @@ import { HTTPException } from 'hono/http-exception';
 import { zValidator } from '@hono/zod-validator';
 import { and, desc, eq, gte, inArray, lte, sql } from 'drizzle-orm';
 import { z } from 'zod';
-import { parse } from 'date-fns';
+import { parse, subDays } from 'date-fns';
 
 import { db } from '@/db';
 import {
@@ -13,9 +13,7 @@ import {
   categories,
   accounts,
 } from '@/db/schema';
-
-const THIRTY_DAYS = 2592000000; // 1000 * 60 * 60 * 24 * 30
-const DATE_FORMAT = 'yyyy-MM-dd';
+import { DATE_FORMAT } from '@/constants/api';
 
 export const transactionsRouter = new Hono()
 
@@ -38,7 +36,7 @@ export const transactionsRouter = new Hono()
       const { from, to, accountId } = ctx.req.valid('query');
 
       const defaultTo = new Date(),
-        defaultFrom = new Date(defaultTo.valueOf() - THIRTY_DAYS);
+        defaultFrom = subDays(defaultTo, 30);
 
       const startDate = from
           ? parse(from, DATE_FORMAT, new Date())
