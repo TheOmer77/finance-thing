@@ -89,31 +89,32 @@ export const summaryRouter = new Hono().get(
     const periodLength = differenceInDays(endDate, startDate) + 1,
       lastPeriodStart = subDays(startDate, periodLength),
       lastPeriodEnd = subDays(endDate, periodLength);
-    const currentPeriod = await fetchFinancialData(
-        auth.userId,
-        startDate,
-        endDate,
-        accountId
-      ),
-      lastPeriod = await fetchFinancialData(
+
+    const periodsData = await Promise.all([
+      fetchFinancialData(auth.userId, startDate, endDate, accountId),
+      fetchFinancialData(
         auth.userId,
         lastPeriodStart,
         lastPeriodEnd,
         accountId
-      );
-
-    const incomeChange = calculatePercentageChange(
+      ),
+    ]).then(([currentPeriod, lastPeriod]) => ({
+      incomeAmount: currentPeriod.income,
+      incomeChange: calculatePercentageChange(
         currentPeriod.income,
         lastPeriod.income
       ),
-      expensesChange = calculatePercentageChange(
+      expensesAmount: currentPeriod.expenses,
+      expensesChange: calculatePercentageChange(
         currentPeriod.expenses,
         lastPeriod.expenses
       ),
-      remainingChange = calculatePercentageChange(
+      remainingAmount: currentPeriod.remaining,
+      remainingChange: calculatePercentageChange(
         currentPeriod.remaining,
         lastPeriod.remaining
-      );
+      ),
+    }));
 
     const category = await db
       .select({
@@ -176,13 +177,7 @@ export const summaryRouter = new Hono().get(
     return ctx.json({
       success: true,
       data: {
-        remainingAmount: currentPeriod.remaining,
-        remainingChange,
-        incomeAmount: currentPeriod.income,
-        incomeChange,
-        expensesAmount: currentPeriod.expenses,
-        expensesChange,
-
+        ...periodsData,
         categories: finalCategories,
         days,
       },
