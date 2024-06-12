@@ -116,7 +116,7 @@ export const summaryRouter = new Hono().get(
       ),
     }));
 
-    const category = await db
+    const finalCategories = await db
       .select({
         name: categories.name,
         value: sql`SUM(ABS(${transactions.amount}))`.mapWith(Number),
@@ -134,45 +134,46 @@ export const summaryRouter = new Hono().get(
         )
       )
       .groupBy(categories.name)
-      .orderBy(desc(sql`SUM(ABS(${transactions.amount}))`));
-    const topCategories = category.slice(0, 3),
-      otherCategories = category.slice(3),
-      otherSum = otherCategories.reduce((sum, curr) => sum + curr.value, 0);
+      .orderBy(desc(sql`SUM(ABS(${transactions.amount}))`))
+      .then(category => {
+        const topCategories = category.slice(0, 3),
+          otherCategories = category.slice(3),
+          otherSum = otherCategories.reduce((sum, curr) => sum + curr.value, 0);
+        return [
+          ...topCategories,
+          ...(otherCategories.length > 0
+            ? [{ name: 'Other', value: otherSum }]
+            : []),
+        ];
+      });
 
-    const finalCategories = [
-      ...topCategories,
-      ...(otherCategories.length > 0
-        ? [{ name: 'Other', value: otherSum }]
-        : []),
-    ];
-
-    const activeDays = await db
-        .select({
-          date: transactions.date,
-          income: sql`SUM(
+    const days = await db
+      .select({
+        date: transactions.date,
+        income: sql`SUM(
   CASE WHEN ${transactions.amount} >= 0 THEN ${transactions.amount}
   ELSE 0
   END
 )`.mapWith(Number),
-          expenses: sql`SUM(
+        expenses: sql`SUM(
   CASE WHEN ${transactions.amount} < 0 THEN ${transactions.amount}
   ELSE 0
   END
 )`.mapWith(Number),
-        })
-        .from(transactions)
-        .innerJoin(accounts, eq(transactions.accountId, accounts.id))
-        .where(
-          and(
-            accountId ? eq(transactions.accountId, accountId) : undefined,
-            eq(accounts.userId, auth.userId),
-            gte(transactions.date, startDate),
-            lte(transactions.date, endDate)
-          )
+      })
+      .from(transactions)
+      .innerJoin(accounts, eq(transactions.accountId, accounts.id))
+      .where(
+        and(
+          accountId ? eq(transactions.accountId, accountId) : undefined,
+          eq(accounts.userId, auth.userId),
+          gte(transactions.date, startDate),
+          lte(transactions.date, endDate)
         )
-        .groupBy(transactions.date)
-        .orderBy(transactions.date),
-      days = fillMissingDays(activeDays, startDate, endDate);
+      )
+      .groupBy(transactions.date)
+      .orderBy(transactions.date)
+      .then(activeDays => fillMissingDays(activeDays, startDate, endDate));
 
     return ctx.json({
       success: true,
