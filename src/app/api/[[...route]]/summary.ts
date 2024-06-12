@@ -17,6 +17,10 @@ import { accounts, categories, transactions } from '@/db/schema';
 import { calculatePercentageChange } from '@/lib/amount';
 import { DATE_FORMAT } from '@/constants/api';
 
+const PROMISE_REJECT_ERROR = { error: 'Something went wrong.' } as const;
+/** Either the awaited type of `T` or a generic error object.  */
+type ResolvedOrError<T> = Awaited<T> | typeof PROMISE_REJECT_ERROR;
+
 const fetchFinancialData = async (
   userId: string,
   startDate: Date,
@@ -90,7 +94,8 @@ export const summaryRouter = new Hono().get(
       lastPeriodStart = subDays(startDate, periodLength),
       lastPeriodEnd = subDays(endDate, periodLength);
 
-    const periodsData = await Promise.all([
+    // No await here, because all promises will be Promise.allSettled below
+    const periodsPromise = Promise.all([
       fetchFinancialData(auth.userId, startDate, endDate, accountId),
       fetchFinancialData(
         auth.userId,
@@ -116,7 +121,7 @@ export const summaryRouter = new Hono().get(
       ),
     }));
 
-    const finalCategories = await db
+    const categoriesPromise = db
       .select({
         name: categories.name,
         value: sql`SUM(ABS(${transactions.amount}))`.mapWith(Number),
@@ -147,7 +152,7 @@ export const summaryRouter = new Hono().get(
         ];
       });
 
-    const days = await db
+    const daysPromise = db
       .select({
         date: transactions.date,
         income: sql`SUM(
@@ -175,13 +180,19 @@ export const summaryRouter = new Hono().get(
       .orderBy(transactions.date)
       .then(activeDays => fillMissingDays(activeDays, startDate, endDate));
 
+    const [periodsData, finalCategories, days] = (
+      await Promise.allSettled([periodsPromise, categoriesPromise, daysPromise])
+    ).map(result =>
+      result.status === 'fulfilled' ? result.value : PROMISE_REJECT_ERROR
+    ) as [
+      ResolvedOrError<typeof periodsPromise>,
+      ResolvedOrError<typeof categoriesPromise>,
+      ResolvedOrError<typeof daysPromise>,
+    ];
+
     return ctx.json({
       success: true,
-      data: {
-        ...periodsData,
-        categories: finalCategories,
-        days,
-      },
+      data: { ...periodsData, categories: finalCategories, days },
     });
   }
 );
