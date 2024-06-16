@@ -53,7 +53,7 @@ export const useAccounts = ({ enabled = true } = {}) => {
     onSuccess: ({ data }) => {
       toast.success(`${data.length === 1 ? 'Account' : 'Accounts'} deleted.`);
       queryClient.invalidateQueries({ queryKey: ['accounts'] });
-      // TODO: Also invalidate summary
+      // TODO: Invalidate summary
     },
     onError: (_, { ids }) =>
       toast.error(

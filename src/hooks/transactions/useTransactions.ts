@@ -59,7 +59,7 @@ export const useTransactions = () => {
         `${data.length === 1 ? 'Transaction' : 'Transactions'} created.`
       );
       queryClient.invalidateQueries({ queryKey: ['transactions'] });
-      // TODO: Also invalidate summary
+      // TODO: Invalidate summary
     },
     onError: (_, data) =>
       toast.error(
@@ -83,7 +83,7 @@ export const useTransactions = () => {
         `${data.length === 1 ? 'Transaction' : 'Transactions'} deleted.`
       );
       queryClient.invalidateQueries({ queryKey: ['transactions'] });
-      // TODO: Also invalidate summary
+      // TODO: Invalidate summary
     },
     onError: (_, { ids }) =>
       toast.error(

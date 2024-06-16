@@ -55,7 +55,7 @@ export const useCategories = ({ enabled = true } = {}) => {
         `${data.length === 1 ? 'Category' : 'Categories'} deleted.`
       );
       queryClient.invalidateQueries({ queryKey: ['categories'] });
-      // TODO: Also invalidate summary
+      // TODO: Invalidate summary
     },
     onError: (_, { ids }) =>
       toast.error(
