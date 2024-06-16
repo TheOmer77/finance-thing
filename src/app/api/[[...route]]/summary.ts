@@ -17,6 +17,7 @@ import { accounts, categories, transactions } from '@/db/schema';
 import { calculatePercentageChange } from '@/lib/amount';
 import { DATE_FORMAT } from '@/constants/api';
 
+const DEFAULT_PERIOD = { income: 0, expenses: 0, remaining: 0 };
 const PROMISE_REJECT_ERROR = { error: 'Something went wrong.' } as const;
 /** Either the awaited type of `T` or a generic error object.  */
 type ResolvedOrError<T> = Awaited<T> | typeof PROMISE_REJECT_ERROR;
@@ -103,23 +104,7 @@ export const summaryRouter = new Hono().get(
         lastPeriodEnd,
         accountId
       ),
-    ]).then(([currentPeriod, lastPeriod]) => ({
-      incomeAmount: currentPeriod.income,
-      incomeChange: calculatePercentageChange(
-        currentPeriod.income,
-        lastPeriod.income
-      ),
-      expensesAmount: currentPeriod.expenses,
-      expensesChange: calculatePercentageChange(
-        currentPeriod.expenses,
-        lastPeriod.expenses
-      ),
-      remainingAmount: currentPeriod.remaining,
-      remainingChange: calculatePercentageChange(
-        currentPeriod.remaining,
-        lastPeriod.remaining
-      ),
-    }));
+    ]);
 
     const categoriesPromise = db
       .select({
@@ -180,7 +165,7 @@ export const summaryRouter = new Hono().get(
       .orderBy(transactions.date)
       .then(activeDays => fillMissingDays(activeDays, startDate, endDate));
 
-    const [periodsData, finalCategories, days] = (
+    const [periods, finalCategories, days] = (
       await Promise.allSettled([periodsPromise, categoriesPromise, daysPromise])
     ).map(result =>
       result.status === 'fulfilled' ? result.value : PROMISE_REJECT_ERROR
@@ -189,10 +174,37 @@ export const summaryRouter = new Hono().get(
       ResolvedOrError<typeof categoriesPromise>,
       ResolvedOrError<typeof daysPromise>,
     ];
+    const [currentPeriod, lastPeriod] =
+      'error' in periods ? [DEFAULT_PERIOD, DEFAULT_PERIOD] : periods;
+
+    const incomeAmount = currentPeriod.income,
+      incomeChange = calculatePercentageChange(
+        currentPeriod.income,
+        lastPeriod.income
+      ),
+      expensesAmount = currentPeriod.expenses,
+      expensesChange = calculatePercentageChange(
+        currentPeriod.expenses,
+        lastPeriod.expenses
+      ),
+      remainingAmount = currentPeriod.remaining,
+      remainingChange = calculatePercentageChange(
+        currentPeriod.remaining,
+        lastPeriod.remaining
+      );
 
     return ctx.json({
       success: true,
-      data: { periodsData, categories: finalCategories, days },
+      data: {
+        incomeAmount,
+        incomeChange,
+        expensesAmount,
+        expensesChange,
+        remainingAmount,
+        remainingChange,
+        categories: finalCategories,
+        days,
+      },
     });
   }
 );
