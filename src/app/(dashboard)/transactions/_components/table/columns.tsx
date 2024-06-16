@@ -5,7 +5,8 @@ import type { InferResponseType } from 'hono';
 import { Badge } from '@/components/ui/Badge';
 import { Checkbox } from '@/components/ui/Checkbox';
 import { DataTableColumnHeader } from '@/components/layout/DataTable';
-import { amountFromMilliunits, formatCurrency } from '@/lib/amount';
+import { amountFromMilliunits } from '@/lib/amount';
+import { formatCurrency } from '@/lib/formatters';
 import type { client } from '@/lib/hono';
 
 import { TransactionLinkCell } from './link-cell';
