@@ -192,7 +192,7 @@ export const summaryRouter = new Hono().get(
 
     return ctx.json({
       success: true,
-      data: { ...periodsData, categories: finalCategories, days },
+      data: { periodsData, categories: finalCategories, days },
     });
   }
 );
