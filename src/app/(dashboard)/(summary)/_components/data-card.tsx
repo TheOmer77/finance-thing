@@ -101,8 +101,8 @@ export const DataCard = ({ title, type, variant }: DataCardProps) => {
           )}
         >
           {percentageChange < 0
-            ? `${formatPercentage(percentageChange)} less than last period`
-            : `${formatPercentage(percentageChange)} more than last period`}
+            ? `${formatPercentage(Math.abs(percentageChange))} less than last period`
+            : `${formatPercentage(Math.abs(percentageChange))} more than last period`}
         </p>
       </CardContent>
     </Card>
