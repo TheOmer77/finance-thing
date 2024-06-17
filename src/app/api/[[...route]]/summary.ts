@@ -15,12 +15,14 @@ import { and, desc, eq, gte, lt, lte, sql, sum } from 'drizzle-orm';
 import { db } from '@/db';
 import { accounts, categories, transactions } from '@/db/schema';
 import { calculatePercentageChange } from '@/lib/amount';
-import { DATE_FORMAT } from '@/constants/api';
+import { isErrorObj } from '@/lib/isErrorObj';
+import {
+  DATE_FORMAT,
+  PROMISE_REJECT_ERROR,
+  type ResolvedOrError,
+} from '@/constants/api';
 
 const DEFAULT_PERIOD = { income: 0, expenses: 0, remaining: 0 };
-const PROMISE_REJECT_ERROR = { error: 'Something went wrong.' } as const;
-/** Either the awaited type of `T` or a generic error object.  */
-type ResolvedOrError<T> = Awaited<T> | typeof PROMISE_REJECT_ERROR;
 
 const fetchFinancialData = async (
   userId: string,
@@ -174,8 +176,9 @@ export const summaryRouter = new Hono().get(
       ResolvedOrError<typeof categoriesPromise>,
       ResolvedOrError<typeof daysPromise>,
     ];
-    const [currentPeriod, lastPeriod] =
-      'error' in periods ? [DEFAULT_PERIOD, DEFAULT_PERIOD] : periods;
+    const [currentPeriod, lastPeriod] = isErrorObj(periods)
+      ? [DEFAULT_PERIOD, DEFAULT_PERIOD]
+      : periods;
 
     const incomeAmount = currentPeriod.income,
       incomeChange = calculatePercentageChange(

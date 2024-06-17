@@ -3,6 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 
 import { client } from '@/lib/hono';
 import { amountFromMilliunits } from '@/lib/amount';
+import { isErrorObj } from '@/lib/isErrorObj';
 
 export const useSummary = () => {
   const searchParams = useSearchParams();
@@ -26,21 +27,19 @@ export const useSummary = () => {
         expensesAmount: amountFromMilliunits(data.expensesAmount),
         remainingAmount: amountFromMilliunits(data.remainingAmount),
 
-        categories:
-          'error' in data.categories
-            ? data.categories
-            : data.categories.map(({ name, value }) => ({
-                name,
-                value: amountFromMilliunits(value),
-              })),
-        days:
-          'error' in data.days
-            ? data.days
-            : data.days.map(({ date, income, expenses }) => ({
-                date,
-                income: amountFromMilliunits(income),
-                expenses: amountFromMilliunits(expenses),
-              })),
+        categories: isErrorObj(data.categories)
+          ? data.categories
+          : data.categories.map(({ name, value }) => ({
+              name,
+              value: amountFromMilliunits(value),
+            })),
+        days: isErrorObj(data.days)
+          ? data.days
+          : data.days.map(({ date, income, expenses }) => ({
+              date,
+              income: amountFromMilliunits(income),
+              expenses: amountFromMilliunits(expenses),
+            })),
       };
     },
   });
