@@ -1,13 +1,9 @@
-import { DataCard } from './_components/data-card';
+import { DataGrid } from './_components/data-grid';
 
-const DashboardPage = () => {
-  return (
-    <div className='mb-8 grid grid-cols-1 gap-8 pb-2 lg:grid-cols-3'>
-      <DataCard title='Remaining' type='remaining' />
-      <DataCard title='Income' type='income' />
-      <DataCard title='Expenses' type='expenses' />
-    </div>
-  );
-};
+const DashboardPage = () => (
+  <div className='mb-8 grid grid-cols-1 gap-8 pb-2 lg:grid-cols-3'>
+    <DataGrid />
+  </div>
+);
 
 export default DashboardPage;
