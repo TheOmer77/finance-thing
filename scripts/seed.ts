@@ -1,10 +1,10 @@
 import { drizzle } from 'drizzle-orm/neon-http';
 import { neon } from '@neondatabase/serverless';
-import { eachDayOfInterval, format, subDays } from 'date-fns';
+import { eachDayOfInterval, subDays } from 'date-fns';
+import { createId } from '@paralleldrive/cuid2';
 
 import { accounts, categories, transactions } from '@/db/schema';
 import { amountToMilliunits } from '@/lib/amount';
-import { DATE_FORMAT } from '@/constants/api';
 
 const sql = neon(process.env.DATABASE_URL!),
   db = drizzle(sql);
@@ -53,9 +53,10 @@ const generateTransactionsForDay = (date: Date) => {
     const isExpense = Math.random() > 0.6; // 60% chance
     const amount = generateRandomAmount(category);
     const formattedAmount = amountToMilliunits(isExpense ? -amount : amount);
+    const id = createId();
 
     SEED_TRANSACTIONS.push({
-      id: `transaction_${format(date, DATE_FORMAT)}_${i}`,
+      id,
       accountId: SEED_ACCOUNTS[0].id,
       categoryId: category.id,
       date,
