@@ -4,11 +4,11 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
 import { isErrorObj } from '@/lib/isErrorObj';
 import type { MaybeError } from '@/constants/api';
 
-import { AreaChart } from './charts/area-chart';
-import { BarChart } from './charts/bar-chart';
-import { LineChart } from './charts/line-chart';
-import { ChartTypeSelect } from './charts/chart-type-select';
-import type { ChartData, ChartType } from './charts/types';
+import { AreaChart } from './area-chart';
+import { BarChart } from './bar-chart';
+import { LineChart } from './line-chart';
+import { ChartTypeSelect } from './chart-type-select';
+import type { ChartData, ChartType } from './types';
 
 type ChartProps = ComponentPropsWithoutRef<'div'> & {
   data?: MaybeError<ChartData>;
@@ -46,7 +46,7 @@ const ChartCardContent = ({ data, type }: ChartCardContentProps) => {
   }
 };
 
-export const ChartCard = ({ data, ...props }: ChartProps) => {
+export const TransactionsChartCard = ({ data, ...props }: ChartProps) => {
   const [chartType, setChartType] = useState<ChartType>('area');
 
   return (

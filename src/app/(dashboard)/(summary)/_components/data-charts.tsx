@@ -4,7 +4,7 @@ import { Card, CardContent } from '@/components/ui/Card';
 import { Spinner } from '@/components/ui/Spinner';
 import { useSummary } from '@/hooks/summary';
 
-import { ChartCard } from './chart-card';
+import { TransactionsChartCard } from './transactions-card';
 
 export const DataCharts = () => {
   const { summary, summaryLoading } = useSummary();
@@ -21,7 +21,7 @@ export const DataCharts = () => {
 
   return (
     <div className='grid grid-cols-1 gap-4 md:gap-8 lg:grid-cols-6'>
-      <ChartCard
+      <TransactionsChartCard
         data={summary?.days}
         className='col-span-1 lg:col-span-3 xl:col-span-4'
       />
