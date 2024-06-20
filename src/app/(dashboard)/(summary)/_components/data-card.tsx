@@ -1,36 +1,28 @@
 'use client';
 
-import { useSearchParams } from 'next/navigation';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { PiggyBankIcon, TrendingDownIcon, TrendingUpIcon } from 'lucide-react';
 
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/Card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
 import { Skeleton } from '@/components/ui/Skeleton';
 import { useSummary } from '@/hooks/summary';
-import {
-  formatCurrency,
-  formatDateRange,
-  formatPercentage,
-} from '@/lib/formatters';
+import { formatCurrency, formatPercentage } from '@/lib/formatters';
 import { cn } from '@/lib/utils';
 
 import { CountUp } from './countup';
 
-const boxVariants = cva('shrink-0 rounded-md size-12 grid place-items-center', {
-  variants: {
-    variant: {
-      default: 'bg-primary/20 text-primary',
-      danger: 'bg-destructive/20 text-destructive',
+const boxVariants = cva(
+  'absolute end-4 top-2 grid size-12 shrink-0 place-items-center rounded-md',
+  {
+    variants: {
+      variant: {
+        default: 'bg-primary/20 text-primary',
+        danger: 'bg-destructive/20 text-destructive',
+      },
     },
-  },
-  defaultVariants: { variant: 'default' },
-});
+    defaultVariants: { variant: 'default' },
+  }
+);
 
 type DataCardProps = {
   title: string;
@@ -44,13 +36,10 @@ const icons = {
 };
 
 const DataCardLoading = () => (
-  <Card className='h-[11.5rem]'>
-    <CardHeader className='flex flex-row items-center justify-between gap-2'>
-      <div className='space-y-1.5'>
-        <Skeleton className='h-6 w-24' />
-        <Skeleton className='h-5 w-40 text-sm' />
-      </div>
-      <Skeleton className='size-12 shrink-0 rounded-md' />
+  <Card className='relative h-[8.375rem]'>
+    <CardHeader className='pb-2'>
+      <Skeleton className='h-6 w-24' />
+      <Skeleton className='absolute end-4 top-2 size-12 shrink-0 rounded-md' />
     </CardHeader>
     <CardContent>
       <Skeleton className='mb-1 h-8 w-24 shrink-0' />
@@ -60,11 +49,6 @@ const DataCardLoading = () => (
 );
 
 export const DataCard = ({ title, type, variant }: DataCardProps) => {
-  const searchParams = useSearchParams(),
-    from = searchParams.get('from') || undefined,
-    to = searchParams.get('to') || undefined;
-  const dateRangeLabel = formatDateRange({ to, from });
-
   const { summary, summaryLoading } = useSummary();
   const value = summary?.[`${type}Amount`] || 0,
     percentageChange = summary?.[`${type}Change`] || 0,
@@ -73,12 +57,11 @@ export const DataCard = ({ title, type, variant }: DataCardProps) => {
   if (summaryLoading) return <DataCardLoading />;
 
   return (
-    <Card>
-      <CardHeader className='flex flex-row items-center justify-between gap-2'>
-        <div className='space-y-1.5'>
-          <CardTitle>{title}</CardTitle>
-          <CardDescription>{dateRangeLabel}</CardDescription>
-        </div>
+    <Card className='relative'>
+      <CardHeader className='pb-2'>
+        <CardTitle className='text-sm font-medium tracking-normal'>
+          {title}
+        </CardTitle>
         <div className={cn(boxVariants({ variant }))}>
           <Icon className='size-6' />
         </div>
@@ -95,7 +78,7 @@ export const DataCard = ({ title, type, variant }: DataCardProps) => {
         />
         <p
           className={cn(
-            'line-clamp-1 text-sm font-medium text-muted-foreground',
+            'line-clamp-1 text-sm text-muted-foreground',
             percentageChange > 0 && 'text-primary',
             percentageChange < 0 && 'text-destructive'
           )}
