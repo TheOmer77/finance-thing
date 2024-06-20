@@ -7,7 +7,7 @@ import { useSummary } from '@/hooks/summary';
 import { TransactionsChartCard } from './transactions-card';
 
 export const DataCharts = () => {
-  const { summary, summaryLoading } = useSummary();
+  const { summaryLoading } = useSummary();
 
   if (summaryLoading)
     return (
@@ -21,10 +21,7 @@ export const DataCharts = () => {
 
   return (
     <div className='grid grid-cols-1 gap-4 md:gap-8 lg:grid-cols-6'>
-      <TransactionsChartCard
-        data={summary?.days}
-        className='col-span-1 lg:col-span-3 xl:col-span-4'
-      />
+      <TransactionsChartCard />
     </div>
   );
 };

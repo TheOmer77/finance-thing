@@ -9,10 +9,8 @@ import { BarChart } from './bar-chart';
 import { LineChart } from './line-chart';
 import { ChartTypeSelect } from './chart-type-select';
 import type { ChartData, ChartType } from './types';
+import { useSummary } from '@/hooks/summary';
 
-type ChartProps = ComponentPropsWithoutRef<'div'> & {
-  data?: MaybeError<ChartData>;
-};
 type ChartCardContentProps = {
   data?: MaybeError<ChartData>;
   type: ChartType;
@@ -46,17 +44,18 @@ const ChartCardContent = ({ data, type }: ChartCardContentProps) => {
   }
 };
 
-export const TransactionsChartCard = ({ data, ...props }: ChartProps) => {
+export const TransactionsChartCard = () => {
+  const { summary } = useSummary();
   const [chartType, setChartType] = useState<ChartType>('area');
 
   return (
-    <Card {...props}>
+    <Card className='col-span-1 lg:col-span-3 xl:col-span-4'>
       <CardHeader className='flex flex-row items-center justify-between space-y-0'>
         <CardTitle className='line-clamp-1'>Transactions</CardTitle>
         <ChartTypeSelect value={chartType} onValueChange={setChartType} />
       </CardHeader>
       <CardContent>
-        <ChartCardContent data={data} type={chartType} />
+        <ChartCardContent data={summary?.days} type={chartType} />
       </CardContent>
     </Card>
   );
