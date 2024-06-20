@@ -1,6 +1,7 @@
 'use client';
 
 import { Card, CardContent } from '@/components/ui/Card';
+import { Spinner } from '@/components/ui/Spinner';
 import { useSummary } from '@/hooks/summary';
 
 import { ChartCard } from './chart-card';
@@ -12,7 +13,8 @@ export const DataCharts = () => {
     return (
       <Card>
         <CardContent className='pt-6 text-sm text-muted-foreground'>
-          {/* TEMPORARY! */}I am loading...
+          {/* TEMPORARY! */}
+          <Spinner />
         </CardContent>
       </Card>
     );
