@@ -8,8 +8,8 @@ import {
 } from 'recharts';
 import { format } from 'date-fns';
 
-import type { ChartProps } from './types';
 import { ChartTooltip } from './chart-tooltip';
+import type { ChartProps } from './types';
 
 export const AreaChart = ({ data }: ChartProps) => {
   const absData = data.map(item => ({
@@ -60,6 +60,7 @@ export const AreaChart = ({ data }: ChartProps) => {
           className='text-xs'
         />
         <Tooltip content={<ChartTooltip />} />
+
         <Area
           type='monotone'
           dataKey='income'
