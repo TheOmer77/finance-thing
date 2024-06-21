@@ -51,7 +51,9 @@ export const TransactionsChartCard = () => {
   return (
     <Card className='col-span-1 lg:col-span-3 xl:col-span-4'>
       <CardHeader className='flex flex-row items-center justify-between space-y-0'>
-        <CardTitle className='line-clamp-1'>Transactions</CardTitle>
+        <CardTitle className='line-clamp-1 overflow-visible'>
+          Transactions
+        </CardTitle>
         <ChartTypeSelect value={chartType} onValueChange={setChartType} />
       </CardHeader>
       <CardContent>
