@@ -3,7 +3,7 @@ import { format } from 'date-fns';
 import { formatCurrency } from '@/lib/formatters';
 import { cn } from '@/lib/utils';
 
-import type { ChartData } from './types';
+import type { TransactionsDaysData } from './types';
 
 const ChartTooltipLine = ({
   type,
@@ -30,7 +30,7 @@ type ChartTooltipProps = {
   active?: boolean;
   payload?: [
     {
-      payload: ChartData[number];
+      payload: TransactionsDaysData[number];
     },
   ];
 };

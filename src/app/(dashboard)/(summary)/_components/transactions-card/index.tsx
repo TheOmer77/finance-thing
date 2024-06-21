@@ -1,6 +1,7 @@
-import { useState, type ComponentPropsWithoutRef } from 'react';
+import { useState } from 'react';
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
+import { useSummary } from '@/hooks/summary';
 import { isErrorObj } from '@/lib/isErrorObj';
 import type { MaybeError } from '@/constants/api';
 
@@ -8,12 +9,11 @@ import { AreaChart } from './area-chart';
 import { BarChart } from './bar-chart';
 import { LineChart } from './line-chart';
 import { ChartTypeSelect } from './chart-type-select';
-import type { ChartData, ChartType } from './types';
-import { useSummary } from '@/hooks/summary';
+import type { TransactionsDaysData, TransactionsChartType } from './types';
 
 type ChartCardContentProps = {
-  data?: MaybeError<ChartData>;
-  type: ChartType;
+  data?: MaybeError<TransactionsDaysData>;
+  type: TransactionsChartType;
 };
 
 const ChartCardContent = ({ data, type }: ChartCardContentProps) => {
@@ -46,7 +46,7 @@ const ChartCardContent = ({ data, type }: ChartCardContentProps) => {
 
 export const TransactionsChartCard = () => {
   const { summary } = useSummary();
-  const [chartType, setChartType] = useState<ChartType>('area');
+  const [chartType, setChartType] = useState<TransactionsChartType>('area');
 
   return (
     <Card className='col-span-1 lg:col-span-3 xl:col-span-4'>

@@ -1,4 +1,8 @@
-export type ChartData = { date: string; income: number; expenses: number }[];
-export type ChartProps = { data: ChartData };
+export type TransactionsDaysData = {
+  date: string;
+  income: number;
+  expenses: number;
+}[];
+export type TransactionsChartProps = { data: TransactionsDaysData };
 
-export type ChartType = 'area' | 'bar' | 'line';
+export type TransactionsChartType = 'area' | 'bar' | 'line';

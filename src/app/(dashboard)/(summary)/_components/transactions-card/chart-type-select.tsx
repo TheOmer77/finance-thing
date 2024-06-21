@@ -14,15 +14,15 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/DropdownMenu';
 
-import type { ChartType } from './types';
+import type { TransactionsChartType } from './types';
 
 const chartOptions = [
   { label: 'Area chart', value: 'area' },
   { label: 'Bar chart', value: 'bar' },
   { label: 'Line chart', value: 'line' },
-] satisfies { label: string; value: ChartType }[];
+] satisfies { label: string; value: TransactionsChartType }[];
 
-const getTypeIcon = (value: ChartType) => {
+const getTypeIcon = (value: TransactionsChartType) => {
   switch (value) {
     case 'area':
       return AreaChartIcon;
@@ -34,8 +34,8 @@ const getTypeIcon = (value: ChartType) => {
 };
 
 type ChartTypeSelectProps = {
-  value: ChartType;
-  onValueChange: (value: ChartType) => void;
+  value: TransactionsChartType;
+  onValueChange: (value: TransactionsChartType) => void;
 };
 
 export const ChartTypeSelect = ({
@@ -60,7 +60,7 @@ export const ChartTypeSelect = ({
       >
         <DropdownMenuRadioGroup
           value={value}
-          onValueChange={value => onValueChange(value as ChartType)}
+          onValueChange={value => onValueChange(value as TransactionsChartType)}
         >
           {chartOptions.map(({ label, value }) => (
             <DropdownMenuRadioItem key={value} value={value}>

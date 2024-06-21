@@ -9,9 +9,9 @@ import {
 import { format } from 'date-fns';
 
 import { ChartTooltip } from './chart-tooltip';
-import type { ChartProps } from './types';
+import type { TransactionsChartProps } from './types';
 
-export const AreaChart = ({ data }: ChartProps) => {
+export const AreaChart = ({ data }: TransactionsChartProps) => {
   const absData = data.map(item => ({
     ...item,
     income: Math.abs(item.income),
