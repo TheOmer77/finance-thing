@@ -1,4 +1,5 @@
-import { PROMISE_REJECT_ERROR, type ResolvedOrError } from '@/constants/api';
+import { PROMISE_REJECT_ERROR } from '@/constants/api';
+import type { ResolvedOrError } from '@/types/api';
 
 export const isErrorObj = <T>(
   value: ResolvedOrError<Promise<T>>

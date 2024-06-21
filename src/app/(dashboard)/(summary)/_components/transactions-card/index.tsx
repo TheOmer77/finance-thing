@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
 import { useSummary } from '@/hooks/summary';
 import { isErrorObj } from '@/lib/isErrorObj';
-import type { MaybeError } from '@/constants/api';
+import type { MaybeError } from '@/types/api';
 
 import { AreaChart } from './area-chart';
 import { BarChart } from './bar-chart';

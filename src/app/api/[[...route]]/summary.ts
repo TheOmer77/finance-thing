@@ -16,11 +16,8 @@ import { db } from '@/db';
 import { accounts, categories, transactions } from '@/db/schema';
 import { calculatePercentageChange } from '@/lib/amount';
 import { isErrorObj } from '@/lib/isErrorObj';
-import {
-  DATE_FORMAT,
-  PROMISE_REJECT_ERROR,
-  type ResolvedOrError,
-} from '@/constants/api';
+import { DATE_FORMAT, PROMISE_REJECT_ERROR } from '@/constants/api';
+import type { ResolvedOrError } from '@/types/api';
 
 const DEFAULT_PERIOD = { income: 0, expenses: 0, remaining: 0 };
 

@@ -1,7 +1,7 @@
 import type { InferResponseType } from 'hono';
 
 import type { client } from '@/lib/hono';
-import type { NotError } from '@/constants/api';
+import type { NotError } from '@/types/api';
 
 export type SpendingCategoriesData = NotError<
   InferResponseType<typeof client.api.summary.$get>['data']['categories']
