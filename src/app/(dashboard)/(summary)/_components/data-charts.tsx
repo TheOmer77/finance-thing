@@ -5,6 +5,7 @@ import { Spinner } from '@/components/ui/Spinner';
 import { useSummary } from '@/hooks/summary';
 
 import { TransactionsChartCard } from './transactions-card';
+import { SpendingPieCard } from './spending-card';
 
 export const DataCharts = () => {
   const { summaryLoading } = useSummary();
@@ -22,6 +23,7 @@ export const DataCharts = () => {
   return (
     <div className='grid grid-cols-1 gap-4 md:gap-8 lg:grid-cols-6'>
       <TransactionsChartCard />
+      <SpendingPieCard />
     </div>
   );
 };
