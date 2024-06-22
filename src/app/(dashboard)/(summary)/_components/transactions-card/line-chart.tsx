@@ -33,7 +33,7 @@ export const LineChart = ({ data }: TransactionsChartProps) => {
           tickMargin={16}
           className='text-xs'
         />
-        <Tooltip content={<ChartTooltip />} />
+        <Tooltip content={ChartTooltip} />
 
         <Line
           dot={false}

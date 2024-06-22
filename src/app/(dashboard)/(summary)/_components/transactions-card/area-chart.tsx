@@ -59,7 +59,7 @@ export const AreaChart = ({ data }: TransactionsChartProps) => {
           tickMargin={16}
           className='text-xs'
         />
-        <Tooltip content={<ChartTooltip />} />
+        <Tooltip content={ChartTooltip} />
 
         <Area
           type='monotone'

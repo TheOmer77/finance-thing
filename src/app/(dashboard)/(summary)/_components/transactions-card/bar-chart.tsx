@@ -33,7 +33,7 @@ export const BarChart = ({ data }: TransactionsChartProps) => {
           tickMargin={16}
           className='text-xs'
         />
-        <Tooltip content={<ChartTooltip />} />
+        <Tooltip content={ChartTooltip} />
 
         <Bar
           dataKey='income'
