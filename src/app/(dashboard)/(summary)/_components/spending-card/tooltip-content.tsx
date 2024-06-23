@@ -4,12 +4,12 @@ import { formatCurrency } from '@/lib/formatters';
 
 import type { SpendingCategoriesData } from './types';
 
-type ChartTooltipProps = TooltipProps<
+type TooltipContentProps = TooltipProps<
   SpendingCategoriesData[number]['value'],
   SpendingCategoriesData[number]['name']
 >;
 
-export const TooltipContent = ({ active, payload }: ChartTooltipProps) => {
+export const TooltipContent = ({ active, payload }: TooltipContentProps) => {
   if (!active || !payload) return null;
 
   const { name, value } = payload[0];

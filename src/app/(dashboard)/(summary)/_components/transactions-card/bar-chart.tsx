@@ -8,7 +8,7 @@ import {
 } from 'recharts';
 import { format } from 'date-fns';
 
-import { ChartTooltip } from './chart-tooltip';
+import { TooltipContent } from './tooltip-content';
 import type { TransactionsChartProps } from './types';
 
 export const BarChart = ({ data }: TransactionsChartProps) => {
@@ -33,7 +33,7 @@ export const BarChart = ({ data }: TransactionsChartProps) => {
           tickMargin={16}
           className='text-xs'
         />
-        <Tooltip content={ChartTooltip} />
+        <Tooltip content={TooltipContent} />
 
         <Bar
           dataKey='income'

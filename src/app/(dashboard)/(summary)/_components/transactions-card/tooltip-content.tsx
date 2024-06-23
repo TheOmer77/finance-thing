@@ -6,7 +6,7 @@ import { cn } from '@/lib/utils';
 
 import type { TransactionsDaysData } from './types';
 
-const ChartTooltipLine = ({
+const TooltipLine = ({
   type,
   value,
 }: {
@@ -27,12 +27,12 @@ const ChartTooltipLine = ({
   </li>
 );
 
-type ChartTooltipProps = TooltipProps<
+type TooltipContentProps = TooltipProps<
   number,
   keyof Omit<TransactionsDaysData[number], 'date'>
 >;
 
-export const ChartTooltip = ({ active, payload }: ChartTooltipProps) => {
+export const TooltipContent = ({ active, payload }: TooltipContentProps) => {
   if (!active || !payload) return null;
 
   const date = payload[0].payload.date as string,
@@ -43,8 +43,8 @@ export const ChartTooltip = ({ active, payload }: ChartTooltipProps) => {
     <div className='rounded-md border bg-popover px-3 py-2 shadow-sm [.recharts-tooltip-wrapper:has(&)]:!transition-none'>
       <p className='pb-1 font-medium'>{format(date, 'PPP')}</p>
       <ul>
-        <ChartTooltipLine type='income' value={income} />
-        <ChartTooltipLine type='expenses' value={expenses * -1} />
+        <TooltipLine type='income' value={income} />
+        <TooltipLine type='expenses' value={expenses * -1} />
       </ul>
     </div>
   );
