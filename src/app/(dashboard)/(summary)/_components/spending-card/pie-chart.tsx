@@ -10,14 +10,11 @@ import {
 
 import { LegendContent } from './legend-content';
 import { TooltipContent } from './tooltip-content';
+import { COLORS } from './colors';
 import type { SpendingChartProps } from './types';
 
 const PieLegendContent = (props: DefaultLegendContentProps) => (
   <LegendContent valueType='percent' {...props} />
-);
-
-const COLORS = [...Array(4).keys()].map(
-  index => `hsl(var(--color-pie-${index + 1}))`
 );
 
 export const PieChart = ({ data }: SpendingChartProps) => (
