@@ -60,7 +60,7 @@ const SpendingChartCardLoading = () => (
   </Card>
 );
 
-export const SpendingPieCard = () => {
+export const SpendingChartCard = () => {
   const { summary, summaryLoading } = useSummary();
   const [chartType, setChartType] = useState<SpendingChartType>('pie');
 
