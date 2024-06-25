@@ -1,3 +1,4 @@
+import type { ComponentPropsWithoutRef } from 'react';
 import type { DayPickerSingleProps } from 'react-day-picker';
 import { format } from 'date-fns';
 import { CalendarIcon } from 'lucide-react';
@@ -12,8 +13,8 @@ import {
 import { cn } from '@/lib/utils';
 
 export type DatePickerProps = Omit<
-  DayPickerSingleProps,
-  'disabled' | 'initialFocus' | 'mode' | 'onSelect' | 'selected'
+  ComponentPropsWithoutRef<'button'>,
+  'value' | 'onChange'
 > & {
   value?: DayPickerSingleProps['selected'];
   onValueChange?: DayPickerSingleProps['onSelect'];
@@ -35,6 +36,7 @@ export const DatePicker = ({
           !value && 'text-muted-foreground'
         )}
         disabled={disabled}
+        {...props}
       >
         <CalendarIcon className='mr-2 size-4' />
         {value ? format(value, 'PPP') : <span>Pick a date</span>}
@@ -42,7 +44,6 @@ export const DatePicker = ({
     </PopoverTrigger>
     <PopoverContent className='w-auto p-0'>
       <Calendar
-        {...props}
         mode='single'
         initialFocus
         selected={value}
