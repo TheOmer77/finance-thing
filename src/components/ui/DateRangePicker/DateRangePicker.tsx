@@ -1,7 +1,6 @@
 'use client';
 
 import type { ComponentPropsWithoutRef } from 'react';
-import { format } from 'date-fns';
 import { Calendar as CalendarIcon, ChevronDownIcon } from 'lucide-react';
 import type { DayPickerRangeProps } from 'react-day-picker';
 
