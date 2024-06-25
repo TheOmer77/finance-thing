@@ -4,12 +4,19 @@ import { useQuery } from '@tanstack/react-query';
 import { client } from '@/lib/hono';
 import { amountFromMilliunits } from '@/lib/amount';
 import { isErrorObj } from '@/lib/isErrorObj';
+import {
+  ACCOUNT_ID_SEARCH_PARAM,
+  FROM_SEARCH_PARAM,
+  TO_SEARCH_PARAM,
+} from '@/constants/searchParams';
 
 export const useSummary = () => {
   const searchParams = useSearchParams();
-  const [from, to, accountId] = ['from', 'to', 'accountId'].map(
-    key => searchParams.get(key) || ''
-  );
+  const [from, to, accountId] = [
+    FROM_SEARCH_PARAM,
+    TO_SEARCH_PARAM,
+    ACCOUNT_ID_SEARCH_PARAM,
+  ].map(key => searchParams.get(key) || '');
 
   const getQuery = useQuery({
     // TODO: Check if params are needed in the key
