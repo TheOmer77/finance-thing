@@ -21,7 +21,6 @@ export const useTransactions = () => {
   const queryClient = useQueryClient();
 
   const getQuery = useQuery({
-    // TODO: Check if params are needed in the key
     queryKey: ['transactions', { from, to, accountId }],
     queryFn: async () => {
       const res = await client.api.transactions.$get({
@@ -66,7 +65,7 @@ export const useTransactions = () => {
         `${data.length === 1 ? 'Transaction' : 'Transactions'} created.`
       );
       queryClient.invalidateQueries({ queryKey: ['transactions'] });
-      // TODO: Invalidate summary
+      queryClient.invalidateQueries({ queryKey: ['summary'] });
     },
     onError: (_, data) =>
       toast.error(
@@ -90,7 +89,7 @@ export const useTransactions = () => {
         `${data.length === 1 ? 'Transaction' : 'Transactions'} deleted.`
       );
       queryClient.invalidateQueries({ queryKey: ['transactions'] });
-      // TODO: Invalidate summary
+      queryClient.invalidateQueries({ queryKey: ['summary'] });
     },
     onError: (_, { ids }) =>
       toast.error(

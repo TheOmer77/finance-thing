@@ -23,7 +23,7 @@ export const useTransactionById = (id?: string, { enabled = true } = {}) => {
       toast.success('Transaction updated.');
       queryClient.invalidateQueries({ queryKey: ['transactions'] });
       queryClient.invalidateQueries({ queryKey: ['transaction', { id }] });
-      // TODO: Invalidate summary
+      queryClient.invalidateQueries({ queryKey: ['summary'] });
     },
     onError: () => toast.error('Failed to update transaction.'),
   });
@@ -42,7 +42,7 @@ export const useTransactionById = (id?: string, { enabled = true } = {}) => {
       toast.success('Transaction deleted.');
       queryClient.invalidateQueries({ queryKey: ['transactions'] });
       queryClient.invalidateQueries({ queryKey: ['transaction', { id }] });
-      // TODO: Invalidate summary
+      queryClient.invalidateQueries({ queryKey: ['summary'] });
     },
     onError: () => toast.error('Failed to delete transaction.'),
   });
