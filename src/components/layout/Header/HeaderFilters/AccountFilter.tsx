@@ -17,13 +17,13 @@ export const AccountFilter = () => {
   const { accounts, accountsLoading } = useAccounts();
   const { summaryLoading } = useSummary();
 
-  const params = useSearchParams(),
-    accountId = params.get(ACCOUNT_ID_SEARCH_PARAM) || ALL_ACCOUNTS_VALUE;
+  const searchParams = useSearchParams(),
+    accountId = searchParams.get(ACCOUNT_ID_SEARCH_PARAM) || ALL_ACCOUNTS_VALUE;
   const pathname = usePathname();
   const router = useRouter();
 
   const handleValueChange = (value: string) => {
-    const newParams = new URLSearchParams(params.toString());
+    const newParams = new URLSearchParams(searchParams.toString());
 
     if (value === ALL_ACCOUNTS_VALUE) newParams.delete(ACCOUNT_ID_SEARCH_PARAM);
     else newParams.set(ACCOUNT_ID_SEARCH_PARAM, value);
@@ -37,7 +37,7 @@ export const AccountFilter = () => {
       onValueChange={handleValueChange}
       disabled={accountsLoading || summaryLoading}
     >
-      <SelectTrigger className='h-9 w-auto rounded-md border-none bg-background/10 px-3 font-medium text-background transition-colors hover:bg-background/20 focus:ring-transparent'>
+      <SelectTrigger className='h-9 w-auto rounded-md border-none bg-white/10 px-3 font-medium text-white transition-colors hover:bg-white/20 focus:ring-transparent'>
         <SelectValue placeholder='Account' />
       </SelectTrigger>
       <SelectContent>
