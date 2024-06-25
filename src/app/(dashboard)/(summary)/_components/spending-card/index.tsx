@@ -1,10 +1,12 @@
 'use client';
 
 import { useState } from 'react';
+import { FileSearchIcon, OctagonAlertIcon } from 'lucide-react';
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
 import { Skeleton } from '@/components/ui/Skeleton';
 import { Spinner } from '@/components/ui/Spinner';
+import { EmptyState } from '@/components/layout/EmptyState';
 import { useSummary } from '@/hooks/summary';
 import { isErrorObj } from '@/lib/isErrorObj';
 import type { MaybeError } from '@/types/api';
@@ -21,22 +23,24 @@ type ChartCardContentProps = {
 };
 
 const ChartCardContent = ({ data, type }: ChartCardContentProps) => {
-  if (!data)
+  if (!data || isErrorObj(data) || data.length < 1) {
+    let errorText;
+    switch (true) {
+      case !data:
+        errorText = 'Data is missing.';
+        break;
+      case Array.isArray(data) && data.length < 1:
+        errorText = 'No data for this period.';
+        break;
+      default:
+        errorText = 'Something went wrong.';
+    }
+
+    const ErrorIcon = Array.isArray(data) ? FileSearchIcon : OctagonAlertIcon;
     return (
-      <span className='text-sm text-muted-foreground'>Data is missing.</span>
+      <EmptyState text={errorText} icon={<ErrorIcon />} className='h-[22rem]' />
     );
-  if (isErrorObj(data))
-    return (
-      <span className='text-sm text-muted-foreground'>
-        Something went wrong.
-      </span>
-    );
-  if (data.length < 1)
-    return (
-      <span className='text-sm text-muted-foreground'>
-        No data for this period.
-      </span>
-    );
+  }
 
   switch (type) {
     case 'pie':
