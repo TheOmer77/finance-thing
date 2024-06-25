@@ -1,4 +1,7 @@
+'use client';
+
 import { forwardRef, type ElementRef } from 'react';
+import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 
 import { Button } from '@/components/ui/Button';
@@ -11,20 +14,28 @@ export type NavButtonProps = {
 };
 
 export const NavButton = forwardRef<ElementRef<'button'>, NavButtonProps>(
-  ({ active, href, label, ...props }, ref) => (
-    <Button
-      {...props}
-      ref={ref}
-      variant='flat'
-      className={cn(
-        `justify-start text-inherit hover:text-inherit
-md:hover:bg-primary-foreground/20`,
-        active && 'bg-muted md:bg-primary-foreground/10'
-      )}
-      asChild
-    >
-      <Link href={href}>{label}</Link>
-    </Button>
-  )
+  ({ active, href, label, ...props }, ref) => {
+    const searchParams = useSearchParams();
+    return (
+      <Button
+        {...props}
+        ref={ref}
+        variant='flat'
+        className={cn(
+          `justify-start text-inherit hover:text-inherit md:hover:bg-primary-foreground/20`,
+          active && 'bg-muted md:bg-primary-foreground/10'
+        )}
+        asChild
+      >
+        <Link
+          href={
+            searchParams.size > 0 ? `${href}?${searchParams.toString()}` : href
+          }
+        >
+          {label}
+        </Link>
+      </Button>
+    );
+  }
 );
 NavButton.displayName = 'NavButton';
