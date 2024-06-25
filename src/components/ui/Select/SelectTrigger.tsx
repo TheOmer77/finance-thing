@@ -22,7 +22,7 @@ export const SelectTrigger = forwardRef<
   >
     {children}
     <SelectIcon asChild>
-      <ChevronDownIcon className='size-4 opacity-50' />
+      <ChevronDownIcon className='ms-2 size-4 opacity-50' />
     </SelectIcon>
   </Trigger>
 ));
