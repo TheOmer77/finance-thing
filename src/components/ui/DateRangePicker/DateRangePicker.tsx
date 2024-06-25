@@ -23,8 +23,6 @@ export type DateRangePickerProps = Omit<
   onValueChange?: DayPickerRangeProps['onSelect'];
 };
 
-const DATE_FORMAT = 'PPP';
-
 export const DateRangePicker = ({
   value,
   onValueChange,
