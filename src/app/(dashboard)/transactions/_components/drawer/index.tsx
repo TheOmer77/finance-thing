@@ -135,7 +135,7 @@ export const TransactionDrawer = () => {
             <DrawerDescription>
               {lastModalWasEdit
                 ? 'Edit this existing transaction.'
-                : 'Create a new transaction to track your transactions.'}
+                : 'Create a new transaction.'}
             </DrawerDescription>
           </DrawerHeader>
           {isLoading ? (
