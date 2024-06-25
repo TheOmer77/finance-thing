@@ -85,6 +85,8 @@ const main = async () => {
     await db.insert(categories).values(SEED_CATEGORIES).execute();
     await db.insert(accounts).values(SEED_ACCOUNTS).execute();
     await db.insert(transactions).values(SEED_TRANSACTIONS).execute();
+
+    console.log('\x1b[32m', '✔️ DB Seed successful.');
   } catch (error) {
     console.error('Error during seed:', error);
     process.exit(1);
