@@ -11,14 +11,14 @@ const sql = neon(process.env.DATABASE_URL!),
 
 const SEED_USER_ID = 'user_2ggeoOtM5kWArUAmkzGQ6iC3iGT';
 const SEED_CATEGORIES = [
-  { id: 'category_1', name: 'Food', userId: SEED_USER_ID },
-  { id: 'category_2', name: 'Rent', userId: SEED_USER_ID },
-  { id: 'category_3', name: 'Utilities', userId: SEED_USER_ID },
-  { id: 'category_7', name: 'Clothing', userId: SEED_USER_ID },
+  { id: createId(), name: 'Food', userId: SEED_USER_ID },
+  { id: createId(), name: 'Rent', userId: SEED_USER_ID },
+  { id: createId(), name: 'Utilities', userId: SEED_USER_ID },
+  { id: createId(), name: 'Clothing', userId: SEED_USER_ID },
 ];
 const SEED_ACCOUNTS = [
-  { id: 'account_1', name: 'Checking', userId: SEED_USER_ID },
-  { id: 'account_2', name: 'Savings', userId: SEED_USER_ID },
+  { id: createId(), name: 'Checking', userId: SEED_USER_ID },
+  { id: createId(), name: 'Savings', userId: SEED_USER_ID },
 ];
 
 const defaultTo = new Date();
