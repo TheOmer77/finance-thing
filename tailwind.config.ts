@@ -1,9 +1,15 @@
 import type { Config } from 'tailwindcss';
+import animate from 'tailwindcss-animate';
 
 const config = {
-  darkMode: ['class'],
   content: ['./src/**/*.{ts,tsx}'],
-  prefix: '',
+  darkMode: [
+    'variant',
+    [
+      "@media not print { @media (prefers-color-scheme: dark) { &:not(:is([data-theme='light'] *)) } }",
+      "@media not print { &:is([data-theme='dark'] *) }",
+    ],
+  ],
   theme: {
     container: { center: true, padding: '2rem', screens: { '2xl': '1400px' } },
     extend: {
@@ -63,7 +69,7 @@ const config = {
       },
     },
   },
-  plugins: [require('tailwindcss-animate')],
+  plugins: [animate],
 } satisfies Config;
 
 export default config;

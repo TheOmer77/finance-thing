@@ -1,6 +1,7 @@
 import type { PropsWithChildren } from 'react';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
+import { ThemeProvider } from 'next-themes';
 
 import { Toaster } from '@/components/ui/Toaster';
 import { Provider } from '@/components/providers';
@@ -17,8 +18,10 @@ const RootLayout = ({ children }: PropsWithChildren) => (
   <Provider>
     <html lang='en'>
       <body className={inter.className}>
-        <Toaster />
-        {children}
+        <ThemeProvider>
+          <Toaster />
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   </Provider>
