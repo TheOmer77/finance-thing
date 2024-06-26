@@ -20,11 +20,8 @@ export const NavButton = forwardRef<ElementRef<'button'>, NavButtonProps>(
       <Button
         {...props}
         ref={ref}
-        variant='flat'
-        className={cn(
-          `justify-start text-inherit hover:text-inherit md:hover:bg-primary-foreground/20`,
-          active && 'bg-muted md:bg-primary-foreground/10'
-        )}
+        variant='flat-nav'
+        className={cn('justify-start', active && 'bg-muted md:bg-white/10')}
         asChild
       >
         <Link

@@ -31,13 +31,7 @@ export const HeaderThemeMenu = () => {
         <Tooltip>
           <TooltipContent>Theme</TooltipContent>
           <TooltipTrigger asChild>
-            <Button
-              asChild
-              variant='flat'
-              size='icon'
-              disabled={!isClient}
-              className='text-inherit hover:bg-primary-foreground/20 hover:text-inherit'
-            >
+            <Button asChild variant='flat-nav' size='icon' disabled={!isClient}>
               <DropdownMenuTrigger>
                 <>
                   <MoonIcon className='hidden dark:block' />

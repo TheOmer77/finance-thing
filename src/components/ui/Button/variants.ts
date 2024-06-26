@@ -16,7 +16,7 @@ disabled:pointer-events-none disabled:opacity-50`,
         secondary:
           'bg-secondary text-secondary-foreground hover:bg-secondary/80',
         flat: 'hover:bg-accent hover:text-accent-foreground',
-        'flat-nav': 'text-inherit hover:bg-primary-foreground/20',
+        'flat-nav': 'text-inherit hover:bg-white/20 ring-offset-white',
         link: 'text-primary underline-offset-4 hover:underline',
       },
       size: {
