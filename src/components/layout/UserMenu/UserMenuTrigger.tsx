@@ -15,7 +15,7 @@ export const UserMenuTrigger = () => {
       <Button
         variant='flat-nav'
         size='icon'
-        className='ms-auto rounded-full p-2'
+        className='rounded-full p-2'
         disabled={!isLoaded}
       >
         {!isLoaded || !user?.id ? (
