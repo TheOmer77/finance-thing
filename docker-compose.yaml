@@ -1,6 +1,6 @@
 services:
   app:
-    image: finance-tutorial-thing-app
+    image: finance-thing-app
     build:
       dockerfile: Dockerfile
       context: .
@@ -19,7 +19,7 @@ services:
       - DATABASE_URL=${DATABASE_URL:?error}
 
   db-studio:
-    image: finance-tutorial-thing-app
+    image: finance-thing-app
     command: pnpm db:studio
     restart: always
     ports:
