@@ -1,6 +1,6 @@
 # Finance thing
 
-This is a finance platform that allows you to track your income and expenses, by adding transactions (manually or by importing them from a CSV file) and assign them to specific accounts and categories. It was created by following [this tutorial](https://youtu.be/N_uNKAus0II?si=DT2WyV3Ni6G1uE_R), though it probably has many changes in both its code and UI from that tutorial.
+This is a finance platform that allows you to track your income and expenses, by adding transactions (manually or by importing them from a CSV file) and assigning them to specific accounts and categories. It was created by following [this tutorial](https://youtu.be/N_uNKAus0II?si=DT2WyV3Ni6G1uE_R), though it probably has many changes in both its code and UI from that tutorial.
 
 Technologies used in this project include:
 
