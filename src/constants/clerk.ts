@@ -6,6 +6,9 @@ import { cn } from '@/lib/utils';
 
 type Appearance = ComponentPropsWithoutRef<typeof ClerkProvider>['appearance'];
 
+export const SIGN_IN_URL = '/signin',
+  SIGN_UP_URL = '/signup';
+
 export const clerkTheme = {
   elements: {
     rootBox: 'size-full',

@@ -14,8 +14,6 @@ services:
       - CLERK_PUBLISHABLE_KEY=${CLERK_PUBLISHABLE_KEY:?error}
       - NEXT_PUBLIC_APP_URL=${APP_URL:-http://localhost:3000}
       - NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=${CLERK_PUBLISHABLE_KEY:?error}
-      - NEXT_PUBLIC_CLERK_SIGN_IN_URL=/signin
-      - NEXT_PUBLIC_CLERK_SIGN_UP_URL=/signup
       - DATABASE_URL=${DATABASE_URL:?error}
 
   db-studio:
