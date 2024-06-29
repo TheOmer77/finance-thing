@@ -5,9 +5,6 @@ import { buttonVariants } from '@/components/ui/Button/variants';
 import { cn } from '@/lib/utils';
 
 type Appearance = ComponentPropsWithoutRef<typeof ClerkProvider>['appearance'];
-type Localization = ComponentPropsWithoutRef<
-  typeof ClerkProvider
->['localization'];
 
 export const clerkTheme = {
   elements: {
@@ -50,18 +47,3 @@ bg-none [&>*:not(:first-of-type)]:border-0`,
     },
   },
 } satisfies Appearance;
-
-export const clerkLocalization = {
-  signIn: {
-    start: {
-      title: 'Welcome back!',
-      subtitle: 'Sign in to continue to your dashboard.',
-    },
-  },
-  signUp: {
-    start: {
-      title: "Let's get started",
-      subtitle: 'Fill in your details below to create your account.',
-    },
-  },
-} satisfies Localization;
