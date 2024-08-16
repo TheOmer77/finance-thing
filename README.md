@@ -13,7 +13,7 @@ Technologies used in this project include:
 - [Drizzle ORM](https://orm.drizzle.team/)
 - [Docker](https://www.docker.com/) compose in local development (run both the app itself and Drizzle studio)
 
-**This project exists purely for educational purposes. I have no plans to develop it any further.**
+**This project exists purely for my own learning purposes. I have no plans to develop it any further.**
 
 ## Getting Started
 
